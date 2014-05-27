@@ -1,0 +1,16 @@
+{% extends index.html %}
+
+{% block content %}
+<div class="container">
+	<form method="POST" action="/">
+		{{ form.hidden_tag() }}
+		{{ form.first_name.label }} {{ form.first_name(size=20) }} <br>
+		{{ form.last_name.label }} {{ form.last_name(size=20) }} <br>
+		{{ form.sex.label }} {{ form.sex }}
+		{{ form.age.label }} {{ form.age }} <br>
+	<input type="submit">
+</form>
+</div>
+
+
+{% endblock %}
