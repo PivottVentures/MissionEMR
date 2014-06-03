@@ -4,6 +4,7 @@ from forms import Patient, Login
 from flask import render_template, flash, redirect, url_for#, request, session, g
 from flask_login import login_user, login_required, logout_user#, current_user
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -11,17 +12,19 @@ def index():
 
 @login_manager.user_loader
 def load_user(uid):
-	return User.get(int(uid))
+	return User.query.get(int(uid))
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	form = Login()
 	if form.validate_on_submit():
-		user = User.query.filter_by(username=form.username.data)
-		if user is not None and user.verify_password(form.password.data):
-			login_user(user, form.remember_me.data)
+		user = User.query.filter_by(username=form.username.data).first()
+		if user is not None and user.check_password_hash(form.password.data):
+			login_user(user)
 			flash("Logged in successfully.")
 			return redirect(url_for("patient"))
+		else:
+			return redirect(url_for('login'))
 	return render_template('login.html', form=form)
 
 @app.route('/logout', methods = ['GET'])

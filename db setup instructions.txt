@@ -1,3 +1,4 @@
+
 python run.py shell
 
 from app import db
@@ -6,11 +7,9 @@ admin_role = Role(name='Admin')
 nurse_role = Role(name='Nurse')
 doctor_role = Role(name='Doctor')
 manager_role = Role(name='Manager')
-
-user_carmel = User(username='carmel', role=doctor_role, password_hash='password', uid='0000001')
-user_donald = User(username='donald', role=manager_role, password_hash='password', uid='0000002')
-user_nurse1 = User(username='nurse1', role=nurse_role, password_hash='password', uid='0000003')
-user_nurse2 = User(username='nurse2', role=nurse_role, password_hash='password', uid='0000004')
-
+user_carmel = User(username='carmel', role=doctor_role, password='password', id='0000001')
+user_donald = User(username='donald', role=manager_role, password='password', id='0000002')
+user_nurse1 = User(username='nurse1', role=nurse_role, password='password', id='0000003')
+user_nurse2 = User(username='nurse2', role=nurse_role, password='password', id='0000004')
 db.session.add_all([admin_role, nurse_role, doctor_role, manager_role, user_carmel, user_donald, user_nurse1, user_nurse2])
 db.session.commit()

@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, IntegerField, BooleanField, RadioField, PasswordField
+from wtforms import StringField, SubmitField, IntegerField, RadioField, PasswordField
 from wtforms.validators import Required, Length
 
 class Patient(Form):
@@ -12,5 +12,4 @@ class Patient(Form):
 class Login(Form):
 	username = StringField('Username', validators=[Required(), Length(1, 64)])
 	password = PasswordField('Password', validators=[Required()])
-	remember_me = BooleanField('Keep me logged in')
 	submit = SubmitField('Log In')
