@@ -24,6 +24,7 @@ def login():
 			flash("Logged in successfully.")
 			return redirect(url_for("registration"))
 		else:
+			flash("Logged NOT SUCCESSFUL.")
 			return redirect(url_for('login'))
 	return render_template('login.html', form=form)
 
@@ -47,3 +48,8 @@ def registration():
     		flash("Stored patient in the database.")
     		return render_template(url_for('registration'))
     return render_template('registration.html', form=form)
+
+
+@app.route('/demo', methods=['GET', 'POST'])
+def demo():
+	return render_template('demo.html')

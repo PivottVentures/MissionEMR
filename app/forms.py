@@ -12,4 +12,4 @@ class Patients(Form):
 class Login(Form):
 	username = StringField('Username', validators=[Required(), Length(1, 64)])
 	password = PasswordField('Password', validators=[Required()])
-	submit = SubmitField('Log In')
+	submit = SubmitField('Sign In')
