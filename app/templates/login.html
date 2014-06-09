@@ -11,14 +11,27 @@
 
 {% block content %}
 <div class="container">
+	<center><img src="/static/files/missionemr_logo.png">
 	<div class="col-md-4">
 	</div>
 	<div class="col-md-4">
-		<img src="/static/files/missionemr_logo.png">
 	    <form class="form-signin" role="form">
-	    	<h2 class="form-signin-heading">Please sign in</h2>
-	    	{{ form.username.label }} {{ form.username(class="form-control", placeholder="Username") }}
-	    	{{ form.password.label }} {{ form.password(class="form-control", placeholder="Password") }}
+	    	<!-- <h2 class="form-signin-heading"><center>Please sign in</h2> -->
+			<!-- Need to figure out how to add vertical space -->
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+	    	<!-- {{ form.username.label }} --> {{ form.username(class="form-control", placeholder="Username") }}
+			<p></p>
+	    	<!-- {{ form.password.label }} --> {{ form.password(class="form-control", placeholder="Password") }}
+			<p></p>
 	    	{{ form.submit(class="btn btn-lg btn-primary btn-block") }}
 	    </form>
 	</div>
