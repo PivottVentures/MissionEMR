@@ -53,3 +53,11 @@ def registration():
 @app.route('/demo', methods=['GET', 'POST'])
 def demo():
 	return render_template('demo.html')
+
+@app.route('/demo2', methods=['GET', 'POST'])
+def demo2():
+	return render_template('demo.html')
+
+@app.route('/demo3', methods=['GET', 'POST'])
+def demo3():
+	return render_template('demo.html')
