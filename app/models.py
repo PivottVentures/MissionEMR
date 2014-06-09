@@ -6,14 +6,19 @@ ROLE_ADMIN = 0
 ROLE_MANAGER = 1
 ROLE_DOCTOR = 2
 ROLE_NURSE = 3
+STATUS_REGISTRATION = 0
+STATUS_TRIAGE = 1
+STATUS_DOCTOR = 2
+STATUS_PARMACY = 3
+STATUS_HOLD = 4
+STATUS_COMPLETE = 5
 
 
 class User(UserMixin, db.Model):
-	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(80), unique=True)
 	pwhash = db.Column(db.String(128))
-	role = db.Column(db.SmallInteger, default = ROLE_NURSE) # 0 = nurse, 1 = doctor, 2 = manager, 3 = admin
+	role = db.Column(db.SmallInteger, default = 3) # 0 = admin, 1 = manager, 2 = doctor, 3 = nurse
 
 
 	def __init__(self, id, username, password, role):
@@ -37,8 +42,8 @@ def load_user(id):
 	return User.query.get(id)
 
 
-class User_Log(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
+#class User_Log(db.Model):
+#	id = db.Column(db.Integer, primary_key=True)
 
 	# UserID
 	# PatientID
@@ -47,9 +52,14 @@ class User_Log(db.Model):
 
 class Status(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	
+	## Current Status in Clinic ##
+	status = db.Column(db.SmallInteger())
 	status_change_timestamp = db.Column(db.DateTime) # at what time/date did the patient change status?
 
-	## Current Status in Clinic ##
+	def __init__(self, status, status_change_timestamp):
+		self.status = status
+		self.status_change_timestamp = status_change_timestamp
 
 
 class Visit(db.Model):
@@ -86,6 +96,34 @@ class Visit(db.Model):
 
 	## pharmacy_id(fk)
 
+	def __init__(self, timestamp, patient_number, weight, height, bp_systolic, bp_diastolic, \
+		pulse, temperature, respirations, complaint, history, exam, diagnosis, treatment1, \
+		treatment2, treatment3, treatment4, treatment5, treatment6, follow_up, exam_notes, \
+		prescription_given, prescription_description):
+		self.timestamp = timestamp
+		self.patient_number = patient_number
+		self.weight = weight
+		self.height = height
+		self.bp_systolic = bp_systolic
+		self.bp_diastolic = bp_diastolic
+		self.pulse = pulse
+		self.temperature = temperature
+		self.respirations = respirations
+		self.complaint = complaint
+		self.history = history
+		self.exam = exam
+		self.diagnosis = diagnosis
+		self.treatment1 = treatment1
+		self.treatment2 = treatment2
+		self.treatment3 = treatment3
+		self.treatment4 = treatment4
+		self.treatment5 = treatment5
+		self.treatment6 = treatment6
+		self.follow_up = follow_up
+		self.exam_notes = exam_notes
+		self.prescription_given = prescription_given
+		self.prescription_description = prescription_description
+
 
 class Payment(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -93,19 +131,28 @@ class Payment(db.Model):
 	payment_amount = db.Column(db.Float())
 	payment_other = db.Column(db.String(255))
 	# patient_number - refernced from visit
-	#patientid - fk
-	#userid - fk
+	# patientid - fk
+	# userid - fk
 
+	def __init__(self, payment_type, payment_amount, payment_other):
+		self.payment_type = payment_type
+		self.payment_amount = payment_amount
+		self.payment_other = payment_other
 
 class Pharmacy(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-
-	## Prescription ##
-
-	## Notes ##
+	medication_given = db.Column(db.String(255))
+	amount_given = db.Column(db.String(255))
+	pharmacy_notes = db.Column(db.Text())
 
 	#patientid - fk
 	#userid - fk
+
+	def __init__(self, medication_given, amount_given, pharmacy_notes):
+		self.medication_given = medication_given
+		self.amount_given = amount_given
+		self.pharmacy_notes = pharmacy_notes
+
 
 class Patient(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
