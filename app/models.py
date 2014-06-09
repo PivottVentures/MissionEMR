@@ -47,9 +47,9 @@ class User(UserMixin, db.Model):
 def load_user(id):
 	return User.query.get(id)
 
-user_patient_interactions = db.Table('user_patient_interactions', 
-	db.Column('visit_id', db.SmallInteger, db.ForeignKey('visit.id')), 
-	db.column('user_id', db.SmallInteger, db.ForeignKey('user.id')))
+#user_patient_interactions = db.Table('user_patient_interactions', 
+#	db.Column('visit_id', db.SmallInteger, db.ForeignKey('visit.id')), 
+#	db.column('user_id', db.SmallInteger, db.ForeignKey('user.id')))
 
 
 class Patient(db.Model):
