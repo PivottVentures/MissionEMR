@@ -67,8 +67,20 @@ class Visit(db.Model):
 	respirations = db.Column(db.Float())
 
 	## Exam ##
-
-	
+	complaint = db.Column(db.Text())
+	history = db.Column(db.Text())
+	exam = db.Column(db.Text())
+	diagnosis = db.Column(db.Text())
+	treatment1 = db.Column(db.String(255))
+	treatment2 = db.Column(db.String(255))
+	treatment3 = db.Column(db.String(255))
+	treatment4 = db.Column(db.String(255))
+	treatment5 = db.Column(db.String(255))
+	treatment6 = db.Column(db.String(255))
+	follow_up = db.Column(db.Text())
+	exam_notes = db.Column(db.Text())
+	prescription_given = db.Column(db.Boolean())
+	prescription_description = db.Column(db.Text())
 
 	## patient_id(fk) ##
 
@@ -132,7 +144,7 @@ class Patient(db.Model):
 	immunizations = db.Column(db.Text)
 	surgeries = db.Column(db.Text)
 	family_history = db.Column(db.Text)
-	notes = db.Column(db.Text)
+	patient_notes = db.Column(db.Text)
 
 	## Flags ##
 	# FUTURE STATE
