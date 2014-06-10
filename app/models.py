@@ -226,7 +226,7 @@ class Pharmacy(db.Model):
 	## Relationships ##
 	patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
 	visit_id = db.Column(db.Integer, db.ForeignKey('visit.id'))
-	user_id = db.Columnn(db.Integer, db.ForeignKey('user.id'))
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 	def __init__(self, medication_given, amount_given, pharmacy_notes, patient_id, visit_id, user_id):
