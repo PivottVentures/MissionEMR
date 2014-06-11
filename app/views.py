@@ -5,6 +5,8 @@ from flask import render_template, flash, redirect, url_for#, request, session, 
 from flask_login import login_user, login_required, logout_user#, current_user
 
 
+### Login Views ###
+
 @login_manager.user_loader
 def load_user(uid):
 	return User.query.get(int(uid))
@@ -32,6 +34,8 @@ def logout():
 	return redirect(url_for('index'))
 
 
+### Testing Views ###
+
 @app.route('/registration', methods=['GET', 'POST'])
 @login_required
 def registration():
@@ -45,7 +49,6 @@ def registration():
     		return render_template(url_for('registration'))
     return render_template('registration.html', form=form)
 
-
 @app.route('/demo', methods=['GET', 'POST'])
 def demo():
 	return render_template('demo.html')
@@ -57,3 +60,103 @@ def demo2():
 @app.route('/demo3', methods=['GET', 'POST'])
 def demo3():
 	return render_template('demo.html')
+
+
+### Base Views ###
+
+@app.route('/reports', methods=['GET', 'POST'])
+@login_required
+def reports():
+	return render_template('reports.html')
+
+@app.route('/home', methods=['GET', 'POST'])
+@login_required
+def home():
+	return render_template('home.html')
+
+@app.route('/search_results', methods=['GET', 'POST'])
+@login_required
+def search_results():
+	return render_template('search_results.html')
+
+@app.route('/patients_today', methods=['GET', 'POST'])
+@login_required
+def patients_today():
+	return render_template('patients_today.html')
+
+@app.route('/master', methods=['GET', 'POST'])
+@login_required
+def master():
+	return render_template('master.html')
+
+
+### Registration Views ###  
+
+@app.route('/registration_initial', methods=['GET', 'POST'])
+@login_required
+def registration_initial():
+	return render_template('registration_initial.html')
+
+@app.route('/registration_search_results', methods=['GET', 'POST'])
+@login_required
+def registration_search_results():
+	return render_template('registration_search_results.html')
+
+@app.route('/registration_add_new', methods=['GET', 'POST'])
+@login_required
+def registration_add_new():
+	return render_template('registration_add_new.html')
+
+@app.route('/registration_patient_review', methods=['GET', 'POST'])
+@login_required
+def registration_patient_review():
+	return render_template('registration_patient_review.html')
+
+@app.route('/registration_payment', methods=['GET', 'POST'])
+@login_required
+def registration_payment():
+	return render_template('registration_payment.html')
+
+
+### Triage Views ###
+
+@app.route('/triage', methods=['GET', 'POST'])
+@login_required
+def triage():
+	return render_template('triage.html')
+
+@app.route('/triage_patient_bg', methods=['GET', 'POST'])
+@login_required
+def triage_patient_bg():
+	return render_template('triage_patient_bg.html')
+
+@app.route('/triage_patient_vitals', methods=['GET', 'POST'])
+@login_required
+def triage_patient_vitals():
+	return render_template('triage_patient_vitals.html')
+
+
+### Doctor Views ###
+
+@app.route('/doctor', methods=['GET', 'POST'])
+@login_required
+def doctor():
+	return render_template('doctor.html')
+
+@app.route('/doctor_exam', methods=['GET', 'POST'])
+@login_required
+def doctor_exam():
+	return render_template('doctor_exam.html')
+
+
+### Pharmacy Views ###
+
+@app.route('/pharmacy', methods=['GET', 'POST'])
+@login_required
+def pharmacy():
+	return render_template('pharmacy.html')
+
+@app.route('/pharmacy_prescription', methods=['GET', 'POST'])
+@login_required
+def pharmacy_prescription():
+	return render_template('pharmacy_prescription.html')
