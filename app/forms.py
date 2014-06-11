@@ -7,9 +7,9 @@ class Patients(Form):
 	last_name = StringField('Nom/Last Name', validators=[Required()])
 	sex = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')])
 	age = IntegerField('Age/Age')
-	submit = SubmitField('Submit')
+	submit = SubmitField('Soumettre/Submit')
 
 class Login(Form):
-	username = StringField('Username', validators=[Required(), Length(1, 64)])
-	password = PasswordField('Password', validators=[Required()])
-	submit = SubmitField('Sign In')
+	username = StringField("Nom d'utilisateur / Username", validators=[Required(), Length(1, 64)])
+	password = PasswordField('Mot de passe / Password', validators=[Required()])
+	submit = SubmitField('Signer Dans / Sign In')

@@ -5,15 +5,11 @@ from flask import render_template, flash, redirect, url_for#, request, session, 
 from flask_login import login_user, login_required, logout_user#, current_user
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('index.html')
-
 @login_manager.user_loader
 def load_user(uid):
 	return User.query.get(int(uid))
 
+@app.route('/')
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	form = Login()
