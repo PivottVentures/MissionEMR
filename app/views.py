@@ -55,11 +55,11 @@ def demo():
 
 @app.route('/demo2', methods=['GET', 'POST'])
 def demo2():
-	return render_template('demo.html')
+	return render_template('demo2.html')
 
 @app.route('/demo3', methods=['GET', 'POST'])
 def demo3():
-	return render_template('demo.html')
+	return render_template('demo3.html')
 
 
 ### Base Views ###
