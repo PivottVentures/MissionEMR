@@ -82,6 +82,17 @@ def reports():
 @app.route('/home', methods=['GET', 'POST'])
 #@login_required
 def home():
+<<<<<<< HEAD
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('home.html', form=form, first_name_search=first_name_search, last_name_search=last_name_search, patient_number_search=patient_number_search)
+=======
 #	form = Search()
 #	if form.validate_on_submit():
 #		if form.search_by.data == 'first_name':
@@ -92,6 +103,7 @@ def home():
 #			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
 	return render_template('home.html')#, form=form, first_name_search=first_name_search, last_name_search=last_name_search, \
 #		patient_number_search=patient_number_search)
+>>>>>>> 4d2d0f32e4df6258a19e988ee425cde7f3c0dee7
 
 @app.route('/search_results', methods=['GET', 'POST'])
 #@login_required

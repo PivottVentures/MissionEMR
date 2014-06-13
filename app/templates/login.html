@@ -42,12 +42,13 @@
 			<p></p>
 			<p></p>
 			<p></p>
-	    	<!-- {{ form.username.label }} --> {{ form.username(class="form-control", placeholder="Username") }}
+	    	{{ form.username(class="form-control", placeholder="Username") }}
 			<p></p>
-	    	<!-- {{ form.password.label }} --> {{ form.password(class="form-control", placeholder="Password") }}
+	    	{{ form.password(class="form-control", placeholder="Password") }}
 			<p></p>
 			<!-- How do I control the "label" on the Sign In button? -->
-	    	<center>{{ form.submit(class="btn btn-lg btn-warning") }}
+			<center><input type="submit" class="btn btn-warning btn-lg" value="Search">
+	    	<!-- <center>{{ form.submit(class="btn btn-lg btn-warning") }} -->
 	    </form>
 	</div>
 	<div class="col-md-4">
