@@ -1,3 +1,3 @@
-from app import manager
+from app import app
 
-manager.run()
+app.run(debug=True)

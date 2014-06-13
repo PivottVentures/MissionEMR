@@ -1,0 +1,5 @@
+setup instructions.txt
+
+to begin working on the virtual environment, type 'workon _____'
+
+virtual environment is venv1
