@@ -24,8 +24,7 @@ class Patients(Form):
 ### Base Forms ###
 
 class Search(Form):
-	search_by = SelectField('Recherche Par/ Search By', choices=[('first_name', 'Prenom/First Name'), ('last_name', 'Nom/Last Name'), ('patient_number', 'Numero de Patient/Patient Number')]) 
-	# what other dropdown options do we want?
+	search_by = SelectField('Recherche Par/ Search By', choices=[('first_name', 'Prenom/First Name'), ('last_name', 'Nom/Last Name')]) 
 	search_term = StringField('Search Term')
 	submit = SubmitField('Chercher/Search')
 
