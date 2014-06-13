@@ -1,6 +1,6 @@
 from app import app, login_manager, db
-from models import User, Patient
-from forms import Patients, Login
+from models import User, Patient#, Visit, Pharmacy, Payment, Status
+from forms import Patients, Login, Search#, Date_Range, Contact, New_Patient, Payment, Background, Vitals, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for#, request, session, g
 from flask_login import login_user, login_required, logout_user#, current_user
 
@@ -22,7 +22,7 @@ def login():
 			flash("Logged in successfully.")
 			return redirect(url_for("registration"))
 		else:
-			flash("Logged NOT SUCCESSFUL.")
+			flash("Logging in NOT SUCCESSFUL.")
 			return redirect(url_for('login'))
 	return render_template('login.html', form=form)
 
@@ -67,22 +67,59 @@ def demo3():
 @app.route('/reports', methods=['GET', 'POST'])
 @login_required
 def reports():
-	return render_template('reports.html')
+	# Search Form
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('reports.html', form=form, first_name_search=first_name_search, last_name_search=last_name_search, \
+		patient_number_search=patient_number_search)
 
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-	return render_template('home.html')
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('home.html', form=form, first_name_search=first_name_search, last_name_search=last_name_search, \
+		patient_number_search=patient_number_search)
 
 @app.route('/search_results', methods=['GET', 'POST'])
 @login_required
 def search_results():
-	return render_template('search_results.html')
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('search_results.html', form=form, first_name_search=first_name_search, \
+		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/patients_today', methods=['GET', 'POST'])
 @login_required
 def patients_today():
-	return render_template('patients_today.html')
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('patients_today.html', form=form, first_name_search=first_name_search, \
+		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/master', methods=['GET', 'POST'])
 @login_required
@@ -95,21 +132,53 @@ def master():
 @app.route('/registration_initial', methods=['GET', 'POST'])
 @login_required
 def registration_initial():
-	return render_template('registration_initial.html')
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('registration_initial.html', form=form, first_name_search=first_name_search, \
+		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/registration_search_results', methods=['GET', 'POST'])
 @login_required
 def registration_search_results():
-	return render_template('registration_search_results.html')
+	form = Search()
+	if form.validate_on_submit():
+		if form.search_by.data == 'first_name':
+			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
+		elif form.search_by.data == 'last_name':
+			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+		else:
+			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
+	return render_template('registration_search_results.html', form=form, first_name_search=first_name_search, \
+		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/registration_add_new', methods=['GET', 'POST'])
 @login_required
 def registration_add_new():
-	return render_template('registration_add_new.html')
+	form = New_Patient()
+	if form.validate_on_submit():
+		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, \
+			birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, \
+			address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, \
+			guardian=form.guardian.data, relation=form.relation.data)
+		if new_patient is not None:
+			db.session.add(new_patient)
+    		db.session.commit()
+    		flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
+    		return render_template(url_for('registration_patient_review'))
+	return render_template('registration_add_new.html', form=form)
 
 @app.route('/registration_patient_review', methods=['GET', 'POST'])
 @login_required
 def registration_patient_review():
+	last_name_review = Patient.query.get(last_name).all()
+
+	# render a patient's details that were just saved
 	return render_template('registration_patient_review.html')
 
 @app.route('/registration_payment', methods=['GET', 'POST'])
