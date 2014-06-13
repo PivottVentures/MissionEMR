@@ -145,7 +145,7 @@ def registration_initial():
 #		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/registration_search_results', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def registration_search_results():
 #	form = Search()
 #	if form.validate_on_submit():
@@ -159,23 +159,23 @@ def registration_search_results():
 #		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/registration_add_new', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def registration_add_new():
-#	form = New_Patient()
-#	if form.validate_on_submit():
-#		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, \
-#			birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, \
-#			address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, \
-#			guardian=form.guardian.data, relation=form.relation.data)
-#		if new_patient is not None:
-#			db.session.add(new_patient)
- #   		db.session.commit()
-  #  		flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
-   # 		return render_template(url_for('registration_patient_review'))
-	return render_template('registration_add_new.html')#, form=form)
+	form = New_Patient()
+	if form.validate_on_submit():
+		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, \
+			birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, \
+			address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, \
+			guardian=form.guardian.data, relation=form.relation.data)
+		if new_patient is not None:
+			db.session.add(new_patient)
+	   		db.session.commit()
+    		flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
+    		return render_template(url_for('registration_patient_review'))
+	return render_template('registration_add_new.html', form=form)
 
 @app.route('/registration_patient_review', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def registration_patient_review():
 	#form = Patients()
 	#last_name_review = Patient.query.get(last_name).all()
@@ -184,7 +184,7 @@ def registration_patient_review():
 	return render_template('registration_patient_review.html')
 
 @app.route('/registration_payment', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def registration_payment():
 	return render_template('registration_payment.html')
 
@@ -192,17 +192,17 @@ def registration_payment():
 ### Triage Views ###
 
 @app.route('/triage', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def triage():
 	return render_template('triage.html')
 
 @app.route('/triage_patient_bg', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def triage_patient_bg():
 	return render_template('triage_patient_bg.html')
 
 @app.route('/triage_patient_vitals', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def triage_patient_vitals():
 	return render_template('triage_patient_vitals.html')
 
@@ -210,12 +210,12 @@ def triage_patient_vitals():
 ### Doctor Views ###
 
 @app.route('/doctor', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def doctor():
 	return render_template('doctor.html')
 
 @app.route('/doctor_exam', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def doctor_exam():
 	return render_template('doctor_exam.html')
 
@@ -223,11 +223,11 @@ def doctor_exam():
 ### Pharmacy Views ###
 
 @app.route('/pharmacy', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def pharmacy():
 	return render_template('pharmacy.html')
 
 @app.route('/pharmacy_prescription', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def pharmacy_prescription():
 	return render_template('pharmacy_prescription.html')
