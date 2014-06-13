@@ -15,7 +15,9 @@
     {%- endblock metas %}
 
     {%- block styles %}
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="/static/css/bootstrap.custom.css" rel="stylesheet" media="screen">
     <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
     {%- endblock styles %}
     {%- endblock head %}
@@ -31,8 +33,10 @@
                 </ul>
             {% endif %}
         {% endwith %}
+		
+	<!-- NAVBAR -->
     {% block navbar %}
-        <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar navbar-default" role="navigation">
             <div class = "container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle"
@@ -42,36 +46,28 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">
-					<img src="/static/files/missionemrlogo_web.png" alt="">
-					</a>
+                    <a class="navbar-brand" href="/"></a>
                 </div>
                 <div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-center">
-                        <li>
-						<a href="/"></a></li>
+                        <li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li> <!-- class="active" -->
+						<a href="demo">Clinic</a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
 						<li>
-						<a href="/"></a></li>
-						<li>
-						<a href="/"></a></li>
-						<li>
-						<a href="/"></a></li>
-						<li>
-						<a href="/"></a></li>
-						<li>
-						<a href="/">Clinic</a></li>
-						<li>
-						<a href="/"></a></li>
-						<li>
-						<a href="/">Pharmacy</a></li>
-						<li>
-						<a href="/"></a></li>
-						<li>
-						<a href="/">Reports</a></li>
-						<li>
-						<a href="/"></a></li>						
+						<a href="#">Reports</a></li>
+						<li><a href="#"></a></li>						
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Contact</a></li>
+						<!-- <li><a href="#"></a></li> -->
                         {% if current_user.is_authenticated() %}
                         <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
                         {% else %}
@@ -82,8 +78,61 @@
             </div>
         </div>
     {%- endblock navbar %}
+
+	<!-- SEARCHBAR -->
+	{% block searchbar -%}
+	<!-- Placeholder for Form fields -->
+		<div class="container">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon input-sm"><b>Station:</b></span>
+						<!-- <select class="form-control input-sm">
+							<option>Station</option>
+							<option>First Name</option>
+							<option>Last Name</option>
+							<option>Birthday</option></select> -->
+						<input type="text" class="form-control input-sm" value="Search">
+						<span class="input-group-btn">
+							<button class="btn btn-default btn-sm" type="button">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+			</div>
+		</div>
+	{%- endblock searchbar %}
+	
+	<!-- CONTENT -->
     {% block content -%}
-    
+	<div class="col-md-2">
+		<p><center><a class="btn-station btn-block" role="button">
+			<i class="fa fa-users"></i> Today</a></p>
+		<p><a class="btn-station btn-block" role="button">
+			<span class="glyphicon glyphicon-pencil"></span>  Registration</a></p>
+		<p><a class="btn btn-station btn-block" role="button">
+			<i class="fa fa-stethoscope"></i>  Triage</a></p>
+		<p><a class="btn btn-station btn-block" role="button">
+			<i class="fa fa-medkit"></i>  Doctor</a></p>
+		<p><a class="btn btn-station btn-block" role="button">
+			<img src="/static/files/icons/drugs_16px.png"> Pharmacy</a></p>
+	</div>
+	<div class="col-md-10">
+		<p></p>
+		<div class="panel panel-default">
+			<div class="panel-heading input-sm">
+				<span class="glyphicon glyphicon-user"></span><b> Patient Chart</b></div>
+			<div class="panel-body">
+				{% block form -%}
+				{%- endblock form %}
+			</div>
+		</div>
+	</div>
     {%- endblock content %}
 
     {% block scripts %}
