@@ -27,7 +27,7 @@ def login():
 	return render_template('login.html', form=form)
 
 @app.route('/logout', methods = ['GET'])
-@login_required
+#@login_required
 def logout():
 	logout_user()
 	flash('You have been logged out.')
@@ -82,17 +82,7 @@ def reports():
 @app.route('/home', methods=['GET', 'POST'])
 #@login_required
 def home():
-<<<<<<< HEAD
-	form = Search()
-	if form.validate_on_submit():
-		if form.search_by.data == 'first_name':
-			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
-		elif form.search_by.data == 'last_name':
-			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
-		else:
-			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
-	return render_template('home.html', form=form, first_name_search=first_name_search, last_name_search=last_name_search, patient_number_search=patient_number_search)
-=======
+
 #	form = Search()
 #	if form.validate_on_submit():
 #		if form.search_by.data == 'first_name':
@@ -103,7 +93,6 @@ def home():
 #			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
 	return render_template('home.html')#, form=form, first_name_search=first_name_search, last_name_search=last_name_search, \
 #		patient_number_search=patient_number_search)
->>>>>>> 4d2d0f32e4df6258a19e988ee425cde7f3c0dee7
 
 @app.route('/search_results', methods=['GET', 'POST'])
 #@login_required
@@ -173,18 +162,15 @@ def registration_search_results():
 @app.route('/registration_add_new', methods=['GET', 'POST'])
 #@login_required
 def registration_add_new():
-#	form = New_Patient()
-#	if form.validate_on_submit():
-#		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, \
-#			birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, \
-#			address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, \
-#			guardian=form.guardian.data, relation=form.relation.data)
-#		if new_patient is not None:
-#			db.session.add(new_patient)
- #   		db.session.commit()
-  #  		flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
-   # 		return render_template(url_for('registration_patient_review'))
-	return render_template('registration_add_new.html')#, form=form)
+	form = New_Patient()
+	if form.validate_on_submit():
+		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, guardian=form.guardian.data, relation=form.relation.data)
+		if new_patient is not None:
+			db.session.add(new_patient)
+	   		db.session.commit()
+    		flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
+    		return render_template(url_for('registration_patient_review'))
+	return render_template('registration_add_new.html', form=form)
 
 @app.route('/registration_patient_review', methods=['GET', 'POST'])
 #@login_required

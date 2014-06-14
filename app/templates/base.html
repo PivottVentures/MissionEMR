@@ -58,15 +58,15 @@
 						<li><a href="#"></a></li>
 						<li><a href="#"></a></li>
 						<li> <!-- class="active" -->
-						<a href="demo">Clinic</a></li>
+						<a href="master">Clinic</a></li>
 						<li><a href="#"></a></li>
 						<li><a href="#"></a></li>
 						<li>
-						<a href="#">Reports</a></li>
+						<a href="reports">Reports</a></li>
 						<li><a href="#"></a></li>						
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Contact</a></li>
+						<li><a href="demo">Contact</a></li>
 						<!-- <li><a href="#"></a></li> -->
                         {% if current_user.is_authenticated() %}
                         <li><a href="{{ url_for('logout') }}">Sign Out</a></li>
@@ -111,29 +111,22 @@
 	<!-- CONTENT -->
     {% block content -%}
 	<div class="col-md-2">
-		<p><center><a class="btn-station btn-block" role="button">
+		<p><center><a href="patients_today" class="btn-station btn-block" role="button">
 			<i class="fa fa-users"></i> Today</a></p>
-		<p><a class="btn-station btn-block" role="button">
+		<p><a href="registration_initial" class="btn-station btn-block" role="button">
 			<span class="glyphicon glyphicon-pencil"></span>  Registration</a></p>
-		<p><a class="btn btn-station btn-block" role="button">
+		<p><a href="triage" class="btn btn-station btn-block" role="button">
 			<i class="fa fa-stethoscope"></i>  Triage</a></p>
-		<p><a class="btn btn-station btn-block" role="button">
+		<p><a href="doctor" class="btn btn-station btn-block" role="button">
 			<i class="fa fa-medkit"></i>  Doctor</a></p>
-		<p><a class="btn btn-station btn-block" role="button">
+		<p><a href="pharmacy" class="btn btn-station btn-block" role="button">
 			<img src="/static/files/icons/drugs_16px.png"> Pharmacy</a></p>
 	</div>
 	{% block view -%}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Patient Chart</b></div>
-			<div class="panel-body">
-				{% block form -%}
-				{%- endblock form %}
-			</div>
-		</div>
-	</div>
+	
+	{% block form -%}
+	{%- endblock form %}
+
     {%- endblock view %}
 	{%- endblock content %}
 

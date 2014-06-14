@@ -1,12 +1,52 @@
 {% extends "base.html" %}
 {% import "wtf.html" as wtf %}
 
-{% block form %}
-
-<i>form goes here</i>
-
-
-last_name=form.last_name.data, first_name=form.first_name.data, birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, guardian=form.guardian.data, relation=form.relation.data)
-
-
-{% endblock %}
+{% block view %}
+	<div class="col-md-10">
+		<p></p>
+		<div class="panel panel-default">
+			<div class="panel-heading input-sm">
+				<span class="glyphicon glyphicon-user"></span><b> Registration - Search or Add</b>
+			</div>
+			<div class="panel-body">
+				{% block form %}
+				
+				<form method="POST" action="/" class="form-signin" role="form">
+					{{ form.last_name(class="form-control", placeholder="Last Name") }}
+					{{ form.first_name.label }}<br>{{ form.first_name(size=20) }}
+					<br>
+					<br>
+					{{ form.birth_date.label }}<br>{{ form.birth_date(size=20) }}
+					<br>
+					<br>
+					{{ form.gender.label }} <br>{{ form.gender(size=20) }}
+					<br>
+					{{ form.children_count.label }}<br>{{ form.children_count(size=20) }}
+					<br>
+					<br>
+					{{ form.address.label }}<br>{{ form.address(size=20) }}
+					<br>
+					<br>
+					{{ form.phone.label }}<br>{{ form.phone(size=20) }}
+					<br>
+					<br>
+					{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
+					<br>
+					<br>
+					{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
+					<br>
+					<br>
+					{{ form.guardian.label }}<br>{{ form.guardian(size=20) }}
+					<br>
+					<br>
+					{{ form.relation.label }}<br>{{ form.relation(size=20) }}
+					<br>
+					<br>
+					<input type="submit" class="btn btn-warning" value="Go">					
+				</form>
+				
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock view %}

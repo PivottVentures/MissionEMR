@@ -44,7 +44,7 @@
 	outline:5px auto -webkit-focus-ring-color;
 	outline-offset:-2px
 }
-.btn-station:hover,.btn-station-lg:focus,.btn-station-lg:active,.btn-station-lg.active,.open .dropdown-toggle.btn-station-lg{
+.btn-station-lg:hover,.btn-station-lg:focus,.btn-station-lg:active,.btn-station-lg.active,.open .dropdown-toggle.btn-station-lg{
 	color:#ffffff;
 	background-color:#13987e;
 	border-color:#11866f;
