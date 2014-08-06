@@ -1,0 +1,96 @@
+Bootstrap Icons
+lg = 18x18
+def = 14x14
+sm = 12x12
+xs = 12x12
+
+Add this text into all files referencing icons:
+<span class="glyphicon glyphicon-search"></span>
+
+Button: glyph image, no text:
+<button type="button" class="btn btn-default">
+	<span class="glyphicon glyphicon-star">
+	</span>
+</button>
+
+Button: fa image, no text:
+<button type="button" class="btn btn-default">
+	<i class="fa fa-stethoscope""></i>
+	<br>
+	<i class="fa fa-stethoscope fa-lg""></i>
+	<br>
+	<i class="fa fa-stethoscope fa-2x""></i>
+	<br>
+	<i class="fa fa-stethoscope fa-3x""></i>
+	<br>
+	<i class="fa fa-stethoscope fa-4x""></i>
+	<br>
+	<i class="fa fa-stethoscope fa-5x""></i>
+	</span>
+</button>
+
+Button: glyph image, text:
+<button type="button" class="btn btn-default btn-lg">
+	<span class="glyphicon glyphicon-star">
+	</span>
+	<font>
+		<font-class> Star</font>
+	</font>
+</button>
+
+User: (bs) user, (fa) user
+Password: (fa) key, (bs) lock
+
+Sign-In: (bs) log-in, (fa) sign-in
+Sign-Out: (bs) log-out, (fa) sign-out
+
+Clinic: (fa) home + plus, (fa) plus-square
+Pharmacy: (dwn) pill
+Reports: (fa) tachometer, (bs) dashboard, (bs) stats
+Contact: (bs) envelope, (fa) envelope, (fa) envelope-o
+
+Search: (fa) search, (bs) search
+Add New: (fa) user, (fa) plus, (fa) plus-circle, (fa) plus-square
+
+Today's Patients: (fa) users,
+Registration: (bs) pencil
+Triage: (fa) stethoscope, 
+Doctor: (fa) medkit
+Pharmacy: (dwn) drugs
+Hold: (fa) exclamation, (bs) exclamation-sign, (bs) warning-sign, 
+
+
+Photo: (bs) camera, (bs) picture
+Birdthday/Age: (bs) gift
+Phone #: (fa) phone, (bs) earphone
+Address: (bs) envelope, (fa) envelope, (fa) envelope-o
+Payment: (bs) USD, (fa) usd
+File (lab reports): (fa) file-image-o, (fa) camera, (bs) camera, (bs) picture,
+Select Date: (bs) calendar, (fa) calendar, (fa) calendar-o
+Complaint: (fa) frown-o
+History: (fa) history, (bs) time
+Exam: (fa) search, (bs) search
+Diagnosis: (dwn) pulse1
+Treatment: (bs) list-alt
+Follow-Up: (bs) flag, (fa) flag, (fa) flag-o
+Notes: (bs) comment, (fa) comment, (fa) comment-o
+Prescription: (dwn) pill
+More Info: (bs) info-sign, (fa) info
+
+
+done, select, okay
+	(bs) ok
+	(bs) ok-sign
+	(bs) ok-circle
+cancel, deselect, remove
+	(bs) remove
+	(bs) remove-sign
+	(bs) remove-circle
+next
+	(bs) circle-arrow-right
+	(bs) arrow-right
+	(bs) chevron-right
+back
+	(bs) circle-arrow-left
+	(bs) arrow-left
+	(bs) chevron-left
