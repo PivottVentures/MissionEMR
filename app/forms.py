@@ -39,7 +39,7 @@ class Contact(Form):
 
 ### Registration ###
 
-class New_Patient(Form):
+class New_Patient(Form): # DONE!
 	last_name = StringField('Nom / Last Name', validators=[Required()])
 	first_name = StringField('Prenom / First Name', validators=[Required()])
 	birth_date = DateField('Date de Naissance / Date of Birth', validators=[Required()])
@@ -55,7 +55,11 @@ class New_Patient(Form):
 
 ### Payment ###
 
+<<<<<<< .merge_file_7eQR6J
+class Payment(Form):  
+=======
 class Payment(Form):
+>>>>>>> .merge_file_920P1w
 	patient_number = IntegerField('Nombre des Patiens / Patient Number')
 	payment_type = RadioField('Type de Paiement / Payment Type', choices=[(0, 'Argent/Money'), (1, "Carte D'abonnement/Pass"), (2, "Autre/Other")])
 	payment_other = StringField('Autres Conditions / Other Payment')
