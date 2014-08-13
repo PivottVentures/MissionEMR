@@ -4,7 +4,6 @@ from forms import Patients, Login, Search, New_Patient#, Date_Range, Contact, Pa
 from flask import render_template, flash, redirect, url_for#, request, session, g
 from flask_login import login_user, login_required, logout_user#, current_user
 
-
 ### Login Views ###
 
 @login_manager.user_loader
@@ -12,18 +11,20 @@ def load_user(uid):
 	return User.query.get(int(uid))
 
 @app.route('/')
+@app.route('/index')
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
+	#form = Login(csrf_enabled=False)
 	form = Login()
 	if form.validate_on_submit():
-		user = User.query.filter_by(username=form.username.data).first()
-		if user is not None and user.check_password_hash(form.password.data):
-			login_user(user)
-			flash("Logged in successfully.")
-			return redirect(url_for("registration"))
-		else:
-			flash("Logging in NOT SUCCESSFUL.")
-			return redirect(url_for('login'))
+		# user = User.query.filter_by(username=form.username.data).first()
+		# if user is not None and user.check_password_hash(form.password.data):
+		# 	login_user(user)
+		# 	flash("Logged in successfully.")
+		# 	return redirect(url_for("home"))
+		# else:
+		# 	flash("Logging in NOT SUCCESSFUL.")
+		return redirect(url_for('home'))
 	return render_template('login.html', form=form)
 
 @app.route('/logout', methods = ['GET'])
@@ -40,18 +41,19 @@ def logout():
 #@login_required
 def registration():
     form = Patients()
-    if form.validate_on_submit():
-    	patient = Patient(first_name=form.first_name.data, last_name=form.last_name.data, sex=form.sex.data, age=form.age.data)
-    	if patient is not None:
-    		db.session.add(patient)
-    		db.session.commit()
-    		flash("Stored patient in the database.")
-    		return render_template(url_for('registration'))
+    # if form.validate_on_submit():
+    # 	patient = Patient(first_name=form.first_name.data, last_name=form.last_name.data, sex=form.sex.data, age=form.age.data)
+    # 	if patient is not None:
+    # 		db.session.add(patient)
+    # 		db.session.commit()
+    # 		flash("Stored patient in the database.")
+    # 		return render_template(url_for('registration'))
     return render_template('registration.html', form=form)
 
 @app.route('/demo', methods=['GET', 'POST'])
 def demo():
-	return render_template('demo.html')
+	form = Login()
+	return render_template('demo.html', form = form)
 
 @app.route('/demo2', methods=['GET', 'POST'])
 def demo2():
@@ -163,8 +165,13 @@ def registration_search_results():
 #@login_required
 def registration_add_new():
 	form = New_Patient()
+	# print form.validate_on_submit()
+	# print form.errors
 	if form.validate_on_submit():
-		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, mother_name=form.mother_name.data, guardian=form.guardian.data, relation=form.relation.data)
+		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, 
+			birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, 
+			address=form.address.data, phone=form.phone.data, occupation=form.occupation.data, 
+			mother_name=form.mother_name.data, guardian=form.guardian.data, relation=form.relation.data)
 		if new_patient is not None:
 			db.session.add(new_patient)
 	   		db.session.commit()

@@ -40,7 +40,7 @@ class User(UserMixin, db.Model):
 		return check_password_hash(self.pwhash, password)
 
 	def __repr__(self):
-		return '<User %r>' % self.id
+		return '<User %r>' % self.username
 
 
 @login_manager.user_loader

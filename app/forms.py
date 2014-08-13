@@ -8,8 +8,6 @@ from wtforms.validators import Required, Length
 class Login(Form):
 	username = StringField("Nom d'utilisateur / Username", validators=[Required(), Length(1, 64)])
 	password = PasswordField('Mot de passe / Password', validators=[Required()])
-	submit = SubmitField('Signer Dans / Sign In')
-
 
 ### Test Forms ###
 
@@ -18,7 +16,6 @@ class Patients(Form):
 	last_name = StringField('Nom/Last Name', validators=[Required()])
 	sex = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')])
 	age = IntegerField('Age/Age')
-	submit = SubmitField('Soumettre/Submit')
 
 
 ### Base Forms ###
@@ -26,7 +23,6 @@ class Patients(Form):
 class Search(Form):
 	search_by = SelectField('Recherche Par/ Search By', choices=[('first_name', 'Prenom/First Name'), ('last_name', 'Nom/Last Name')]) 
 	search_term = StringField('Search Term')
-	submit = SubmitField('Chercher/Search')
 
 class Date_Range(Form):
 	start_date = DateField('Date de Debut / Start Date')
@@ -55,11 +51,7 @@ class New_Patient(Form): # DONE!
 
 ### Payment ###
 
-<<<<<<< .merge_file_7eQR6J
 class Payment(Form):  
-=======
-class Payment(Form):
->>>>>>> .merge_file_920P1w
 	patient_number = IntegerField('Nombre des Patiens / Patient Number')
 	payment_type = RadioField('Type de Paiement / Payment Type', choices=[(0, 'Argent/Money'), (1, "Carte D'abonnement/Pass"), (2, "Autre/Other")])
 	payment_other = StringField('Autres Conditions / Other Payment')
