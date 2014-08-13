@@ -25,8 +25,8 @@ login_manager.login_view = 'login'
 
 ## config ##
 
-from app import views, models
 app.config.from_object('config.DevelopmentConfig')
+from app import views, models
 
 #basedir = os.path.abspath(os.path.dirname(__file__))
 

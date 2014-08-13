@@ -1,7 +1,7 @@
 from app import app, login_manager, db
-from models import User, Patient#, Visit, Pharmacy, Payment, Status
+from models import  Test_Patient#, User, Patient, Visit, Pharmacy, Payment, Status
 from forms import Patients, Login, Search, New_Patient#, Date_Range, Contact, Payment, Background, Vitals, Exam, Pharmacy
-from flask import render_template, flash, redirect, url_for#, request, session, g
+from flask import render_template, flash, redirect, url_for, request#, session, g
 from flask_login import login_user, login_required, logout_user#, current_user
 
 ### Login Views ###
@@ -37,18 +37,48 @@ def logout():
 
 ### Testing Views ###
 
-@app.route('/registration', methods=['GET', 'POST'])
+@app.route('/test_input', methods=['GET', 'POST'])
 #@login_required
-def registration():
-    form = Patients()
-    # if form.validate_on_submit():
-    # 	patient = Patient(first_name=form.first_name.data, last_name=form.last_name.data, sex=form.sex.data, age=form.age.data)
-    # 	if patient is not None:
-    # 		db.session.add(patient)
-    # 		db.session.commit()
-    # 		flash("Stored patient in the database.")
-    # 		return render_template(url_for('registration'))
-    return render_template('registration.html', form=form)
+def test_input():
+	form = Patients()
+	if request.form.get('cancel'):
+		return redirect(url_for('test_output'))
+	if form.validate_on_submit():
+		patient = Test_Patient(first_name=form.first_name.data, last_name=form.last_name.data, 
+			age=form.age.data, gender=form.gender.data)
+		if patient is not None:
+			db.session.add(patient)
+			db.session.commit()
+			flash("Stored patient in the database.")
+			users = Test_Patient.query.all()
+			for u in users:
+				print u.id,u.first_name,u.last_name,u.age,u.gender
+			return redirect(url_for('test_output'))
+	return render_template('test_input.html', form=form)
+
+
+@app.route('/test_output', methods=['GET', 'POST'])
+#@login_required
+def test_output():
+	patients = Test_Patient.query.all()
+
+	# for u in patients:
+	# 	print u.id,u.first_name,u.last_name,u.age,u.gender
+	if request.form.get('add'):
+		return redirect(url_for('test_input'))
+
+	if request.form.get('erase'):
+		for pat in patients:
+			db.session.delete(pat)
+			db.session.commit()
+		patients = []
+
+	return render_template('test_output.html', patients=patients)
+
+
+
+
+
 
 @app.route('/demo', methods=['GET', 'POST'])
 def demo():
@@ -165,8 +195,8 @@ def registration_search_results():
 #@login_required
 def registration_add_new():
 	form = New_Patient()
-	# print form.validate_on_submit()
-	# print form.errors
+	print form.validate_on_submit()
+	print form.errors
 	if form.validate_on_submit():
 		new_patient = New_Patient(last_name=form.last_name.data, first_name=form.first_name.data, 
 			birth_date=form.birth_date.data, gender=form.gender.data, children_count=form.children_count.data, 

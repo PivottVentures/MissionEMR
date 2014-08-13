@@ -5,7 +5,7 @@ class Config(object):
 	DEBUG = False
 	TESTING = False
 	SECRET_KEY = '198j-1-i;lku]?a/2;lm[1]]13c09jqpzza[l0i;2lk3jrimmmlkn23lku09m1kj'
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test.db')
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 	SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 	SQLALCHEMY_RECORD_QUERIES = True
@@ -14,7 +14,7 @@ class Config(object):
 
 class ProductionConfig(Config):
 	DEBUG = False
-	SQLALCHEMY_DATABASE_URI = ''
+#	SQLALCHEMY_DATABASE_URI = ''
 
 class StagingConfig(Config):
 	DEVELOPMENT = True

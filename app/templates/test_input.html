@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "wtf.html" as wtf %}
+
+{% block view %}
+	<div class="col-md-10">
+		<p></p>
+		<div class="panel panel-default">
+			<div class="panel-heading input-sm">
+				<span class="glyphicon glyphicon-user"></span><b> Registration - Add New Patient</b>
+			</div>
+			<div class="panel-body">
+				{% block form %}
+				
+				<form method="POST" action="/test_input" class="form-signin" role="form">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+					{{ form.first_name.label }}
+					{{ form.first_name(class="form-control", placeholder="First Name") }}
+					{% for error in form.errors.first_name %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
+        			<br>
+					{{ form.last_name.label }}
+					{{form.last_name(class="form-control", placeholder="Last Name") }}
+					{% for error in form.errors.last_name %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
+					<br>
+					{{ form.age.label }}
+					{{ form.age(class="form-control", placeholder="Age") }}
+					{% for error in form.errors.age %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
+					<br>
+					{{ form.gender.label }}
+					{{ form.gender }}
+					{% for error in form.errors.gender %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
+					<br>
+					<br>
+					<br>
+					<input type="submit" class="btn btn-warning" value="Create" name='create'>
+					<input type="submit" class="btn btn-warning" value="Cancel" name='cancel'>
+				</form>
+				
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock view %}
+
