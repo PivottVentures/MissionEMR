@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "wtf.html" as wtf %}
+
+{% block content %}
+
+<!-- of course, everything must be in french and english... how? --> 
+<div class="container">
+	<div class="jumbotron">
+		<!-- Add <user name> input -->
+		<h1><center><span font-size=>Byen venu, Wesley!</h1>
+		<p><center><a href="patients_today" class="btn btn-warning btn-lg" role="button">
+			<i class="fa fa-users"></i> Today's Patients</a>
+		</p>
+	</div>
+</div>
+<div class="container">
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-4">
+		<p><a href="registration_initial" class="btn btn-station-lg btn-block" role="button">
+			<span class="glyphicon glyphicon-pencil"></span>  Registration</a></p>
+		<p><a href="triage" class="btn btn-station-lg btn-block" role="button">
+			<i class="fa fa-stethoscope"></i>  Triage</a></p>
+	</div>
+	<div class="col-md-4">
+		<p><a href="doctor" class="btn btn-station-lg btn-block" role="button">
+			<i class="fa fa-medkit"></i>  Doctor</a></p>
+		<p><a href="pharmacy" class="btn btn-station-lg btn-block" role="button">
+			<img src="/static/files/icons/drugs_32px.png"> Pharmacy</a></p>
+	</div>
+	<div class="col-md-2">
+	</div>
+</div>
+
+{% endblock %}

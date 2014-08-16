@@ -1,0 +1,141 @@
+@import url(app/static/fonts/lato_regular, app/static/fonts/lato_italic, app/static/fonts/lato_700);
+
+/* Custom brand logo
+-------------------------------------------------- */
+.navbar-brand{
+  background: url(/static/files/missionemrlogo_web.png) no-repeat left center;
+  height: 50px;
+  width: 150px;
+  margin-top: 5px;
+}
+
+/* Custom button = Welcome Stations
+-------------------------------------------------- */
+.btn-station-lg{
+	display:inline-block;
+	margin-bottom:0;
+	font-weight:normal;
+	text-align:left;
+	vertical-align:middle;
+	cursor:pointer;
+	color:#ffffff;
+	background-color:#18bc9c;
+	border-color:#18bc9c;
+	background-image:none;
+	border:1px solid transparent;
+	white-space:nowrap;
+	padding:10px 15px;
+	font-size:15px;
+	line-height:1.42857143;
+	border-radius:4px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none
+}
+.btn-station-lg,.btn-group.station-lg>.btn{
+	padding:25px 25px;
+	font-size:26px;
+}
+.btn-station-lg:focus,.btn-station:active:focus,.btn-station.active:focus{
+	line-height:1.33;
+	border-radius:6px
+	outline:thin dotted;
+	outline:5px auto -webkit-focus-ring-color;
+	outline-offset:-2px
+}
+.btn-station-lg:hover,.btn-station-lg:focus,.btn-station-lg:active,.btn-station-lg.active,.open .dropdown-toggle.btn-station-lg{
+	color:#ffffff;
+	background-color:#13987e;
+	border-color:#11866f;
+	text-decoration:none
+}
+.btn-station-lg:active,.btn-station-lg.active,.open .dropdown-toggle.btn-station-lg{
+	outline:0;
+	background-image:none;
+	-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);
+	box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)
+}
+.btn-station-lg.disabled,.btn-station-lg[disabled],fieldset[disabled] .btn-station-lg{
+	background-color:brown;
+	border-color:brown;
+	cursor:not-allowed;
+	pointer-events:none;
+	opacity:0.65;
+	filter:alpha(opacity=65);
+	-webkit-box-shadow:none;
+	box-shadow:none
+}
+.btn-station-lg .caret{
+	border-width:5px 5px 0;
+	border-bottom-width:0
+}
+.dropup .btn-station-lg .caret{
+	border-width:0 5px 5px
+}
+
+
+/* Custom button = Stations, RHS
+-------------------------------------------------- */
+.btn-station{
+	display:inline-block;
+	margin-bottom:0;
+	font-weight:normal;
+	text-align:left;
+	vertical-align:middle;
+	cursor:pointer;
+	color:#ffffff;
+	background-color:#18bc9c;
+	border-color:#18bc9c;
+	background-image:none;
+	border:1px solid transparent;
+	white-space:nowrap;
+	padding:10px 15px;
+	font-size:15px;
+	line-height:1.42857143;
+	border-radius:4px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none
+}
+.btn-station,.btn-group.station>.btn{
+	padding:20px 15px;
+	font-size:16px;
+}
+.btn-station:focus,.btn-station:active:focus,.btn-station.active:focus{
+	line-height:1.33;
+	border-radius:6px
+	outline:thin dotted;
+	outline:5px auto -webkit-focus-ring-color;
+	outline-offset:-2px
+}
+.btn-station:hover,.btn-station:focus,.btn-station:active,.btn-station.active,.open .dropdown-toggle.btn-station{
+	color:#ffffff;
+	background-color:#13987e;
+	border-color:#11866f;
+	text-decoration:none
+}
+.btn-station:active,.btn-station.active,.open .dropdown-toggle.btn-station{
+	outline:0;
+	background-image:none;
+	-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);
+	box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)
+}
+.btn-station.disabled,.btn-station[disabled],fieldset[disabled] .btn-station{
+	background-color:brown;
+	border-color:brown;
+	cursor:not-allowed;
+	pointer-events:none;
+	opacity:0.65;
+	filter:alpha(opacity=65);
+	-webkit-box-shadow:none;
+	box-shadow:none
+}
+.btn-station .caret{
+	border-width:5px 5px 0;
+	border-bottom-width:0
+}
+.dropup .btn-station .caret{
+	border-width:0 5px 5px
+}

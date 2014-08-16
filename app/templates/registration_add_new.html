@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% import "wtf.html" as wtf %}
+
+<<<<<<< HEAD
+{% block view %}
+	<div class="col-md-10">
+		<p></p>
+		<div class="panel panel-default">
+			<div class="panel-heading input-sm">
+				<span class="glyphicon glyphicon-user"></span><b> Registration - Add New Patient</b>
+			</div>
+			<div class="panel-body">
+				{% block form %}
+				
+				<form method="POST" action="/" class="form-signin" role="form">
+					{{ form.last_name.label }}
+					{{form.last_name(class="form-control", placeholder="Last Name") }}
+					<br>
+					{{ form.first_name.label }}
+					{{ form.first_name(class="form-control", placeholder="First Name") }}
+					<br>
+					{{ form.birth_date.label }}
+					{{ form.birth_date(class="form-control", placeholder="Date of Birth") }}
+					<br>
+					{{ form.gender.label }}
+					{{ form.gender(size=20) }}
+					<br>
+					{{ form.children_count.label }}
+					{{ form.children_count(size=20) }}
+					<br>
+					<br>
+					{{ form.address.label }}<br>{{ form.address(size=20) }}
+					<br>
+					<br>
+					{{ form.phone.label }}<br>{{ form.phone(size=20) }}
+					<br>
+					<br>
+					{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
+					<br>
+					<br>
+					{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
+					<br>
+					<br>
+					{{ form.guardian.label }}<br>{{ form.guardian(size=20) }}
+					<br>
+					<br>
+					{{ form.relation.label }}<br>{{ form.relation(size=20) }}
+					<br>
+					<br>
+					<input type="submit" class="btn btn-warning" value="Go">					
+				</form>
+				
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock view %}
+=======
+{% block form %}
+
+<form method="POST" action="/" class="form-signin" role="form">
+	{{ form.last_name.label }}<br>{{ form.last_name(class="form-control") }}
+	<br>
+	{{ form.first_name.label }}<br>{{ form.first_name(size=20) }}
+	<br>
+	{{ form.birth_date.label }}<br>{{ form.birth_date(size=20) }}
+	<br>
+	{{ form.gender.label }} <br>{{ form.gender(size=20) }}
+	<br>
+	{{ form.children_count.label }}<br>{{ form.children_count(size=20) }}
+	<br>
+	{{ form.address.label }}<br>{{ form.address(size=20) }}
+	<br>
+	{{ form.phone.label }}<br>{{ form.phone(size=20) }}
+	<br>
+	{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
+	<br>
+	{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
+	<br>
+	{{ form.guardian.label }}<br>{{ form.guardian(size=20) }}
+	<br>
+	{{ form.relation.label }}<br>{{ form.relation(size=20) }}
+	<br>
+	<input type="submit" value="Go">
+</form>
+
+{% endblock %}
+>>>>>>> 248548d47e13ad9f3002c03c65010c8c4a3e22a7
