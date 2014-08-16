@@ -29,27 +29,25 @@
 	<div class="col-md-4">
 	</div>
 	<div class="col-md-4">
-	    <form class="form-signin" role="form">
-	    	<!-- <h2 class="form-signin-heading"><center>Please sign in</h2> -->
-			<!-- Need to figure out how to add vertical space -->
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+	    {% block form %}
+				
+				<form method="POST" action="/login" class="form-signin" role="form">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+					{{ form.username(class="form-control", placeholder="Username") }}
+					<p></p>
+	    			{{ form.password(class="form-control", placeholder="Password") }}
+					<center><input type="submit" class="btn btn-warning btn-lg" value="Search">					
+				</form>
+				
+		{% endblock %}
+	   <!--  <form class="form-signin" role="form">
+
 	    	{{ form.username(class="form-control", placeholder="Username") }}
 			<p></p>
 	    	{{ form.password(class="form-control", placeholder="Password") }}
 			<p></p>
-			<!-- How do I control the "label" on the Sign In button? -->
 			<center><input type="submit" class="btn btn-warning btn-lg" value="Search">
-	    	<!-- <center>{{ form.submit(class="btn btn-lg btn-warning") }} -->
-	    </form>
+	    </form> -->
 	</div>
 	<div class="col-md-4">
 	</div>

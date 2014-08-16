@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% import "wtf.html" as wtf %}
 
-<<<<<<< HEAD
 {% block view %}
 	<div class="col-md-10">
 		<p></p>
@@ -12,21 +11,37 @@
 			<div class="panel-body">
 				{% block form %}
 				
-				<form method="POST" action="/" class="form-signin" role="form">
+				<form method="POST" action="/registration_add_new" class="form-signin" role="form">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					{{ form.last_name.label }}
 					{{form.last_name(class="form-control", placeholder="Last Name") }}
+					{% for error in form.errors.last_name %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
 					<br>
 					{{ form.first_name.label }}
 					{{ form.first_name(class="form-control", placeholder="First Name") }}
+					{% for error in form.errors.first_name %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
 					<br>
 					{{ form.birth_date.label }}
 					{{ form.birth_date(class="form-control", placeholder="Date of Birth") }}
+					{% for error in form.errors.birth_date %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
 					<br>
 					{{ form.gender.label }}
 					{{ form.gender(size=20) }}
+					{% for error in form.errors.gender %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
 					<br>
 					{{ form.children_count.label }}
 					{{ form.children_count(size=20) }}
+					{% for error in form.errors.children_count %}
+        				<span style="color: red;">[{{error}}]</span>
+        			{% endfor %}
 					<br>
 					<br>
 					{{ form.address.label }}<br>{{ form.address(size=20) }}
@@ -47,7 +62,8 @@
 					{{ form.relation.label }}<br>{{ form.relation(size=20) }}
 					<br>
 					<br>
-					<input type="submit" class="btn btn-warning" value="Go">					
+					<input type="submit" class="btn btn-warning" value="Create">
+					<input type="button" class="btn btn-warning" value="Cancel" onclick="document.location='';">
 				</form>
 				
 				{% endblock %}
@@ -55,34 +71,4 @@
 		</div>
 	</div>
 {% endblock view %}
-=======
-{% block form %}
 
-<form method="POST" action="/" class="form-signin" role="form">
-	{{ form.last_name.label }}<br>{{ form.last_name(class="form-control") }}
-	<br>
-	{{ form.first_name.label }}<br>{{ form.first_name(size=20) }}
-	<br>
-	{{ form.birth_date.label }}<br>{{ form.birth_date(size=20) }}
-	<br>
-	{{ form.gender.label }} <br>{{ form.gender(size=20) }}
-	<br>
-	{{ form.children_count.label }}<br>{{ form.children_count(size=20) }}
-	<br>
-	{{ form.address.label }}<br>{{ form.address(size=20) }}
-	<br>
-	{{ form.phone.label }}<br>{{ form.phone(size=20) }}
-	<br>
-	{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
-	<br>
-	{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
-	<br>
-	{{ form.guardian.label }}<br>{{ form.guardian(size=20) }}
-	<br>
-	{{ form.relation.label }}<br>{{ form.relation(size=20) }}
-	<br>
-	<input type="submit" value="Go">
-</form>
-
-{% endblock %}
->>>>>>> 248548d47e13ad9f3002c03c65010c8c4a3e22a7
