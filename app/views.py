@@ -75,9 +75,12 @@ def test_output():
 
 	return render_template('test_output.html', patients=patients)
 
-
-
-
+@app.route('/test_view/<patient_id>', methods=['GET', 'POST'])
+#@login_required
+def test_view(patient_id):
+	print patient_id
+	patient = Test_Patient.query.filter_by(id=patient_id).first()
+	return render_template('test_view.html', patient=patient)
 
 
 @app.route('/demo', methods=['GET', 'POST'])
