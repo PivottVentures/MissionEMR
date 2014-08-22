@@ -12,8 +12,8 @@ class Login(Form):
 ### Test Forms ###
 
 class Patients(Form):
-	first_name = StringField('Prenom/First Name', validators=[Required()])
-	last_name = StringField('Nom/Last Name', validators=[Required()])
+	first_name = TextAreaField('Prenom/First Name', validators=[Required()])
+	last_name = TextAreaField('Nom/Last Name', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
 	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
 

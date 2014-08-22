@@ -5,8 +5,8 @@ class Config(object):
 	DEBUG = False
 	TESTING = False
 	CSRF_ENABLED = True
-    SECRET_KEY = '198j-1-i;lku]?a/2;lm[1]]13c09jqpzza[l0i;2lk3jrimmmlkn23lku09m1kj'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/missiondb'   #'sqlite:///' + os.path.join(basedir, 'test.db')
+	SECRET_KEY = ";AKLSJW;klajs/dmfpwmvlkj"
+	SQLALCHEMY_DATABASE_URI = "mysql://wbrooks:bubbles@localhost/missiondb"   #'sqlite:///' + os.path.join(basedir, 'test.db')
     #SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     #SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 	#SQLALCHEMY_RECORD_QUERIES = True
