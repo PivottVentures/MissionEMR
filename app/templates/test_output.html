@@ -15,7 +15,7 @@
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<ul>
 					{% for pat in patients %}
-						<!-- <li>{{ pat.id }} {{ pat.first_name }} {{ pat.last_name }} {{ pat.age }} {{ pat.gender }}</li> -->
+						<li>{{ pat.id }} {{ pat.first_name }} {{ pat.last_name }} {{ pat.age }} {{ pat.gender }}</li>
 						<li><a href="{{ url_for('test_view', patient_id=pat.id) }}">{{pat.last_name}}, {{pat.first_name}}</a></li>
 					{% endfor %}
 					</ul>
