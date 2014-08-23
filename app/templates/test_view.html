@@ -6,18 +6,15 @@
 		<p></p>
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> All Patients</b>
+				<span class="glyphicon glyphicon-user"></span><b> Patient info</b>
 			</div>
 			<div class="panel-body">
-				{% block patients %}
+				{% block patient %}
 				
 				<form method="POST" action="/test_output" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<ul>
-					{% for pat in patients %}
-						<!-- <li>{{ pat.id }} {{ pat.first_name }} {{ pat.last_name }} {{ pat.age }} {{ pat.gender }}</li> -->
-						<li><a href="{{ url_for('test_view', patient_id=pat.id) }}">{{pat.last_name}}, {{pat.first_name}}</a></li>
-					{% endfor %}
+					<li>{{ patient.id }} {{ patient.first_name }} {{ patient.last_name }} {{ patient.age }} {{ patient.gender}}</li>
 					</ul>
 					<br>
 					<br>
@@ -31,3 +28,4 @@
 		</div>
 	</div>
 {% endblock view %}
+

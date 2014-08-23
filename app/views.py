@@ -1,5 +1,5 @@
 from app import app, login_manager, db
-from models import  Test_Patient#, User, Patient, Visit, Pharmacy, Payment, Status
+from models import  Test_Patient #, User, Patient, Visit, Pharmacy, Payment, Status
 from forms import Patients, Login, Search, New_Patient#, Date_Range, Contact, Payment, Background, Vitals, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request#, session, g
 from flask_login import login_user, login_required, logout_user#, current_user
@@ -9,6 +9,13 @@ from flask_login import login_user, login_required, logout_user#, current_user
 @login_manager.user_loader
 def load_user(uid):
 	return User.query.get(int(uid))
+
+@app.route('/testdb')
+def testdb():
+	if db.session.query("1").from_statement("SELECT 1").all():
+		return 'It works.'
+	else:
+		return 'Something is broken.'
 
 @app.route('/')
 @app.route('/index')
@@ -54,6 +61,8 @@ def test_input():
 			for u in users:
 				print u.id,u.first_name,u.last_name,u.age,u.gender
 			return redirect(url_for('test_output'))
+	else:
+		form.first_name.data = 'Wes'
 	return render_template('test_input.html', form=form)
 
 
@@ -75,9 +84,12 @@ def test_output():
 
 	return render_template('test_output.html', patients=patients)
 
-
-
-
+@app.route('/test_view/<patient_id>', methods=['GET', 'POST'])
+#@login_required
+def test_view(patient_id):
+	print patient_id
+	patient = Test_Patient.query.filter_by(id=patient_id).first()
+	return render_template('test_view.html', patient=patient)
 
 
 @app.route('/demo', methods=['GET', 'POST'])

@@ -7,13 +7,13 @@ from wtforms.validators import Required, Length
 
 class Login(Form):
 	username = StringField("Nom d'utilisateur / Username", validators=[Required(), Length(1, 64)])
-	password = PasswordField('Mot de passe / Password', validators=[Required()])\
+	password = PasswordField('Mot de passe / Password', validators=[Required()])
 
 ### Test Forms ###
 
 class Patients(Form):
-	first_name = StringField('Prenom/First Name', validators=[Required()])
-	last_name = StringField('Nom/Last Name', validators=[Required()])
+	first_name = TextAreaField('Prenom/First Name', validators=[Required()])
+	last_name = TextAreaField('Nom/Last Name', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
 	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
 
@@ -109,7 +109,6 @@ class Pharmacy(Form):
 class Search(Form):
 	search_by = SelectField('Recherche Par/ Search By', choices=[('first_name', 'Prenom/First Name'), ('last_name', 'Nom/Last Name')]) 
 	search_term = StringField('Search Term')
-	submit = SubmitField('Chercher/Search')
 
 class Date_Range(Form):
 	start_date = DateField('Date de Debut / Start Date')

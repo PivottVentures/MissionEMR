@@ -17,6 +17,7 @@ bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
+db.init_app(app)
 
 
 login_manager = LoginManager()
