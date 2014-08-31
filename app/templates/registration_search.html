@@ -6,24 +6,28 @@
 		<p></p>
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Today's Patients</b>
+				<span class="glyphicon glyphicon-user"></span><b> Registration - Search or Add</b>
 			</div>
 			<div class="panel-body">
-				{% block patients %}
+				{% block form %}
 				
-				<form method="POST" action="/test_output" class="form-signin" role="form">
+				<form method="POST" action="/registration_search" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{% if patients|length == 0 %}
-					<i>There are no patients today!</i>
-					{% else %}
+					<div class="input-group">
+						{{ form.criteria.label }}
+						{{ form.criteria }}
+						{{ form.search_term(class="form-control", placeholder="Search") }}
+					</div>
+					<input type="submit" class="btn btn-default" value="Search" name='search'>
+					<br>
+					<br>
+					<br>
 					<ul>
 					{% for pat in patients %}
 						<!-- <li>{{ pat.id }} {{ pat.first_name }} {{ pat.last_name }} {{ pat.age }} {{ pat.gender }}</li> -->
 						<li><a href="{{ url_for('test_view', patient_id=pat.id) }}">{{pat.last_name}}, {{pat.first_name}}</a></li>
 					{% endfor %}
 					</ul>
-					<br>
-					{% endif %}
 				</form>
 				
 				{% endblock %}

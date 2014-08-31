@@ -1,8 +1,10 @@
 from app import app, login_manager, db
 from models import  Test_Patient#, User, Patient, Visit, Pharmacy, Payment, Status
-from forms import Patients, Login, Search, New_Patient#, Date_Range, Contact, Payment, Background, Vitals, Exam, Pharmacy
+from forms import Patients, Login, Registration_Search, New_Patient#, Date_Range, Contact, Payment, Background, Vitals, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request#, session, g
 from flask_login import login_user, login_required, logout_user#, current_user
+
+todays_patients=[]
 
 ### Login Views ###
 
@@ -44,7 +46,7 @@ def test_input():
 	if request.form.get('cancel'):
 		return redirect(url_for('test_output'))
 	if form.validate_on_submit():
-		patient = Test_Patient(first_name=form.first_name.data, last_name=form.last_name.data, 
+		patient = Test_Patient(first_name=form.first_name.data.title(), last_name=form.last_name.data.title(), 
 			age=form.age.data, gender=form.gender.data)
 		if patient is not None:
 			db.session.add(patient)
@@ -78,23 +80,52 @@ def test_output():
 @app.route('/test_view/<patient_id>', methods=['GET', 'POST'])
 #@login_required
 def test_view(patient_id):
-	print patient_id
+	form = Patients()
 	patient = Test_Patient.query.filter_by(id=patient_id).first()
-	return render_template('test_view.html', patient=patient)
+	return render_template('test_view.html', patient=patient, form=form)
 
 
-@app.route('/demo', methods=['GET', 'POST'])
-def demo():
-	form = Login()
-	return render_template('demo.html', form = form)
+@app.route('/patients_today', methods=['GET', 'POST'])
+#@login_required
+def patients_today():
+	return render_template('patients_today.html', patients=todays_patients)
 
-@app.route('/demo2', methods=['GET', 'POST'])
-def demo2():
-	return render_template('demo2.html')
 
-@app.route('/demo3', methods=['GET', 'POST'])
-def demo3():
-	return render_template('demo3.html')
+@app.route('/registration_search', methods=['GET', 'POST'])
+#@login_required
+def registration_search():
+	form = Registration_Search()
+	if form.validate_on_submit():
+		print 'Validated'
+		print form.criteria.data
+		print form.search_term.data
+		if form.criteria.data == 'first_name':
+			search_results = Test_Patient.query.filter_by(first_name=form.search_term.data.title()).all()
+		elif form.criteria.data == 'last_name':
+			search_results = Test_Patient.query.filter_by(last_name=form.search_term.data.title()).all()
+		# elif form.criteria.data == 'phone':
+		# 	search_results = Test_Patient.query.filter_by(last_name=form.search_term).all()
+		# elif form.criteria.data == 'address':
+		# 	search_results = Test_Patient.query.filter_by(last_name=form.search_term).all()
+		else:
+			search_results = Test_Patient.query.filter_by(id=form.search_term.data).all()
+		
+		return render_template('registration_search.html', patients=search_results, form=form)
+
+	return render_template('registration_search.html', patients=[], form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Base Views ###
@@ -143,19 +174,6 @@ def search_results():
 	return render_template('search_results.html')#, form=form, first_name_search=first_name_search, \
 #		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
-@app.route('/patients_today', methods=['GET', 'POST'])
-#@login_required
-def patients_today():
-#	form = Search()
-#	if form.validate_on_submit():
-#		if form.search_by.data == 'first_name':
-#			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
-#		elif form.search_by.data == 'last_name':
-#			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
-#		else:
-#			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
-	return render_template('patients_today.html')#, form=form, first_name_search=first_name_search, \
-#		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/master', methods=['GET', 'POST'])
 #@login_required
@@ -180,19 +198,6 @@ def registration_initial():
 	return render_template('registration_initial.html')#, form=form, first_name_search=first_name_search, \
 #		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
-@app.route('/registration_search_results', methods=['GET', 'POST'])
-#@login_required
-def registration_search_results():
-#	form = Search()
-#	if form.validate_on_submit():
-#		if form.search_by.data == 'first_name':
-#			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
-#		elif form.search_by.data == 'last_name':
-#			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
-#		else:
-#			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
-	return render_template('registration_search_results.html')#, form=form, first_name_search=first_name_search, \
-#		last_name_search=last_name_search, patient_number_search=patient_number_search)
 
 @app.route('/registration_add_new', methods=['GET', 'POST'])
 #@login_required

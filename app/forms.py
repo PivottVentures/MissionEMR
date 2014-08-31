@@ -1,5 +1,6 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, IntegerField, RadioField, PasswordField, SelectField, DateField, TextAreaField, DecimalField, FloatField, BooleanField
+from wtforms import StringField, SubmitField, IntegerField, RadioField, PasswordField, SelectField, \
+					DateField, TextAreaField, DecimalField, FloatField, BooleanField
 from wtforms.validators import Required, Length
 
 
@@ -16,6 +17,16 @@ class Patients(Form):
 	last_name = StringField('Nom/Last Name', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
 	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
+
+
+class Registration_Search(Form):
+	criteria = SelectField('Recherche Par/ Search By', choices=[('last_name', 'Nom/Last Name'), \
+						('first_name', 'Prenom/First Name'), ('phone', 'Telephone/Phone'), \
+						('address', 'Adresse/Address'), ('id', 'Nombre des Patiens/Patient Number')])
+	search_term = StringField('Search Term', validators=[Required()])
+
+
+
 
 
 
@@ -105,10 +116,6 @@ class Pharmacy(Form):
 
 
 ### Base Forms ###
-
-class Search(Form):
-	search_by = SelectField('Recherche Par/ Search By', choices=[('first_name', 'Prenom/First Name'), ('last_name', 'Nom/Last Name')]) 
-	search_term = StringField('Search Term')
 
 class Date_Range(Form):
 	start_date = DateField('Date de Debut / Start Date')
