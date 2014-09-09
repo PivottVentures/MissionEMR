@@ -1,8 +1,8 @@
 from app import app, login_manager, db
-from models import  Test_Patient#, User, Patient, Visit, Pharmacy, Payment, Status
+from models import  Test_Patient, User#, Patient, Visit, Pharmacy, Payment, Status
 from forms import Patients, Login, Registration_Search, New_Patient#, Date_Range, Contact, Payment, Background, Vitals, Exam, Pharmacy
-from flask import render_template, flash, redirect, url_for, request#, session, g
-from flask_login import login_user, login_required, logout_user#, current_user
+from flask import render_template, flash, redirect, url_for, request, session, g
+from flask_login import login_user, login_required, logout_user, current_user
 
 todays_patients=[]
 
@@ -19,28 +19,39 @@ def login():
 	#form = Login(csrf_enabled=False)
 	form = Login()
 	if form.validate_on_submit():
-		# user = User.query.filter_by(username=form.username.data).first()
-		# if user is not None and user.check_password_hash(form.password.data):
-		# 	login_user(user)
-		# 	flash("Logged in successfully.")
-		# 	return redirect(url_for("home"))
-		# else:
-		# 	flash("Logging in NOT SUCCESSFUL.")
-		return redirect(url_for('home'))
+		# user = User(username=form.username.data, password=form.password.data, role=3)
+		# if user is not None:
+		# 	db.session.add(user)
+		# 	db.session.commit()
+		user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
+#		if user is not None and user.check_password_hash(form.password.data):
+		if user is not None:
+			login_user(user)
+			print 'current user'
+			print current_user
+			flash('Logged in successfully.')
+			return redirect(url_for('home'))
+		else:
+			flash('Logging in NOT SUCCESSFUL.')
+		return redirect(url_for('login'))
 	return render_template('login.html', form=form)
 
+@app.before_request
+def before_request():
+	g.user = current_user
+
 @app.route('/logout', methods = ['GET'])
-#@login_required
+@login_required
 def logout():
 	logout_user()
 	flash('You have been logged out.')
-	return redirect(url_for('index'))
+	return redirect(url_for('login'))
 
 
 ### Testing Views ###
 
 @app.route('/test_input', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def test_input():
 	form = Patients()
 	if request.form.get('cancel'):
@@ -60,7 +71,7 @@ def test_input():
 
 
 @app.route('/test_output', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def test_output():
 	patients = Test_Patient.query.all()
 
@@ -78,7 +89,7 @@ def test_output():
 	return render_template('test_output.html', patients=patients)
 
 @app.route('/test_view/<patient_id>', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def test_view(patient_id):
 	form = Patients()
 	patient = Test_Patient.query.filter_by(id=patient_id).first()
@@ -86,19 +97,19 @@ def test_view(patient_id):
 
 
 @app.route('/patients_today', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def patients_today():
 	return render_template('patients_today.html', patients=todays_patients)
 
 
 @app.route('/registration_search', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def registration_search():
 	form = Registration_Search()
 	if form.validate_on_submit():
-		print 'Validated'
-		print form.criteria.data
-		print form.search_term.data
+		# print 'Validated'
+		# print form.criteria.data
+		# print form.search_term.data
 		if form.criteria.data == 'first_name':
 			search_results = Test_Patient.query.filter_by(first_name=form.search_term.data.title()).all()
 		elif form.criteria.data == 'last_name':

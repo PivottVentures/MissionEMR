@@ -17,17 +17,30 @@ STATUS_COMPLETE = 5
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(80), unique=True)
-	pwhash = db.Column(db.String(128))
+	password = db.Column(db.String(64))
+#	pwhash = db.Column(db.String(128))
 	role = db.Column(db.SmallInteger, default = 3) # 0 = admin, 1 = manager, 2 = doctor, 3 = nurse
 
-	def __init__(self, id, username, password, role):
-		self.id = id
+	def __init__(self, username, password, role):
 		self.username = username
-		self.pwhash = generate_password_hash(password)
+		self.password = password
+#		self.pwhash = generate_password_hash(password)
 		self.role = role
 
 	def check_password_hash(self, password):
 		return check_password_hash(self.pwhash, password)
+
+	def is_authenticated(self):
+		return True
+	
+	def is_active(self):
+		return True
+	
+	def is_anonymous(self):
+		return False
+	
+	def get_id(self):
+		return unicode(self.id)
 
 	def __repr__(self):
 		return '<User %r>' % self.username
