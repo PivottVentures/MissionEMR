@@ -1,4 +1,4 @@
-from . import db, login_manager
+from . import db#, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -53,6 +53,13 @@ class Test_Patient(db.Model):
 	first_name = db.Column(db.String(255))
 	age = db.Column(db.SmallInteger, default = 0)
 	gender = db.Column(db.SmallInteger, default = 0)  # 0 = male, 1 = female
+
+	def __init__(self, last_name, first_name, age, gender):
+		self.id = id
+		self.last_name = last_name
+		self.first_name = first_name
+		self.age = age
+		self.gender = gender
 
 
 # class Patient(db.Model):

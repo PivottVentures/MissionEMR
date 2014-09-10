@@ -6,11 +6,19 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 todays_patients=[]
 
+
 ### Login Views ###
 
 @login_manager.user_loader
 def load_user(uid):
 	return User.query.get(int(uid))
+
+@app.route('/testdb')
+def testdb():
+	if db.session.query("1").from_statement("SELECT 1").all():
+		return 'It works.'
+	else:
+		return 'Something is broken.'
 
 @app.route('/')
 @app.route('/index')
@@ -67,6 +75,8 @@ def test_input():
 			for u in users:
 				print u.id,u.first_name,u.last_name,u.age,u.gender
 			return redirect(url_for('test_output'))
+	else:
+		form.first_name.data = 'Wes'
 	return render_template('test_input.html', form=form)
 
 
