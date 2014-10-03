@@ -291,11 +291,3 @@ class Test_Patient(db.Model):
 
 # 	def __repr__(self):
 # 		return '<Status %r>' % self.id
-
-
-#class User_Log(db.Model):
-#	id = db.Column(db.Integer, primary_key=True)
-
-	# UserID
-	# Patient_ID
-	# VisitID
