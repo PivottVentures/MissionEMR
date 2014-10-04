@@ -4,5 +4,4 @@ import logging
 logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0,"/var/www/MissionEMR/")
 
-from app import app as application
-application.secret_key = '02jmpjae;lkjs'
+from app import app as applications
