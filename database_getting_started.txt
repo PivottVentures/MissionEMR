@@ -1,0 +1,20 @@
+
+With a newly created database, go into the python command line:
+
+python
+from app import db
+db.create_all()
+from app import models
+luke = models.User(username = "luke", password = "ski", role = 0)
+leah = models.User(username = "leah", password = "drums", role = 0)
+wes = models.User(username = "wes", password = "guitar", role = 0)
+db.session.add(luke)
+db.session.add(leah)
+db.session.add(wes)
+db.session.commit()
+
+users = models.User.query.all()
+users
+
+To run the test server, run the command:
+python manage.py runserver

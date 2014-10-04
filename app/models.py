@@ -6,15 +6,15 @@ ROLE_ADMIN = 0
 ROLE_MANAGER = 1
 ROLE_DOCTOR = 2
 ROLE_NURSE = 3
-STATUS_REGISTRATION = 0
-STATUS_TRIAGE = 1
-STATUS_DOCTOR = 2
-STATUS_PARMACY = 3
-STATUS_HOLD = 4
-STATUS_COMPLETE = 5
-
+#STATUS_REGISTRATION = 0
+#STATUS_TRIAGE = 1
+#STATUS_DOCTOR = 2
+#STATUS_PARMACY = 3
+#STATUS_HOLD = 4
+#STATUS_COMPLETE = 5
 
 class User(UserMixin, db.Model):
+	__tablename__ = 'User'
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(80), unique=True)
 	password = db.Column(db.String(64))
@@ -45,7 +45,9 @@ class User(UserMixin, db.Model):
 	def __repr__(self):
 		return '<User %r>' % self.username
 
+
 class Test_Patient(db.Model):
+	__tablename__ = 'Test_Patient'
 	id = db.Column(db.Integer, primary_key=True)
 
 	## Demographic Info ##
@@ -62,232 +64,309 @@ class Test_Patient(db.Model):
 		self.gender = gender
 
 
-# class Patient(db.Model):
-# 	id = db.Column(db.Integer, primary_key=True)
+class Patient(db.Model):
+	__tablename__ = 'Patient'
+	id = db.Column(db.Integer, primary_key=True)
 
-# 	## Demographic Info ##
-# 	last_name = db.Column(db.String(255))
-# 	first_name = db.Column(db.String(255))
-# 	age = db.Column(db.SmallInteger, default = 0)
-# 	birth_date = db.Column(db.Date) # attribues: year, month, and day
-# 	gender = db.Column(db.SmallInteger, default = 0)  # 0 = male, 1 = female
-# 	children_count = db.Column(db.SmallInteger, default=0)
-# 	address = db.Column(db.String(255))
-# 	phone = db.Column(db.String(255))
-# 	occupation = db.Column(db.String(255))
-# 	mother_name = db.Column(db.String(255))
-# 	guardian = db.Column(db.String(255))
-# 	relation = db.Column(db.String(255))
-# 	# PHOTO CAPTURE?
+	## Demographics ##
+	name_first = db.Column(db.String(255))
+	name_last = db.Column(db.String(255))
+	nickname = db.Column(db.String(255))
+	birth_date = db.Column(db.Date) # attributes: year, month, day
+	age = db.Column(db.SmallInteger)
+	gender = db.Column(db.SmallInteger) # 0 = male, 1 = female
+	phone = db.Column(db.String(255))
+	address = db.Column(db.String(255))
+	references = db.Column(db.String(255))
+	occupation = db.Column(db.String(255))
+	children_count = db.Column(db.SmallInteger, default=0)
+	name_mother = db.Column(db.String(255))
+	name_caretaker = db.Column(db.String(255))
+	relationship_caretaker = db.Column(db.String(255))
+	emergency_contact_person = db.Column(db.String(255))
+	emergency_contact_number = db.Column(db.String(255))
 
-# 	## Background ##
-# 	ht = db.Column(db.Boolean)
-# 	diabetes = db.Column(db.Boolean)
-# 	asthma = db.Column(db.Boolean)
-# 	epilepsy = db.Column(db.Boolean)
-# 	tb = db.Column(db.Boolean)
-# 	sickle_cell = db.Column(db.Boolean)
-# 	 # for the habits fields, a list of checkboxes are shown that yield boolean values
-# 	tea = db.Column(db.Boolean) 
-# 	coffee = db.Column(db.Boolean)
-# 	alcohol = db.Column(db.Boolean)
-# 	drugs = db.Column(db.Boolean)
-# 	drugs_notes = db.Column(db.Text)
-# 	period_age_start = db.Column(db.SmallInteger)
-# 	period_last_date = db.Column(db.Date) # attribues: year, month, and day
-# 	allergies = db.Column(db.Text)
-# 	immunizations = db.Column(db.Text)
-# 	surgeries = db.Column(db.Text)
-# 	family_history = db.Column(db.Text)
-# 	patient_notes = db.Column(db.Text)
-
-# 	## Relationships ##
-# 	payments = db.relationship('Payment', backref='patient', lazy='dynamic')
-# 	pharmacy = db.relationship('Pharmacy', backref='patient', lazy='dynamic')
-# 	visit = db.relationship('Visit', backref='patient', lazy='dynamic')
-# 	status = db.relationship('Status', backref='patient', lazy='dynamic')
-
-# 	## Flags ##
-# 	# FUTURE STATE
-
-# 	def __init__(self, last_name, first_name, age, birth_date, gender, children_count, \
-# 		address, phone, occupation, mother_name, guardian, relation, ht, diabetes, asthma, \
-# 		epilepsy, tb, sickle_cell, tea, coffee, alcohol, drugs, drugs_notes, period_age_start, \
-# 		period_last_date, allergies, imunizations, surgeries, family_history, notes, payments, \
-# 		pharmacy, visit, status):
-# 		self.last_name = last_name
-# 		self.first_name = first_name
-# 		self.age = age
-# 		self.birth_date = birth_date
-# 		self.gender = gender
-# 		self.children_count = children_count
-# 		self.address = address
-# 		self.phone = phone
-# 		self.occupation = occupation
-# 		self.mother_name = mother_name
-# 		self.guardian = guardian
-# 		self.relation = relation
-# 		self.ht = ht
-# 		self.diabetes = diabetes
-# 		self.asthma = asthma
-# 		self.epilepsy = epilepsy
-# 		self.tb = tb
-# 		self.sickle_cell = sickle_cell
-# 		self.tea = tea
-# 		self.coffee = coffee
-# 		self.alcohol = alcohol
-# 		self.drugs = drugs
-# 		self.drugs_notes = drugs_notes
-# 		self.period_age_start = period_age_start
-# 		self.period_last_date = period_last_date
-# 		self.allergies = allergies
-# 		self.immunizations = imunizations
-# 		self.surgeries = surgeries
-# 		self.family_history = family_history
-# 		self.notes = notes
-# 		self.payments = payments
-# 		self.pharmacy = pharmacy
-# 		self.visit = visit
-# 		self.status = status
-
-# 	def __repr__(self):
-# 		return '<Patient %r>' % self.id
-
-
-
-# class Visit(db.Model):
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	timestamp = db.Column(db.Date) # attribues: year, month, and day
-# 	patient_number = db.Column(db.SmallInteger) # number given to the patient at their time of visit
-
-# 	## Vitals ##
-# 	weight = db.Column(db.Float())
-# 	height = db.Column(db.Float())
-# 	bp_systolic = db.Column(db.SmallInteger())
-# 	bp_diastolic = db.Column(db.SmallInteger())
-# 	pulse = db.Column(db.SmallInteger())
-# 	temperature = db.Column(db.Float())
-# 	respirations = db.Column(db.Float())
-
-# 	## Exam ##
-# 	complaint = db.Column(db.Text())
-# 	history = db.Column(db.Text())
-# 	exam = db.Column(db.Text())
-# 	diagnosis = db.Column(db.Text())
-# 	treatment_1 = db.Column(db.String(255))
-# 	treatment_2 = db.Column(db.String(255))
-# 	treatment_3 = db.Column(db.String(255))
-# 	treatment_4 = db.Column(db.String(255))
-# 	treatment_5 = db.Column(db.String(255))
-# 	treatment_6 = db.Column(db.String(255))
-# 	follow_up = db.Column(db.Text())
-# 	exam_notes = db.Column(db.Text())
-# 	prescrip_given = db.Column(db.Boolean())
-# 	prescrip_descrip = db.Column(db.Text())
-
-# 	## Relationships ##
-# 	patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
-# 	payment = db.relationship('Payment', uselist = False, backref = 'visit', lazy='dynamic')
-# 	pharmacy = db.relationship('Pharmacy', uselist = False, backref = 'visit', lazy='dynamic')
-# 	# INSERT user_patient_interactions CONNECTION
-
-# 	def __init__(self, timestamp, patient_number, weight, height, bp_systolic, bp_diastolic, \
-# 		pulse, temperature, respirations, complaint, history, exam, diagnosis, treatment1, \
-# 		treatment2, treatment3, treatment4, treatment5, treatment6, follow_up, exam_notes, \
-# 		prescription_given, prescription_description, patient_id, payment, pharmacy):
-# 		self.timestamp = timestamp
-# 		self.patient_number = patient_number
-# 		self.weight = weight
-# 		self.height = height
-# 		self.bp_systolic = bp_systolic
-# 		self.bp_diastolic = bp_diastolic
-# 		self.pulse = pulse
-# 		self.temperature = temperature
-# 		self.respirations = respirations
-# 		self.complaint = complaint
-# 		self.history = history
-# 		self.exam = exam
-# 		self.diagnosis = diagnosis
-# 		self.treatment1 = treatment1
-# 		self.treatment2 = treatment2
-# 		self.treatment3 = treatment3
-# 		self.treatment4 = treatment4
-# 		self.treatment5 = treatment5
-# 		self.treatment6 = treatment6
-# 		self.follow_up = follow_up
-# 		self.exam_notes = exam_notes
-# 		self.prescription_given = prescription_given
-# 		self.prescription_description = prescription_description
-# 		self.patient_id = patient_id
-# 		self.payment = payment
-# 		self.pharmacy = pharmacy
-
-# 	def __repr__(self):
-# 		return '<Visit %r>' % self.id
-
-
-
-# class Pharmacy(db.Model):
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	medication_given = db.Column(db.String(255))
-# 	amount_given = db.Column(db.String(255))
-# 	pharmacy_notes = db.Column(db.Text())
+	### Medical History ###
+	blood_type = db.Column(db.SmallInteger) 
+		# 0 = O+
+		# 1 = O-
+		# 2 = A+
+		# 3 = A-
+		# 4 = B+
+		# 5 = B-
+		# 6 = AB+
+		# 7 = AB-
+	allergies = db.Column(db.Text)
+	immunizations = db.Column(db.Text)
+	surgeries = db.Column(db.Text)
+	family_history = db.Column(db.Text)
+	family_history_notes = db.Column(db.Text)
 	
-# 	## Relationships ##
-# 	patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
-# 	visit_id = db.Column(db.Integer, db.ForeignKey('visit.id'))
-# 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-
-# 	def __init__(self, medication_given, amount_given, pharmacy_notes, patient_id, visit_id, user_id):
-# 		self.medication_given = medication_given
-# 		self.amount_given = amount_given
-# 		self.pharmacy_notes = pharmacy_notes
-# 		self.patient_id = patient_id
-# 		self.visit_id = visit_id
-# 		self.user_id = user_id
-
-# 	def __repr__(self):
-# 		return '<Pharmacy %r>' % self.id
-
-
-
-# class Payment(db.Model):
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	payment_type = db.Column(db.SmallInteger()) # 0 = $, 1 = pass, 2 = other
-# 	payment_amount = db.Column(db.Float())
-# 	payment_other = db.Column(db.String(255))
+	## Conditions ##
+	hiv = db.Column(db.Boolean)
+	ht = db.Column(db.Boolean) # hypertension 
+	diabetes = db.Column(db.Boolean)
+	tb = db.Column(db.Boolean) # tuberculosis 
+	epilepsy = db.Column(db.Boolean)
+	asthma = db.Column(db.Boolean)
+	sickle_cell_anemia = db.Column(db.Boolean)
+	heart_condition = db.Column(db.Boolean)
+	blood_transfusion = db.Column(db.Boolean)
 	
-# 	## Relationships##
-# 	patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
-# 	visit_id = db.Column(db.Integer, db.ForeignKey('visit.id'))
-# 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	## Habits ##
+	tea = db.Column(db.Boolean)
+	coffee = db.Column(db.Boolean)
+	drugs = db.Column(db.Boolean)
+	alcohol = db.Column(db.Boolean)
+	
+	## Menstrual Cycle ##
+	period_age_start = db.Column(db.SmallInteger)
+	period_last_date = db.Column(db.Date)
 
-# 	def __init__(self, payment_type, payment_amount, payment_other, patient_id, visit_id, user_id):
-# 		self.payment_type = payment_type
-# 		self.payment_amount = payment_amount
-# 		self.payment_other = payment_other
-# 		self.patient_id = patient_id
-# 		self.visit_id = visit_id
-# 		self.user_id = user_id
+	## Lab_ID - relationship
+	## Prescription_ID - relationship
+	## Photo
+	## Dental History
 
-# 	def __repr__(self):
-# 		return '<Payment %r>' % self.id
+	def __init__(self, name_first, name_last, nickname, birth_date, age, \
+		gender, phone, address, references, occupation, children_count, \
+		name_mother, name_caretaker, relationship_caretaker, emergency_contact_person, \
+		emergency_contact_number, blood_type, allergies, immunizations, surgeries, \
+		family_history, family_history_notes, hiv, ht, diabetes, tb, epilepsy, \
+		asthma, sickle_cell_anemia, heart_condition, blood_transfusion, tea, \
+		coffee, drugs, alcohol, period_age_start, period_last_date):
+		self.name_first = name_first	
+		self.name_last = name_last
+		self.nickname = nickname
+		self.birth_date = birth_date
+		self.age = age
+		self.gender = gender
+		self.phone = phone
+		self.address = address
+		self.references = references
+		self.occupation = occupation
+		self.children_count = children_count
+		self.name_mother = name_mother
+		self.name_caretaker = name_caretaker
+		self.relationship_caretaker = relationship_caretaker
+		self.emergency_contact_person = emergency_contact_person
+		self.emergency_contact_number = emergency_contact_number
+		self.blood_type = blood_type
+		self.allergies = allergies
+		self.immunizations = immunizations
+		self.surgeries = surgeries
+		self.family_history = family_history
+		self.family_history_notes = family_history_notes
+		self.hiv = hiv
+		self.ht = ht
+		self.diabetes = diabetes
+		self.tb = tb
+		self.epilepsy = epilepsy
+		self.asthma = asthma
+		self.sickle_cell_anemia = sickle_cell_anemia
+		self.heart_condition = heart_condition
+		self.blood_transfusion = blood_transfusion
+		self.tea = tea
+		self.coffee = coffee
+		self.drugs = drugs
+		self.alcohol = alcohol
+		self.period_age_start = period_age_start
+		self.period_last_date = period_last_date
 
 
+ 	def __repr__(self):
+ 		return '<Patient %r>' % self.id
 
-# class Status(db.Model):
+
+# class Visit_Doc(db.Model):
 # 	id = db.Column(db.Integer, primary_key=True)
 	
-# 	## Current Status in Clinic ##
-# 	status = db.Column(db.SmallInteger())
-# 	status_change_timestamp = db.Column(db.DateTime) # at what time/date did the patient change status?
-# 	patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+class Visit(db.Model):
+	__tablename__ = 'Visit'
+	id = db.Column(db.Integer, primary_key=True)
+	visit_type = db.Column(db.SmallInteger) # 0 = doctor, 1 = dentist
+	ticket_number = db.Column(db.SmallInteger)
+	payment_type = db.Column(db.SmallInteger) # types and values TBD
+	payment_amount = db.Column(db.Float())
 
-# 	def __init__(self, status, status_change_timestamp, patient_id):
-# 		self.status = status
-# 		self.status_change_timestamp = status_change_timestamp
-# 		self.patient_id = patient_id
+	### Vitals_Doctor ###
+	weight_doctor = db.Column(db.Float())
+	height = db.Column(db.String(255))
+	temperature = db.Column(db.Float())
+	bp_doc_systolic = db.Column(db.SmallInteger)
+	bp_doc_diastolic = db.Column(db.SmallInteger)
+	pulse = db.Column(db.SmallInteger)
+	respirations = db.Column(db.Float())
+
+	### Vitals_Dentist ###
+	weight_dentist = db.Column(db.Float())
+	bp_dentist_systolic = db.Column(db.SmallInteger)
+	bp_dentist_diastolic = db.Column(db.SmallInteger)
+
+	### Doctor Exam Notes ###
+	chief_complaint = db.Column(db.Text)
+	hpi = db.Column(db.Text)   # history of present illness
+	exam = db.Column(db.Text)
+	diagnosis_doctor = db.Column(db.Text)
+	treatment_doctor = db.Column(db.Text)
+#### EXACT METHOD STILL TO BE DETERMINED ####
+	prescription_1_doctor = db.Column(db.String(255))
+	prescription_2_doctor = db.Column(db.String(255))
+	prescription_3_doctor = db.Column(db.String(255))
+	prescription_4_doctor = db.Column(db.String(255))
+	prescription_1_notes_doctor = db.Column(db.Text)
+	prescription_2_notes_doctor = db.Column(db.Text)
+	prescription_3_notes_doctor = db.Column(db.Text)
+	prescription_4_notes_doctor = db.Column(db.Text)
+	lab_test_1_doctor = db.Column(db.String(255))
+	lab_test_2_doctor = db.Column(db.String(255))
+	lab_test_3_doctor = db.Column(db.String(255))
+	lab_test_4_doctor = db.Column(db.String(255))
+	lab_test_1_notes_doctor = db.Column(db.Text)
+	lab_test_2_notes_doctor = db.Column(db.Text)
+	lab_test_3_notes_doctor = db.Column(db.Text)
+	lab_test_4_notes_doctor = db.Column(db.Text)
+
+	### Dentist Exam Notes ###
+	## Reason for Consultation ##
+	sharp_pain = db.Column(db.Boolean)
+	bleeding = db.Column(db.Boolean)
+	dental_sensitivity = db.Column(db.Boolean)
+	tooth_mobility = db.Column(db.Boolean)
+	abscess = db.Column(db.Boolean)
+	other_reason = db.Column(db.Boolean)
+	other_reason_text = db.Column(db.Text)
+	## Exam ##
+	tooth_numbers_treated = db.Column(db.String(400))
+	diagnosis_dentist = db.Column(db.Text)
+	treatment_dentist = db.Column(db.Text)
+	prescription_1_dentist = db.Column(db.String(255))
+	prescription_1_notes_dentist = db.Column(db.Text)
+	prescription_2_dentist = db.Column(db.String(255))
+	prescription_2_notes_dentist = db.Column(db.Text)
+	prescription_3_dentist = db.Column(db.String(255))
+	prescription_3_notes_dentist = db.Column(db.Text)
+	prescription_4_dentist = db.Column(db.String(255))
+	prescription_4_notes_dentist = db.Column(db.Text)
+	lab_test_1_dentist = db.Column(db.String(255))
+	lab_test_1_notes_dentist = db.Column(db.Text)
+	lab_test_2_dentist = db.Column(db.String(255))
+	lab_test_2_notes_dentist = db.Column(db.Text)
+	lab_test_3_dentist = db.Column(db.String(255))
+	lab_test_3_notes_dentist = db.Column(db.Text)
+	lab_test_4_dentist = db.Column(db.String(255))
+	lab_test_4_notes_dentist = db.Column(db.Text)
+	# Patient_ID - relationship
+
+	def __init__(self, visit_type, ticket_number, payment_type, payment_amount, weight_doctor, \
+		height, temperature, bp_doc_systolic, bp_doc_diastolic, pulse, respirations, weight_dentist, \
+		bp_dentist_systolic, bp_dentist_diastolic, chief_complaint, hpi, exam, diagnosis_doctor, \
+		treatment_doctor, prescription_1_doctor, prescription_2_doctor, prescription_3_doctor, \
+		prescription_4_doctor, prescription_1_notes_doctor, prescription_2_notes_doctor, \
+		prescription_3_notes_doctor, prescription_4_notes_doctor, prescription_1_dentist, \
+		prescription_2_dentist, prescription_3_dentist, prescription_4_dentist, \
+		prescription_1_notes_dentist, prescription_2_notes_dentist, prescription_3_notes_dentist, \
+		prescription_4_notes_dentist, lab_test_1_doctor, lab_test_2_doctor, lab_test_3_doctor, \
+		lab_test_4_doctor, lab_test_1_dentist, lab_test_2_dentist, lab_test_3_dentist, \
+		lab_test_4_dentist, lab_test_1_notes_doctor, lab_test_2_notes_doctor, lab_test_3_notes_doctor, \
+		lab_test_4_notes_doctor, lab_test_1_notes_dentist, lab_test_2_notes_dentist, \
+		lab_test_3_notes_dentist, lab_test_4_notes_dentist, sharp_pain, bleeding, \
+		dental_sensitivity, tooth_mobility, abscess, other_reason, other_reason_text, \
+		tooth_numbers_treated, diagnosis_dentist, treatment_dentist):
+		self.visit_type = visit_type
+		self.ticket_number = ticket_number
+		self.payment_type = payment_type
+		self.payment_amount = payment_amount
+		self.weight_doctor = weight_doctor
+		self.height = height
+		self.temperature = temperature
+		self.bp_doc_systolic = bp_doc_systolic
+		self.bp_doc_diastolic = bp_doc_diastolic
+		self.pulse = pulse
+		self.respirations = respirations
+		self.weight_dentist = weight_dentist
+		self.bp_dentist_systolic = bp_dentist_systolic
+		self.bp_dentist_diastolic = bp_dentist_diastolic
+		self.chief_complaint = chief_complaint
+		self.hpi = hpi
+		self.exam = exam
+		self.diagnosis_doctor = diagnosis_doctor
+		self.treatment_doctor = treatment_doctor
+		self.prescription_1_doctor = prescription_1_doctor
+		self.prescription_2_doctor = prescription_2_doctor
+		self.prescription_3_doctor = prescription_3_doctor
+		self.prescription_4_doctor = prescription_4_doctor
+		self.prescription_1_notes_doctor = prescription_1_notes_doctor
+		self.prescription_2_notes_doctor = prescription_2_notes_doctor
+		self.prescription_3_notes_doctor = prescription_3_notes_doctor
+		self.prescription_4_notes_doctor = prescription_4_notes_doctor
+		self.prescription_1_dentist = prescription_1_dentist
+		self.prescription_2_dentist = prescription_2_dentist
+		self.prescription_3_dentist = prescription_3_dentist
+		self.prescription_4_dentist = prescription_4_dentist
+		self.prescription_1_notes_dentist = prescription_1_notes_dentist
+		self.prescription_2_notes_dentist = prescription_2_notes_dentist
+		self.prescription_3_notes_dentist = prescription_3_notes_dentist
+		self.prescription_4_notes_dentist = prescription_4_notes_dentist
+		self.sharp_pain = sharp_pain
+		self.bleeding = bleeding
+		self.dental_sensitivity = dental_sensitivity
+		self.tooth_mobility = tooth_mobility
+		self.abscess = abscess
+		self.other_reason = other_reason
+		self.other_reason_text = other_reason_text
+		self.tooth_numbers_treated = tooth_numbers_treated
+		self.diagnosis_dentist = diagnosis_dentist
+		self.treatment_dentist = treatment_dentist
+
+ 	def __repr__(self):
+ 		return '<Doctor Visit %r>' % self.id
+
+#### STILL TO BE DETERMINED ####
+# class Lab(db.Model):
+# 	id = db.Column(db.Integer, primary_key=True)
+	# Type
+	# Value
+	# Visit_ID - relationship
+
+#	def __init__(self):
+#			
 
 # 	def __repr__(self):
-# 		return '<Status %r>' % self.id
+# 		return '<Lab %r>' % self.id
+
+
+class Prescription(db.Model):
+	__tablename__ = 'Prescription'
+	id = db.Column(db.Integer, primary_key=True)
+	given_prescription = db.Column(db.String(255))
+	amount_given = db.Column(db.String(255))
+	notes_prescription = db.Column(db.Text)
+	
+	# Visit_ID - relationship
+
+	def __init__(self, given_prescription, amount_given, notes_prescription):
+		self.given_prescription = given_prescription
+		self.amount_given = amount_given
+		self.notes_prescription = notes_prescription
+
+ 	def __repr__(self):
+ 		return '<Prescription %r>' % self.id
+
+
+
+class status_log(db.Model):
+	__tablename__ = 'status_log'
+	id = db.Column(db.Integer, primary_key=True)
+	visit_id = db.Column(db.SmallInteger)
+#### NUMBERING SYSTEM STILL TO BE DETERMINED ####
+	status = db.Column(db.SmallInteger)
+	timestamp = db.Column(db.DateTime)
+
+	def __init__(self, visit_id, status, timestamp):
+		self.visit_id = visit_id
+		self.status = status
+		self.timestamp = timestamp
+
+ 	def __repr__(self):
+ 		return '<status_log %r>' % self.id
