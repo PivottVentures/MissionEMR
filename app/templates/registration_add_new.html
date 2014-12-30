@@ -16,38 +16,59 @@
 					{{ form.last_name.label }}
 					{{form.last_name(class="form-control", placeholder="Last Name") }}
 					{% for error in form.errors.last_name %}
-        				<span style="color: red;">[{{error}}]</span>
-        			{% endfor %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
 					<br>
 					{{ form.first_name.label }}
 					{{ form.first_name(class="form-control", placeholder="First Name") }}
 					{% for error in form.errors.first_name %}
-        				<span style="color: red;">[{{error}}]</span>
-        			{% endfor %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					{{ form.nickname.label }}
+					{{ form.nickname(class="form-control", placeholder="Nickname") }}
+					{% for error in form.errors.nickname %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
 					<br>
 					{{ form.birth_date.label }}
 					{{ form.birth_date(class="form-control", placeholder="Date of Birth") }}
 					{% for error in form.errors.birth_date %}
-        				<span style="color: red;">[{{error}}]</span>
-        			{% endfor %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					{{ form.age.label }}
+					{{ form.age(class="form-control", placeholder="Age") }}
+					{% for error in form.errors.age %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
 					<br>
 					{{ form.gender.label }}
-					{{ form.gender(size=20) }}
+					{{ form.gender }}
 					{% for error in form.errors.gender %}
-        				<span style="color: red;">[{{error}}]</span>
-        			{% endfor %}
-					<br>
-					{{ form.children_count.label }}
-					{{ form.children_count(size=20) }}
-					{% for error in form.errors.children_count %}
-        				<span style="color: red;">[{{error}}]</span>
-        			{% endfor %}
-					<br>
-					<br>
-					{{ form.address.label }}<br>{{ form.address(size=20) }}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
 					<br>
 					<br>
 					{{ form.phone.label }}<br>{{ form.phone(size=20) }}
+					{% for error in form.errors.phone %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.address.label }}<br>{{ form.address(size=20) }}
+					{% for error in form.errors.address %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					{{ form.children_count.label }}
+					{{ form.children_count }}
+					{% for error in form.errors.children_count %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.references.label }}<br>{{ form.references(size=20) }}
 					<br>
 					<br>
 					{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
@@ -56,14 +77,20 @@
 					{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
 					<br>
 					<br>
-					{{ form.guardian.label }}<br>{{ form.guardian(size=20) }}
+					{{ form.caretaker.label }}<br>{{ form.caretaker(size=20) }}
 					<br>
 					<br>
-					{{ form.relation.label }}<br>{{ form.relation(size=20) }}
+					{{ form.caretaker_relation.label }}<br>{{ form.caretaker_relation(size=20) }}
 					<br>
 					<br>
-					<input type="submit" class="btn btn-warning" value="Create">
-					<input type="button" class="btn btn-warning" value="Cancel" onclick="document.location='';">
+					{{ form.emergency_person.label }}<br>{{ form.emergency_person(size=20) }}
+					<br>
+					<br>
+					{{ form.emergency_number.label }}<br>{{ form.emergency_number(size=20) }}
+					<br>
+					<br>
+					<input type="submit" class="btn btn-primary" value="Back" name='back'>
+					<input type="submit" class="btn btn-primary" value="Save" name='save'>
 				</form>
 				
 				{% endblock %}

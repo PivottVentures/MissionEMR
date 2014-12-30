@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, IntegerField, RadioField, PasswordField, SelectField, \
 					DateField, TextAreaField, DecimalField, FloatField, BooleanField
-from wtforms.validators import Required, Length
+from wtforms.validators import Required, Length, InputRequired
 
 
 ### Login Forms ###
@@ -13,8 +13,8 @@ class Login(Form):
 ### Test Forms ###
 
 class Patients(Form):
-	first_name = TextAreaField('Prenom/First Name', validators=[Required()])
-	last_name = TextAreaField('Nom/Last Name', validators=[Required()])
+	first_name = StringField('Prenom/First Name', validators=[Required()])
+	last_name = StringField('Nom/Last Name', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
 	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
 
@@ -32,19 +32,24 @@ class Registration_Search(Form):
 
 ### Registration ###
 
-class New_Patient(Form): # DONE!
-	last_name = StringField('Nom / Last Name', validators=[Required()])
+class Registration_Patient(Form): # DONE!
 	first_name = StringField('Prenom / First Name', validators=[Required()])
-	birth_date = DateField('Date de Naissance / Date of Birth', validators=[Required()])
-	age = IntegerField('Age/Age')
-	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], validators=[Required()])
-	children_count = IntegerField("Nombre d'enfants / Number of Children", validators=[Required()])
-	address = StringField('Adresse / Address')
-	phone = StringField('Telephone / Phone')
+	last_name = StringField('Nom / Last Name', validators=[Required()])
+	nickname = StringField('Nom / Nickname')
+	birth_date = DateField('Date de Naissance / Date of Birth', format='%m/%d/%Y', validators=[Required()])
+	age = IntegerField('Age/Age', validators=[Required()])
+	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
+	phone = StringField('Telephone / Phone', validators=[Required()])
+	address = StringField('Adresse / Address', validators=[Required()])
+	children_count = IntegerField("Nombre d'enfants / Number of Children", validators=[InputRequired()])
+	references = StringField('XXXXX / References')
 	occupation = StringField('Occupation / Occupation')
 	mother_name = StringField("Nom de la Mere / Mother's Name")
-	guardian = StringField('Tuteur / Guardian')
-	relation = StringField('Parente / Relationship')
+	caretaker = StringField('Tuteur / Caretaker')
+	caretaker_relation = StringField('Parente / Relationship')
+	emergency_person = StringField('XXXXX / Emergency Contact Person')
+	emergency_number = StringField('XXXXX / Emergency Contact Number')
+
 
 ### Payment ###
 

@@ -11,7 +11,7 @@
 			<div class="panel-body">
 				{% block form %}
 				
-				<form method="POST" action="/registration_search" class="form-signin" role="form">
+				<form method="POST" action="" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<div class="input-group">
 						{{ form.criteria.label }}
@@ -25,9 +25,12 @@
 					<ul>
 					{% for pat in patients %}
 						<!-- <li>{{ pat.id }} {{ pat.first_name }} {{ pat.last_name }} {{ pat.age }} {{ pat.gender }}</li> -->
-						<li><a href="{{ url_for('test_view', patient_id=pat.id) }}">{{pat.last_name}}, {{pat.first_name}}</a></li>
+						<li><a href="{{ url_for('patient_chart', patient_id=pat.id) }}">{{pat.name_last}}, {{pat.name_first}}, {{pat.gender}}, {{pat.age}}</a></li>
 					{% endfor %}
 					</ul>
+					<br>
+					<br>
+					<input type="submit" class="btn btn-warning" value="Add" name="add">
 				</form>
 				
 				{% endblock %}

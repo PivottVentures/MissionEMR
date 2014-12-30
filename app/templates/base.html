@@ -113,13 +113,13 @@
 	<div class="col-md-2">
 		<p><center><a href="patients_today" class="btn-station btn-block" role="button">
 			<i class="fa fa-users"></i> Today</a></p>
-		<p><a href="registration_search" class="btn-station btn-block" role="button">
+		<p><a href="{{ url_for('registration_search') }}" class="btn-station btn-block" role="button">
 			<span class="glyphicon glyphicon-pencil"></span>  Registration</a></p>
-		<p><a href="triage" class="btn btn-station btn-block" role="button">
+		<p><a href="{{ url_for('triage') }}" class="btn btn-station btn-block" role="button">
 			<i class="fa fa-stethoscope"></i>  Triage</a></p>
-		<p><a href="doctor" class="btn btn-station btn-block" role="button">
+		<p><a href="{{ url_for('doctor') }}" class="btn btn-station btn-block" role="button">
 			<i class="fa fa-medkit"></i>  Doctor</a></p>
-		<p><a href="pharmacy" class="btn btn-station btn-block" role="button">
+		<p><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-block" role="button">
 			<img src="/static/files/icons/drugs_16px.png"> Pharmacy</a></p>
 	</div>
 	{% block view -%}

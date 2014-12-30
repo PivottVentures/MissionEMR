@@ -8,7 +8,7 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
-manager.add_command('runserver', Server(port=9000))
+manager.add_command('runserver', Server(port=9000, use_debugger=True))
 
 if __name__ == '__main__':
     manager.run()
