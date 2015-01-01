@@ -25,7 +25,7 @@
 					<ul>
 					{% for pat in patients %}
 						<!-- <li>{{ pat.id }} {{ pat.first_name }} {{ pat.last_name }} {{ pat.age }} {{ pat.gender }}</li> -->
-						<li><a href="{{ url_for('patient_chart', patient_id=pat.id) }}">{{pat.name_last}}, {{pat.name_first}}, {{pat.gender}}, {{pat.age}}</a></li>
+						<li><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{pat.name_last}}, {{pat.name_first}}, {{pat.gender}}, {{pat.age}}</a></li>
 					{% endfor %}
 					</ul>
 					<br>

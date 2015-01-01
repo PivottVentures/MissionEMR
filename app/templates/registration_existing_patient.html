@@ -11,7 +11,7 @@
 			<div class="panel-body">
 				{% block form %}
 				
-				<form method="POST" action="/registration_add_new" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('registration_existing_patient', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					{{ form.last_name.label }}
 					{{form.last_name(class="form-control", placeholder="Last Name") }}

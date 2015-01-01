@@ -150,7 +150,7 @@ def test_search():
 def patient_chart(patient_id):
 
 	if request.form.get('add'):
-		return redirect(url_for('registration_add_new'))
+		return redirect(url_for('registration_new_patient'))
 	
 	patient = Patient.query.filter_by(id=patient_id).first()
 	return render_template('patient_chart.html', patient=patient)
@@ -161,7 +161,7 @@ def registration_search():
 	form = Registration_Search()
 
 	if request.form.get('add'):
-		return redirect(url_for('registration_add_new'))
+		return redirect(url_for('registration_new_patient'))
 	
 	if form.validate_on_submit():
 		if form.criteria.data == 'first_name':
@@ -183,12 +183,6 @@ def registration_search():
 @login_required
 def registration_output():
 	patients = Patient.query.all()
-
-	# for u in patients:
-	# 	print u.id,u.name_first,u.name_last,u.age,u.gender
-	# if request.form.get('add'):
-	# 	return redirect(url_for('test_input'))
-
 	# if request.form.get('erase'):
 	# 	for pat in patients:
 	# 		db.session.delete(pat)
@@ -197,9 +191,9 @@ def registration_output():
 
 	return render_template('registration_output.html', patients=patients)
 
-@app.route('/registration_add_new', methods=['GET', 'POST'])
+@app.route('/registration_new_patient', methods=['GET', 'POST'])
 @login_required
-def registration_add_new():
+def registration_new_patient():
 	form = Registration_Patient()
 
 	#Navigate to different pages
@@ -207,7 +201,6 @@ def registration_add_new():
 		return redirect(url_for('registration_search'))
 
 	if form.validate_on_submit() and request.form.get('save'):
-		print 'Validated'
 		new_patient = Patient(
 			name_first = form.first_name.data.title(),
 			name_last = form.last_name.data.title(),
@@ -227,9 +220,7 @@ def registration_add_new():
 			emergency_contact_number = form.emergency_number.data
 			)
 
-		print 'created'
 		if new_patient is not None:
-			print 'not none'
 			db.session.add(new_patient)
 			db.session.commit()
 			flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
@@ -237,23 +228,74 @@ def registration_add_new():
 			for u in users:
 				print u.id,u.name_first,u.name_last,u.age,u.gender,u.occupation
 			
-			return render_template('registration_output.html')
+			return redirect(url_for('registration_output'))
 	else:
- 		form.first_name.data = 'Luke'
- 		form.last_name.data = 'Fenton'
- 		form.birth_date.data = 4/4/1998
- 		form.gender.data = 0
- 		form.children_count.data = 0
- 		form.address.data = 'Loveland'
- 		form.phone.data = '645'
- 		form.occupation.data = 'Engineer'
- 		form.mother_name.data = 'Kathy'
- 		form.caretaker.data = 'Pat'
- 		form.caretaker_relation.data = 'Buddy'
+		form.first_name.data = 'Luke'
+		form.last_name.data = 'Fenton'
+		form.birth_date.data = 04/04/1998
+		form.gender.data = 0
+		form.children_count.data = 0
+		form.address.data = 'Loveland'
+		form.phone.data = '645'
+		form.occupation.data = 'Engineer'
+		form.mother_name.data = 'Kathy'
+		form.caretaker.data = 'Pat'
+		form.caretaker_relation.data = 'Buddy'
 
-	return render_template('registration_add_new.html', form=form)
+	return render_template('registration_new_patient.html', form=form)
 
+@app.route('/registration_existing_patient/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def registration_existing_patient(patient_id):
+	form = Registration_Patient()
 
+	#Navigate to different pages
+	if request.form.get('back'):
+		return redirect(url_for('registration_search'))
+
+	patient = Patient.query.filter_by(id=patient_id).first()
+
+	if form.validate_on_submit() and request.form.get('save'):
+		print 'validated'
+		patient.name_first = form.first_name.data.title()
+		patient.name_last = form.last_name.data.title()
+		patient.nickname = form.nickname.data.title()
+		patient.birth_date = form.birth_date.data
+		patient.age = form.age.data
+		patient.gender = form.gender.data
+		patient.phone = form.phone.data
+		patient.address = form.address.data
+		patient.references = form.references.data
+		patient.occupation = form.occupation.data
+		patient.children_count = form.children_count.data
+		patient.name_mother = form.mother_name.data
+		patient.name_caretaker = form.caretaker.data
+		patient.relationship_caretaker = form.caretaker_relation.data
+		patient.emergency_contact_person = form.emergency_person.data
+		patient.emergency_contact_number = form.emergency_number.data
+		print 'updated'
+		db.session.commit()
+		return redirect(url_for('registration_output'))
+
+	else:
+		form.first_name.data = patient.name_first
+		form.last_name.data = patient.name_last
+		form.nickname.data = patient.nickname
+		form.birth_date.data = patient.birth_date
+		form.age.data = patient.age
+		form.gender.data = patient.gender
+		form.phone.data = patient.phone
+		form.address.data = patient.address
+		form.references.data = patient.references
+		form.occupation.data = patient.occupation
+		form.children_count.data = patient.children_count
+		form.mother_name.data = patient.name_mother
+		form.caretaker.data = patient.name_caretaker
+		form.caretaker_relation.data = patient.relationship_caretaker
+		form.emergency_person.data = patient.emergency_contact_person
+		form.emergency_number.data = patient.emergency_contact_number
+
+	return render_template('registration_existing_patient.html', patient=patient, form=form)
 
 
 
