@@ -54,10 +54,12 @@ class Registration_Patient(Form): # DONE!
 ### Payment ###
 
 class Payment(Form):  
-	patient_number = IntegerField('Nombre des Patiens / Patient Number')
-	payment_type = RadioField('Type de Paiement / Payment Type', choices=[(0, 'Argent/Money'), (1, "Carte D'abonnement/Pass"), (2, "Autre/Other")])
-	payment_other = StringField('Autres Conditions / Other Payment')
-	payment_amount = DecimalField('Montant/Amount', places=2, rounding=None)
+	ticket_number = IntegerField('XXXXX / Ticket Number', validators=[Required()])
+	payment_type = RadioField('Type de Paiement / Payment Type', choices=[('Money', 'Argent/Money'), ('Pink Pass', "Carte D'abonnement/Pass"), 
+																			('Blue Pass', "Carte D'abonnement/Pass"), ('Yellow Pass', "Carte D'abonnement/Pass"),
+																			('Other', "Autre/Other")], validators=[Required()])
+	payment_amount = DecimalField('Autres Montant/Other Amount', places=2, rounding=None)
+	payment_notes = StringField('XXXXX / Notes')
 
 
 ### Triage ###

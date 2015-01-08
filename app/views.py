@@ -1,6 +1,6 @@
 from app import app, login_manager, db
 from models import  Test_Patient, User, Patient#, Visit, Pharmacy, Payment, Status
-from forms import Patients, Login, Registration_Search, Registration_Patient#, Date_Range, Contact, Payment, Background, Vitals, Exam, Pharmacy
+from forms import Patients, Login, Registration_Search, Registration_Patient, Payment#, Date_Range, Contact, Background, Vitals, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -200,7 +200,7 @@ def registration_new_patient():
 	if request.form.get('back'):
 		return redirect(url_for('registration_search'))
 
-	if form.validate_on_submit() and request.form.get('save'):
+	if form.validate_on_submit() and request.form.get('continue'):
 		new_patient = Patient(
 			name_first = form.first_name.data.title(),
 			name_last = form.last_name.data.title(),
@@ -223,24 +223,9 @@ def registration_new_patient():
 		if new_patient is not None:
 			db.session.add(new_patient)
 			db.session.commit()
-			flash("Nouveau patient stockees dans la base de donnees. Stored new patient in the database.")
 			users = Patient.query.all()
-			for u in users:
-				print u.id,u.name_first,u.name_last,u.age,u.gender,u.occupation
 			
 			return redirect(url_for('registration_output'))
-	else:
-		form.first_name.data = 'Luke'
-		form.last_name.data = 'Fenton'
-		form.birth_date.data = 04/04/1998
-		form.gender.data = 0
-		form.children_count.data = 0
-		form.address.data = 'Loveland'
-		form.phone.data = '645'
-		form.occupation.data = 'Engineer'
-		form.mother_name.data = 'Kathy'
-		form.caretaker.data = 'Pat'
-		form.caretaker_relation.data = 'Buddy'
 
 	return render_template('registration_new_patient.html', form=form)
 
@@ -255,9 +240,8 @@ def registration_existing_patient(patient_id):
 
 	patient = Patient.query.filter_by(id=patient_id).first()
 
-	if form.validate_on_submit() and request.form.get('save'):
-		print 'validated'
-		patient.name_first = form.first_name.data.title()
+	if form.validate_on_submit() and (request.form.get('save') or request.form.get('continue')):
+		patient.name_first = form.first_name. data.title()
 		patient.name_last = form.last_name.data.title()
 		patient.nickname = form.nickname.data.title()
 		patient.birth_date = form.birth_date.data
@@ -273,9 +257,11 @@ def registration_existing_patient(patient_id):
 		patient.relationship_caretaker = form.caretaker_relation.data
 		patient.emergency_contact_person = form.emergency_person.data
 		patient.emergency_contact_number = form.emergency_number.data
-		print 'updated'
 		db.session.commit()
-		return redirect(url_for('registration_output'))
+		if request.form.get('save'):
+			return render_template('registration_existing_patient.html', patient=patient, form=form)
+		else:
+			return redirect(url_for('registration_payment', patient_id=patient_id))
 
 	else:
 		form.first_name.data = patient.name_first
@@ -297,7 +283,24 @@ def registration_existing_patient(patient_id):
 
 	return render_template('registration_existing_patient.html', patient=patient, form=form)
 
+@app.route('/registration_payment/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def registration_payment(patient_id):
+	form = Payment()
 
+	if request.form.get('back'):
+		return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+
+	patient = Patient.query.filter_by(id=patient_id).first()
+
+	if form.validate_on_submit():
+		
+		# Store items in database
+		# db.session.commit()
+		
+		return redirect(url_for('registration_output'))
+
+	return render_template('registration_payment.html', patient=patient, form=form)
 
 
 
@@ -385,12 +388,6 @@ def registration_patient_review():
 
 	# render a patient's details that were just saved
 	return render_template('registration_patient_review.html')
-
-@app.route('/registration_payment', methods=['GET', 'POST'])
-#@login_required
-def registration_payment():
-	return render_template('registration_payment.html')
-
 
 ### Triage Views ###
 

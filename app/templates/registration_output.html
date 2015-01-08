@@ -11,18 +11,13 @@
 			<div class="panel-body">
 				{% block patients %}
 				
-				<form method="POST" action="/registration_output" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('registration_output') }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<ul>
 					{% for pat in patients %}
 						<li><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</a></li>
 					{% endfor %}
 					</ul>
-					<br>
-					<br>
-					<input type="submit" class="btn btn-warning" value="Add" name="add">
-					<input type="submit" class="btn btn-warning" value="Erase" name="erase">
-					<br>
 				</form>
 				
 				{% endblock %}

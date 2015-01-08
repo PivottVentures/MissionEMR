@@ -6,12 +6,12 @@
 		<p></p>
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Registration - Add New Patient</b>
+				<span class="glyphicon glyphicon-user"></span><b>  New Patient</b>
 			</div>
 			<div class="panel-body">
 				{% block form %}
 				
-				<form method="POST" action="/registration_new_patient" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('registration_new_patient') }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					{{ form.last_name.label }}
 					{{form.last_name(class="form-control", placeholder="Last Name") }}
@@ -90,7 +90,7 @@
 					<br>
 					<br>
 					<input type="submit" class="btn btn-primary" value="Back" name='back'>
-					<input type="submit" class="btn btn-primary" value="Save" name='save'>
+					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
 				</form>
 				
 				{% endblock %}

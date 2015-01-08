@@ -6,7 +6,7 @@
 		<p></p>
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Registration - Add New Patient</b>
+				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
 			</div>
 			<div class="panel-body">
 				{% block form %}
@@ -91,6 +91,7 @@
 					<br>
 					<input type="submit" class="btn btn-primary" value="Back" name='back'>
 					<input type="submit" class="btn btn-primary" value="Save" name='save'>
+					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
 				</form>
 				
 				{% endblock %}
