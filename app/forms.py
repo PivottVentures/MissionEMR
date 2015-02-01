@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, IntegerField, RadioField, PasswordField, SelectField, \
 					DateField, TextAreaField, DecimalField, FloatField, BooleanField
-from wtforms.validators import Required, Length, InputRequired
+from wtforms.validators import Required, Length, InputRequired, Optional
 
 
 ### Login Forms ###
@@ -50,9 +50,6 @@ class Registration_Patient(Form): # DONE!
 	emergency_person = StringField('XXXXX / Emergency Contact Person')
 	emergency_number = StringField('XXXXX / Emergency Contact Number')
 
-
-### Payment ###
-
 class Payment(Form):  
 	ticket_number = IntegerField('XXXXX / Ticket Number', validators=[Required()])
 	payment_type = RadioField('Type de Paiement / Payment Type', choices=[('Money', 'Argent/Money'), ('Pink Pass', "Carte D'abonnement/Pass"), 
@@ -62,28 +59,39 @@ class Payment(Form):
 	payment_notes = StringField('XXXXX / Notes')
 
 
-### Triage ###
+### Vitals ###
 
 class Background(Form):
-	ht = RadioField('HT', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	diabetes = RadioField('Diabete / Diabetes', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	asthma = RadioField('Asthme / Asthma', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	epilepsy = RadioField('Epilepsie / Epilepsy', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	TB = RadioField('TB', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	sickle_cell = RadioField('Drepanocytose / Sickle Cell', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	tea = RadioField('The / Tea', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	coffee = RadioField('Cafe / Coffee', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	alcohol = RadioField('Alcool / Alcohol', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	drugs = RadioField('La Drogues / Drugs', choices=[(0,'Oui/Yes'), (1,'Non/No')])
-	drugs_notes = TextAreaField('La Drogues Notes / Drugs Notes')
-	period_age_start = DateField('Regles de Premiere / First Period')
-	period_last_date = DateField('Regles de Dernier/ Last Period')
+	# Blood Type
+	blood_type = SelectField('Blood Type', choices=[(0, 'Select'), (1, 'O+'), (2, 'O-'), (3, 'A+'), (4, 'A-'), (5, 'B+'), (6, 'B-'), (7, 'AB+'), (8, 'AB-')], coerce=int)
+
+	# Conditions
+	hiv = BooleanField('HIV')
+	ht = BooleanField('Hypertension')
+	diabetes = BooleanField('Diabete / Diabetes')
+	tb = BooleanField('Tuberculosis')
+	epilepsy = BooleanField('Epilepsie / Epilepsy')
+	asthma = BooleanField('Asthme / Asthma')
+	sickle_cell_anemia = BooleanField('Drepanocytose / Sickle Cell')
+	heart_condition = BooleanField('Drepanocytose / Sickle Cell')
+	blood_transfusion = BooleanField('Drepanocytose / Sickle Cell')
+
+	# Habits
+	tea = BooleanField('The / Tea')
+	coffee = BooleanField('Cafe / Coffee')
+	drugs = BooleanField('La Drogues / Drugs')
+	alcohol = BooleanField('Alcool / Alcohol')
+
+	# Menstrual Cycle
+	period_age_start = DateField('Regles de Premiere / First Period', validators=[Optional()])
+	period_last_date = DateField('Regles de Dernier/ Last Period', validators=[Optional()])
+
+	# Medical History
 	allergies = TextAreaField('Allergies / Allergies')
 	immunizations = TextAreaField('Vaccinations / Immunizations')
 	surgeries = TextAreaField('Chirurgies / Surgeries')
 	family_history = TextAreaField('Histoire de Famille / Family History')
-	patient_notes = TextAreaField('Remarques Patients / Patient Notes')
-
+	background_notes = TextAreaField('Remarques Background / Background Notes')
 
 class Vitals(Form):
 	weight = FloatField('Poids / Weight')

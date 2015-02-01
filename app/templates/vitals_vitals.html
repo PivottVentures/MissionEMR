@@ -11,36 +11,26 @@
 			<div class="panel-body">
 				{% block form %}
 				
-				<form method="POST" action="{{ url_for('registration_payment', patient_id=patient.id) }}" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('vitals_vitals', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.ticket_number.label }}
-					{{ form.ticket_number(class="form-control") }}
-					{% for error in form.errors.ticket_number %}
+					{{ form.blood_type.label }}
+					{{ form.blood_type }}
+					{% for error in form.errors.blood_type %}
 						<span style="color: red;">[{{error}}]</span>
 					{% endfor %}
 					<br>
-					{{ form.payment_type.label }}
-					{{ form.payment_type }}
-					{% for error in form.errors.payment_type %}
+					<br>
+					{{ form.hiv.label }}
+					{{ form.hiv }}
+					{% for error in form.errors.hiv %}
 						<span style="color: red;">[{{error}}]</span>
 					{% endfor %}
-					<br>
-					{{ form.payment_amount.label }}
-					{{ form.payment_amount(class="form-control") }}
-					{% for error in form.errors.payment_amount %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.payment_notes.label }}
-					{{ form.payment_notes(class="form-control") }}
-					{% for error in form.errors.payment_notes %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
 					<br>
 					<br>
 					<input type="submit" class="btn btn-primary" value="Back" name='back'>
+					<input type="submit" class="btn btn-primary" value="Save" name='save'>
 					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+				</form>
 				
 				{% endblock %}
 			</div>

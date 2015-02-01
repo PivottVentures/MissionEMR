@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% import "wtf.html" as wtf %}
+
+{% block view %}
+	<div class="col-md-10">
+		<p></p>
+		<div class="panel panel-default">
+			<div class="panel-heading input-sm">
+				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
+			</div>
+			<div class="panel-body">
+				{% block form %}
+				
+				<form method="POST" action="{{ url_for('vitals_background', patient_id=patient.id) }}" class="form-signin" role="form">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+					{{ form.blood_type.label }}
+					{{ form.blood_type }}
+					{% for error in form.errors.blood_type %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.hiv.label }}
+					{{ form.hiv }}
+					{% for error in form.errors.hiv %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.ht.label }}
+					{{ form.ht }}
+					{% for error in form.errors.ht %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.diabetes.label }}
+					{{ form.diabetes }}
+					{% for error in form.errors.diabetes %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.asthma.label }}
+					{{ form.asthma }}
+					{% for error in form.errors.asthma %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.epilepsy.label }}
+					{{ form.epilepsy }}
+					{% for error in form.errors.epilepsy %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.tb.label }}
+					{{ form.tb }}
+					{% for error in form.errors.tb %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.sickle_cell_anemia.label }}
+					{{ form.sickle_cell_anemia }}
+					{% for error in form.errors.sickle_cell_anemia %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.tea.label }}
+					{{ form.tea }}
+					{% for error in form.errors.tea %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.coffee.label }}
+					{{ form.coffee }}
+					{% for error in form.errors.coffee %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.alcohol.label }}
+					{{ form.alcohol }}
+					{% for error in form.errors.alcohol %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.drugs.label }}
+					{{ form.drugs }}
+					{% for error in form.errors.drugs %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.period_age_start.label }}
+					{{ form.period_age_start }}
+					{% for error in form.errors.period_age_start %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.period_last_date.label }}
+					{{ form.period_last_date }}
+					{% for error in form.errors.period_last_date %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.allergies.label }}
+					{{ form.allergies }}
+					{% for error in form.errors.allergies %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.immunizations.label }}
+					{{ form.immunizations }}
+					{% for error in form.errors.immunizations %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.surgeries.label }}
+					{{ form.surgeries }}
+					{% for error in form.errors.surgeries %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.family_history.label }}
+					{{ form.family_history }}
+					{% for error in form.errors.family_history %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					{{ form.background_notes.label }}
+					{{ form.background_notes }}
+					{% for error in form.errors.background_notes %}
+						<span style="color: red;">[{{error}}]</span>
+					{% endfor %}
+					<br>
+					<br>
+					<input type="submit" class="btn btn-primary" value="Back" name='back'>
+					<input type="submit" class="btn btn-primary" value="Save" name='save'>
+					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+				</form>
+				
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock view %}
+

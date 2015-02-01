@@ -86,43 +86,45 @@ class Patient(db.Model):
 	emergency_contact_person = db.Column(db.String(255), default = '')
 	emergency_contact_number = db.Column(db.String(255), default = '')
 
-	### Medical History ###
+	### Blood Type ###
 	blood_type = db.Column(db.SmallInteger) 
-		# 0 = O+
-		# 1 = O-
-		# 2 = A+
-		# 3 = A-
-		# 4 = B+
-		# 5 = B-
-		# 6 = AB+
-		# 7 = AB-
-	allergies = db.Column(db.Text)
-	immunizations = db.Column(db.Text)
-	surgeries = db.Column(db.Text)
-	family_history = db.Column(db.Text)
-	family_history_notes = db.Column(db.Text)
+		# 0 = None Selected
+		# 1 = O+
+		# 2 = O-
+		# 3 = A+
+		# 4 = A-
+		# 5 = B+
+		# 6 = B-
+		# 7 = AB+
+		# 8 = AB-
 	
 	## Conditions ##
-	hiv = db.Column(db.Boolean)
-	ht = db.Column(db.Boolean) # hypertension 
-	diabetes = db.Column(db.Boolean)
-	tb = db.Column(db.Boolean) # tuberculosis 
-	epilepsy = db.Column(db.Boolean)
-	asthma = db.Column(db.Boolean)
-	sickle_cell_anemia = db.Column(db.Boolean)
-	heart_condition = db.Column(db.Boolean)
-	blood_transfusion = db.Column(db.Boolean)
+	hiv = db.Column(db.Boolean, default=False)
+	ht = db.Column(db.Boolean, default=False) # hypertension 
+	diabetes = db.Column(db.Boolean, default=False)
+	tb = db.Column(db.Boolean, default=False) # tuberculosis 
+	epilepsy = db.Column(db.Boolean, default=False)
+	asthma = db.Column(db.Boolean, default=False)
+	sickle_cell_anemia = db.Column(db.Boolean, default=False)
+	heart_condition = db.Column(db.Boolean, default=False)
+	blood_transfusion = db.Column(db.Boolean, default=False)
 	
 	## Habits ##
-	tea = db.Column(db.Boolean)
-	coffee = db.Column(db.Boolean)
-	drugs = db.Column(db.Boolean)
-	alcohol = db.Column(db.Boolean)
+	tea = db.Column(db.Boolean, default=False)
+	coffee = db.Column(db.Boolean, default=False)
+	drugs = db.Column(db.Boolean, default=False)
+	alcohol = db.Column(db.Boolean, default=False)
 	
 	## Menstrual Cycle ##
 	period_age_start = db.Column(db.SmallInteger)
 	period_last_date = db.Column(db.Date)
 
+	### Medical History ###
+	allergies = db.Column(db.Text, default = '')
+	immunizations = db.Column(db.Text, default = '')
+	surgeries = db.Column(db.Text, default = '')
+	family_history = db.Column(db.Text, default = '')
+	family_history_notes = db.Column(db.Text, default = '')
 	## Lab_ID - relationship
 	## Prescription_ID - relationship
 	## Photo

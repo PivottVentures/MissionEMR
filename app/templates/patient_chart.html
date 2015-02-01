@@ -18,7 +18,11 @@
 					<li>{{ patient.name_first }}</li>
 					<li>{{ patient.name_last }}</li>
 					<li>{{ patient.age }}</li>
-					<li>{{ patient.nickname}}</li>
+					<li>{{ patient.nickname }}</li>
+					<li>{{ patient.blood_type }}</li>
+					{% if patient.hiv == True %}
+						<li> HIV Positive</li>
+					{% endif %}
 					</ul>
 					<br>
 					<br>
