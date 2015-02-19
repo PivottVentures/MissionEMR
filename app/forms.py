@@ -1,7 +1,8 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, IntegerField, RadioField, PasswordField, SelectField, \
 					DateField, TextAreaField, DecimalField, FloatField, BooleanField
-from wtforms.validators import Required, Length, InputRequired, Optional
+from wtforms.validators import Required, Length, InputRequired, Optional,\
+	optional
 
 
 ### Login Forms ###
@@ -13,15 +14,15 @@ class Login(Form):
 ### Test Forms ###
 
 class Patients(Form):
-	first_name = StringField('Prenom/First Name', validators=[Required()])
-	last_name = StringField('Nom/Last Name', validators=[Required()])
+	name_first = StringField('Prenom/First Name', validators=[Required()])
+	name_last = StringField('Nom/Last Name', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
 	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
 
 
 class Registration_Search(Form):
-	criteria = SelectField('Recherche Par/ Search By', choices=[('last_name', 'Nom/Last Name'), \
-						('first_name', 'Prenom/First Name'), ('phone', 'Telephone/Phone'), \
+	criteria = SelectField('Recherche Par/ Search By', choices=[('name_last', 'Nom/Last Name'), \
+						('name_first', 'Prenom/First Name'), ('phone', 'Telephone/Phone'), \
 						('address', 'Adresse/Address'), ('id', 'Nombre des Patiens/Patient Number')])
 	search_term = StringField('Search Term', validators=[Required()])
 
@@ -33,8 +34,8 @@ class Registration_Search(Form):
 ### Registration ###
 
 class Registration_Patient(Form): # DONE!
-	first_name = StringField('Prenom / First Name', validators=[Required()])
-	last_name = StringField('Nom / Last Name', validators=[Required()])
+	name_first = StringField('Prenom / First Name', validators=[Required()])
+	name_last = StringField('Nom / Last Name', validators=[Required()])
 	nickname = StringField('Nom / Nickname')
 	birth_date = DateField('Date de Naissance / Date of Birth', format='%m/%d/%Y', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
@@ -55,7 +56,7 @@ class Payment(Form):
 	payment_type = RadioField('Type de Paiement / Payment Type', choices=[('Money', 'Argent/Money'), ('Pink Pass', "Carte D'abonnement/Pass"), 
 																			('Blue Pass', "Carte D'abonnement/Pass"), ('Yellow Pass', "Carte D'abonnement/Pass"),
 																			('Other', "Autre/Other")], validators=[Required()])
-	payment_amount = DecimalField('Autres Montant/Other Amount', places=2, rounding=None)
+	payment_amount = DecimalField('Autres Montant/Other Amount', places=2, rounding=None, validators=[optional()])
 	payment_notes = StringField('XXXXX / Notes')
 
 
