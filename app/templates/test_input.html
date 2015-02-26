@@ -11,13 +11,16 @@
 			<div class="panel-body">
 				{% block form %}
 				
+				{% from "form_helpers.html" import render_field %}
 				<form method="POST" action="/test_input" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.name_first.label }}
-					{{ form.name_first(class="form-control", placeholder="First Name") }}
-					{% for error in form.errors.name_first %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					{{ render_field(form.name_first, class="form-control", placeholder="Last Name") }}
+					
+<!-- 					{{ form.name_first.label }} -->
+<!-- 					{{ form.name_first(class="form-control", placeholder="First Name") }} -->
+<!-- 					{% for error in form.errors.name_first %} -->
+<!-- 						<span style="color: red;">[{{error}}]</span> -->
+<!-- 					{% endfor %} -->
 					<br>
 					{{ form.name_last.label }}
 					{{form.name_last(class="form-control", placeholder="Last Name") }}

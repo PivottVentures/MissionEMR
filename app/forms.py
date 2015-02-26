@@ -84,7 +84,7 @@ class Background(Form):
 	alcohol = BooleanField('Alcool / Alcohol')
 
 	# Menstrual Cycle
-	period_age_start = DateField('Regles de Premiere / First Period', validators=[Optional()])
+	period_age_start = IntegerField('Regles de Premiere / First Period', validators=[Optional()])
 	period_last_date = DateField('Regles de Dernier/ Last Period', validators=[Optional()])
 
 	# Medical History

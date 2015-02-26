@@ -1,6 +1,6 @@
 from app import app, login_manager, db
 from models import  Test_Patient, User, Patient#, Visit, Pharmacy, Payment, Status
-from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background#, Date_Range, Contact, Vitals, Exam, Pharmacy
+from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals#, Date_Range, Contact, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -328,7 +328,9 @@ def vitals_background(patient_id):
 	
 	patient = Patient.query.filter_by(id=patient_id).first()
 
-	if form.validate_on_submit() and (request.form.get('save') or request.form.get('continue')):
+	if form.validate_on_submit() and (request.form.get('save') 
+									or request.form.get('continue')
+									or request.form.get('view')):
 		patient.blood_type = form.blood_type.data
 		patient.hiv = form.hiv.data
 		patient.ht = form.ht.data
@@ -352,7 +354,9 @@ def vitals_background(patient_id):
 		patient.family_history_notes = form.background_notes.data
 		
 		db.session.commit()
-		if request.form.get('save'):
+		if request.form.get('view'):
+			return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+		elif request.form.get('save'):
 			return render_template('vitals_background.html', patient=patient, form=form)
 		else:
 			return redirect(url_for('vitals_vitals', patient_id=patient_id))
