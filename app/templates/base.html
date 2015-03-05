@@ -101,15 +101,13 @@
 	<!-- CONTENT -->
     {% block content -%}
 		<div class="col-md-2">
-
-			
 			<p><center><a href="patients_today" class="btn btn-station btn-block" role="button">
 				<i class="fa fa-users"></i> Today</a></p>
 			<p><a href="{{ url_for('registration_search') }}" class="btn btn-station btn-block" role="button">
 				<span class="glyphicon glyphicon-pencil"></span>  Registration</a></p>
 			<!-- NEED TO BUILD url_for for each station -->
 			<p><a href="{{ url_for('vitals') }}" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-plus"></i>  Vitals</a></p>
+				<i class="fa fa-plus fa-3x"></i><br>Vitals</a></p>
 			<p><a href="{{ url_for('vitals') }}" class="btn btn-station btn-block" role="button">
 				<i class="fa fa-stethoscope"></i>  Doctor</a></p>
 			<p><a href="{{ url_for('vitals') }}" class="btn btn-station btn-block" role="button">
@@ -118,6 +116,8 @@
 				<i class="fa fa-heartbeat"></i>  Lab</a></p>
 			<p><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-block" role="button">
 				<i class="fa fa-medkit"></i>  Pharmacy</a></p>
+			<p><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-block" role="button">
+				<i class="fa fa-medkit fa-3x"></i></a></p>
 		</div>
 	{% block view -%}
 	
