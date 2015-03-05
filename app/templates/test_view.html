@@ -13,11 +13,11 @@
 				
 				<form method="POST" action="{{ url_for('test_view', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.first_name.label }}
-					{{ form.first_name(class="form-control", value=patient.first_name) }}
+					{{ form.name_first.label }}
+					{{ form.name_first(class="form-control", value=patient.first_name) }}
 
-					{{ form.last_name.label }}
-					{{ form.last_name(class="form-control", value=patient.last_name) }}
+					{{ form.name_last.label }}
+					{{ form.name_last(class="form-control", value=patient.last_name) }}
 
 					{{ form.age.label }}
 					{{ form.age(class="form-control", value=patient.age) }}

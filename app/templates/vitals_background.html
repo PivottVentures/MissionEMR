@@ -7,144 +7,48 @@
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
 				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
+				<br>
+				Sex: {{patient.gender}} Age: {{patient.age}} # of Kids: {{patient.children_count}} Occupation: {{patient.occupation}}
 			</div>
 			<div class="panel-body">
 				{% block form %}
 				
+				{% from "form_helpers.html" import render_field %}
 				<form method="POST" action="{{ url_for('vitals_background', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.blood_type.label }}
-					{{ form.blood_type }}
-					{% for error in form.errors.blood_type %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					<input type="submit" class="btn" value="View" name='view'>
 					<br>
 					<br>
-					{{ form.hiv.label }}
-					{{ form.hiv }}
-					{% for error in form.errors.hiv %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					{{ render_field(form.blood_type) }}
+					<br>
+					{{ render_field(form.hiv) }}
+					{{ render_field(form.ht) }}
+					{{ render_field(form.diabetes) }}
+					{{ render_field(form.asthma) }}
+					{{ render_field(form.epilepsy) }}
+					{{ render_field(form.tb) }}
+					{{ render_field(form.sickle_cell_anemia) }}
+					{{ render_field(form.heart_condition) }}
+					{{ render_field(form.blood_transfusion) }}
 					<br>
 					<br>
-					{{ form.ht.label }}
-					{{ form.ht }}
-					{% for error in form.errors.ht %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					{{ render_field(form.tea) }}
+					{{ render_field(form.coffee) }}
+					{{ render_field(form.alcohol) }}
+					{{ render_field(form.drugs) }}
 					<br>
+<!-- 					Placeholder: Need a check here for Female to display -->
+					{{ render_field(form.period_age_start, class="form-control") }}
 					<br>
-					{{ form.diabetes.label }}
-					{{ form.diabetes }}
-					{% for error in form.errors.diabetes %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					{{ render_field(form.allergies) }}
 					<br>
+					{{ render_field(form.immunizations) }}
 					<br>
-					{{ form.asthma.label }}
-					{{ form.asthma }}
-					{% for error in form.errors.asthma %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					{{ render_field(form.surgeries) }}
 					<br>
+					{{ render_field(form.family_history) }}
 					<br>
-					{{ form.epilepsy.label }}
-					{{ form.epilepsy }}
-					{% for error in form.errors.epilepsy %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.tb.label }}
-					{{ form.tb }}
-					{% for error in form.errors.tb %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.sickle_cell_anemia.label }}
-					{{ form.sickle_cell_anemia }}
-					{% for error in form.errors.sickle_cell_anemia %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.tea.label }}
-					{{ form.tea }}
-					{% for error in form.errors.tea %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.coffee.label }}
-					{{ form.coffee }}
-					{% for error in form.errors.coffee %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.alcohol.label }}
-					{{ form.alcohol }}
-					{% for error in form.errors.alcohol %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.drugs.label }}
-					{{ form.drugs }}
-					{% for error in form.errors.drugs %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.period_age_start.label }}
-					{{ form.period_age_start }}
-					{% for error in form.errors.period_age_start %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.period_last_date.label }}
-					{{ form.period_last_date }}
-					{% for error in form.errors.period_last_date %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.allergies.label }}
-					{{ form.allergies }}
-					{% for error in form.errors.allergies %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.immunizations.label }}
-					{{ form.immunizations }}
-					{% for error in form.errors.immunizations %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.surgeries.label }}
-					{{ form.surgeries }}
-					{% for error in form.errors.surgeries %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.family_history.label }}
-					{{ form.family_history }}
-					{% for error in form.errors.family_history %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.background_notes.label }}
-					{{ form.background_notes }}
-					{% for error in form.errors.background_notes %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
+					{{ render_field(form.background_notes) }}
 					<br>
 					<input type="submit" class="btn btn-primary" value="Back" name='back'>
 					<input type="submit" class="btn btn-primary" value="Save" name='save'>

@@ -1,6 +1,6 @@
 from app import app, login_manager, db
 from models import  Test_Patient, User, Patient#, Visit, Pharmacy, Payment, Status
-from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background#, Date_Range, Contact, Vitals, Exam, Pharmacy
+from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals#, Date_Range, Contact, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -64,8 +64,8 @@ def test_input():
 		return redirect(url_for('test_output'))
 	if form.validate_on_submit():
 		patient = Test_Patient()
-		patient.first_name=form.first_name.data.title()
-		patient.last_name=form.last_name.data.title()
+		patient.first_name=form.name_first.data.title()
+		patient.last_name=form.name_last.data.title()
 		patient.age=form.age.data
 		patient.gender=form.gender.data
 		if patient is not None:
@@ -122,9 +122,9 @@ def patients_today():
 def test_search():
 	form = Registration_Search()
 	if form.validate_on_submit():
-		if form.criteria.data == 'first_name':
+		if form.criteria.data == 'name_first':
 			search_results = Test_Patient.query.filter_by(first_name=form.search_term.data.title()).all()
-		elif form.criteria.data == 'last_name':
+		elif form.criteria.data == 'name_last':
 			search_results = Test_Patient.query.filter_by(last_name=form.search_term.data.title()).all()
 		# elif form.criteria.data == 'phone':
 		# 	search_results = Test_Patient.query.filter_by(last_name=form.search_term).all()
@@ -164,14 +164,14 @@ def registration_search():
 		return redirect(url_for('registration_new_patient'))
 	
 	if form.validate_on_submit():
-		if form.criteria.data == 'first_name':
+		if form.criteria.data == 'name_first':
 			search_results = Patient.query.filter_by(name_first=form.search_term.data.title()).all()
-		elif form.criteria.data == 'last_name':
+		elif form.criteria.data == 'name_last':
 			search_results = Patient.query.filter_by(name_last=form.search_term.data.title()).all()
 		# elif form.criteria.data == 'phone':
-		# 	search_results = Test_Patient.query.filter_by(last_name=form.search_term).all()
+		# 	search_results = Test_Patient.query.filter_by(name_last=form.search_term).all()
 		# elif form.criteria.data == 'address':
-		# 	search_results = Test_Patient.query.filter_by(last_name=form.search_term).all()
+		# 	search_results = Test_Patient.query.filter_by(name_last=form.search_term).all()
 		else:
 			search_results = Patient.query.filter_by(id=form.search_term.data).all()
 		
@@ -202,8 +202,8 @@ def registration_new_patient():
 
 	if form.validate_on_submit():
 		new_patient = Patient(
-			name_first = form.first_name.data.title(),
-			name_last = form.last_name.data.title(),
+			name_first = form.name_first.data.title(),
+			name_last = form.name_last.data.title(),
 			nickname = form.nickname.data.title(),
 			birth_date = form.birth_date.data,
 			age = form.age.data,
@@ -244,8 +244,8 @@ def registration_existing_patient(patient_id):
 	patient = Patient.query.filter_by(id=patient_id).first()
 
 	if form.validate_on_submit() and (request.form.get('save') or request.form.get('continue')):
-		patient.name_first = form.first_name.data.title()
-		patient.name_last = form.last_name.data.title()
+		patient.name_first = form.name_first.data.title()
+		patient.name_last = form.name_last.data.title()
 		patient.nickname = form.nickname.data.title()
 		patient.birth_date = form.birth_date.data
 		patient.age = form.age.data
@@ -267,8 +267,8 @@ def registration_existing_patient(patient_id):
 			return redirect(url_for('registration_payment', patient_id=patient_id))
 
 	else:
-		form.first_name.data = patient.name_first
-		form.last_name.data = patient.name_last
+		form.name_first.data = patient.name_first
+		form.name_last.data = patient.name_last
 		form.nickname.data = patient.nickname
 		form.birth_date.data = patient.birth_date
 		form.age.data = patient.age
@@ -328,7 +328,9 @@ def vitals_background(patient_id):
 	
 	patient = Patient.query.filter_by(id=patient_id).first()
 
-	if form.validate_on_submit() and (request.form.get('save') or request.form.get('continue')):
+	if form.validate_on_submit() and (request.form.get('save') 
+									or request.form.get('continue')
+									or request.form.get('view')):
 		patient.blood_type = form.blood_type.data
 		patient.hiv = form.hiv.data
 		patient.ht = form.ht.data
@@ -352,7 +354,9 @@ def vitals_background(patient_id):
 		patient.family_history_notes = form.background_notes.data
 		
 		db.session.commit()
-		if request.form.get('save'):
+		if request.form.get('view'):
+			return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+		elif request.form.get('save'):
 			return render_template('vitals_background.html', patient=patient, form=form)
 		else:
 			return redirect(url_for('vitals_vitals', patient_id=patient_id))
@@ -404,13 +408,13 @@ def home():
 
 #	form = Search()
 #	if form.validate_on_submit():
-#		if form.search_by.data == 'first_name':
-#			first_name_search = Patient.query.filter_by(first_name=form.search_term.data).all()
-#		elif form.search_by.data == 'last_name':
-#			last_name_search = Patient.query.filter_by(last_name=form.search_term.data).all()
+#		if form.search_by.data == 'name_first':
+#			name_first_search = Patient.query.filter_by(name_first=form.search_term.data).all()
+#		elif form.search_by.data == 'name_last':
+#			name_last_search = Patient.query.filter_by(name_last=form.search_term.data).all()
 #		else:
 #			patient_number_search = Patient.query.filter_by(patient_number=form.search_term.data).all()
-	return render_template('home.html')#, form=form, first_name_search=first_name_search, last_name_search=last_name_search, \
+	return render_template('home.html')#, form=form, name_first_search=name_first_search, name_last_search=name_last_search, \
 #		patient_number_search=patient_number_search)
 
 
