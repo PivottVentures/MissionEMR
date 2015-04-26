@@ -38,7 +38,7 @@ def login():
 			flash('Logged in successfully.')
 			return redirect(url_for('home'))
 		else:
-			flash('Logging in NOT SUCCESSFUL.')
+			flash('The username or password you entered is incorrect.')
 		return redirect(url_for('login'))
 	return render_template('login.html', form=form)
 

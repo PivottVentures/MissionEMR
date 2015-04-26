@@ -17,8 +17,8 @@
 
     {%- block styles %}
 	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
-	<link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
-	<link href="/static/css/base.css" rel="stylesheet" media="screen">
+	<link href="/static/css/bootstrap-theme.css" rel="stylesheet" media="screen">
+    <link href="/static/css/custom.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!--<link href="/static/css/bootstrap-responsive.css" rel="stylesheet"> -->
 	{%- endblock styles %}
@@ -26,15 +26,6 @@
   </head>
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body -%}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
 		
 	<!-- NAVBAR -->
     {% block navbar %}
@@ -67,6 +58,22 @@
 				</div>
 			</div>
 		</nav>
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-dismissable alert-danger">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="col-md-2">
+            </div>
+        </div>
     {%- endblock navbar %}
 
 	<!-- SEARCHBAR -->
