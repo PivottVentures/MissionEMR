@@ -103,9 +103,9 @@ class Patient(db.Model):
     ## Past dental vists
 
     ### Relationships ###
-    lab = db.relationship('Lab', backref='Patient')
-    visit = db.relationship('Visit', backref='Patient')
-    prescription = db.relationship('Prescription', backref='Patient')
+    lab_patient = db.relationship('Lab', backref='Patient')
+    visit_patient = db.relationship('Visit', backref='Patient')
+    prescription_patient = db.relationship('Prescription', backref='Patient')
 
     def __init__(self, name_first, name_last, nickname, birth_date, age,
         gender, phone, address, references, occupation, children_count,
@@ -113,7 +113,7 @@ class Patient(db.Model):
         emergency_contact_number, blood_type, allergies, immunizations, surgeries,
         family_history, family_history_notes, hiv, ht, diabetes, tb, epilepsy,
         asthma, sickle_cell_anemia, heart_condition, blood_transfusion, tea,
-        coffee, drugs, alcohol, period_age_start, period_last_date, lab, visit, prescription):
+        coffee, drugs, alcohol, period_age_start, period_last_date, lab_patient, visit_patient, prescription_patient):
         self.name_first = name_first
         self.name_last = name_last
         self.nickname = nickname
@@ -151,9 +151,9 @@ class Patient(db.Model):
         self.alcohol = alcohol
         self.period_age_start = period_age_start
         self.period_last_date = period_last_date
-        self.lab = lab
-        self.visit = visit
-        self.prescription = prescription
+        self.lab_patient = lab_patient
+        self.visit_patient = visit_patient
+        self.prescription_patient = prescription_patient
 
     def __repr__(self):
         return '<Patient %r>' % self.id
@@ -202,17 +202,17 @@ class Visit(db.Model):
 
     ### Relationships ###
 #    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    patient_id = db.Column(db.Integer, db.ForeignKey('Patient.id'))
-    lab = db.relationship('Lab', backref='Visit')
-    prescription = db.relationship('Prescription', backref='Visit')
-    Status_Log = db.relationship('Status_Log', backref='Visit')
+    visit_patient_id = db.Column(db.Integer, db.ForeignKey('Patient.id'))
+    lab_visit = db.relationship('Lab', backref='Visit')
+    prescription_visit = db.relationship('Prescription', backref='Visit')
+    Status_Log_visit = db.relationship('Status_Log', backref='Visit')
 
     def __init__(self, visit_type, ticket_number, payment_type, payment_amount, weight_doctor, \
         height, temperature, bp_doc_systolic, bp_doc_diastolic, pulse, respirations, weight_dentist, \
         bp_dentist_systolic, bp_dentist_diastolic, chief_complaint, hpi, exam, diagnosis_doctor, \
         treatment_doctor, sharp_pain, bleeding, dental_sensitivity, tooth_mobility, abscess, \
         other_reason, other_reason_text, tooth_numbers_treated, diagnosis_dentist, treatment_dentist, \
-        user_id, patient_id, lab, prescription, Status_Log):
+        user_id, patient_id, lab_visit, prescription_visit, Status_Log_visit):
         self.visit_type = visit_type
         self.ticket_number = ticket_number
         self.payment_type = payment_type
@@ -244,9 +244,9 @@ class Visit(db.Model):
         self.treatment_dentist = treatment_dentist
         self.user_id = user_id
         self.patient_id = patient_id
-        self.lab = lab
-        self.prescription = prescription
-        self.Status_Log = Status_Log
+        self.lab_visit = lab_visit
+        self.prescription_visit = prescription_visit
+        self.Status_Log_visit = Status_Log_visit
 
     def __repr__(self):
         return '<Doctor Visit %r>' % self.id
@@ -258,7 +258,7 @@ class Status_Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.SmallInteger)
     timestamp = db.Column(db.DateTime)
-    visit_id = db.Column(db.Integer, db.ForeignKey('Visit.id'))
+    Status_Log_visit_id = db.Column(db.Integer, db.ForeignKey('Visit.id'))
 
     def __init__(self, status, timestamp, visit_id):
         self.status = status
@@ -279,8 +279,8 @@ class Lab(db.Model):
     # Value
 
     ### Relationships ###
-    patient_id = db.Column(db.Integer, db.ForeignKey('Patient.id'))
-    visit_id = db.Column(db.Integer, db.ForeignKey('Visit.id'))
+    lab_patient_id = db.Column(db.Integer, db.ForeignKey('Patient.id'))
+    lab_visit_id = db.Column(db.Integer, db.ForeignKey('Visit.id'))
 
     def __init__(self, prescribed_test, test_notes, patient_id, visit_id):
         self.prescribed_test = prescribed_test
@@ -303,8 +303,8 @@ class Prescription(db.Model):
     notes_pharmacy = db.Column(db.Text)
 
     ### Relationships ###
-    patient_id = db.Column(db.Integer, db.ForeignKey('Patient.id'))
-    visit_id = db.Column(db.Integer, db.ForeignKey('Visit.id'))
+    prescription_patient_id = db.Column(db.Integer, db.ForeignKey('Patient.id'))
+    prescription_visit_id = db.Column(db.Integer, db.ForeignKey('Visit.id'))
 
     def __init__(self, doctor_prescription, dentist_prescription, given_prescription, \
         amount_given, notes_pharmacy, patient_id, visit_id):
