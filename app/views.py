@@ -1,5 +1,5 @@
 from app import app, login_manager, db
-from models import  Test_Patient, User, Patient#, Visit, Pharmacy, Payment, Status
+from models import   User, Patient #, Visit, Pharmacy, Payment, Status, Test_Patient
 from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals#, Date_Range, Contact, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
