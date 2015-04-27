@@ -7,26 +7,66 @@
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
 				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
+				<br>
+				Sex: {{patient.gender}} Age: {{patient.age}} # of Kids: {{patient.children_count}} Occupation: {{patient.occupation}}
 			</div>
 			<div class="panel-body">
 				{% block form %}
 				
+				{% from "form_helpers.html" import render_field %}
 				<form method="POST" action="{{ url_for('vitals_vitals', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.blood_type.label }}
-					{{ form.blood_type }}
-					{% for error in form.errors.blood_type %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					<input type="submit" class="btn" value="View" name='view_registration'>
 					<br>
+					<div style="float: left;">
+						Background
+						<input type="submit" class="btn" value="View" name='view_background'>
+						<br>
+						{% if patient.blood_type != 'Select' %}
+							Blood Type: {{patient.blood_type}}
+						{% endif %}
+						<br>
+						{% set conditions = {'Hypertension':patient.ht,'Tuberculosis': patient.tb, 
+									'Asthma': patient.asthma, 'Heart Condition': patient.heart_condition, 
+									'HIV': patient.hiv, 'Diabetes': patient.diabetes, 'Epilepsy': patient.epilepsy, 
+									'Sickle Cell Anemia': patient.sickle_cell_anemia, 
+									'Blood Transfusion': patient.blood_transfusion} %}
+						Conditions
+						{% for field in conditions %}
+							{% if conditions[field] == True %}
+								<li>{{field}}</li>
+							{% endif %} 
+						{% endfor %}
+						<br>
+						{% set habits = {'Tea':patient.tea,'Coffee': patient.coffee, 
+									'Drugs': patient.drugs, 'Alcohol': patient.alcohol} %}
+						Habits
+						{% for field in habits %}
+							{% if habits[field] == True %}
+								<li>{{field}}</li>
+							{% endif %} 
+						{% endfor %}	
+						
+						
+					</div>
+					<div style="float: left;">
+					{{ render_field(form.weight) }}
 					<br>
-					{{ form.hiv.label }}
-					{{ form.hiv }}
-					{% for error in form.errors.hiv %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					{{ render_field(form.height) }}
 					<br>
+					{{ render_field(form.bp_systolic) }}
 					<br>
+					{{ render_field(form.bp_diastolic) }}
+					<br>
+					{{ render_field(form.pulse) }}
+					<br>
+					{{ render_field(form.temperature) }}
+					<br>
+					{{ render_field(form.respirations) }}
+					<br>
+					{{ render_field(form.period_last_date) }}
+					<br>
+					</div>
 					<input type="submit" class="btn btn-primary" value="Back" name='back'>
 					<input type="submit" class="btn btn-primary" value="Save" name='save'>
 					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>

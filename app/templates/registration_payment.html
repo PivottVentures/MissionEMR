@@ -11,31 +11,16 @@
 			<div class="panel-body">
 				{% block form %}
 				
+				{% from "form_helpers.html" import render_field %}
 				<form method="POST" action="{{ url_for('registration_payment', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.ticket_number.label }}
-					{{ form.ticket_number(class="form-control") }}
-					{% for error in form.errors.ticket_number %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
 					<br>
-					{{ form.payment_type.label }}
-					{{ form.payment_type }}
-					{% for error in form.errors.payment_type %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.payment_amount.label }}
-					{{ form.payment_amount(class="form-control") }}
-					{% for error in form.errors.payment_amount %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.payment_notes.label }}
-					{{ form.payment_notes(class="form-control") }}
-					{% for error in form.errors.payment_notes %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
+					
+					{{ render_field(form.ticket_number) }}
+					{{ render_field(form.payment_type) }}
+					{{ render_field(form.payment_amount) }}
+					{{ render_field(form.payment_notes) }}
+					
 					<br>
 					<br>
 					<br>

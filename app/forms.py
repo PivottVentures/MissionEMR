@@ -39,7 +39,7 @@ class Registration_Patient(Form): # DONE!
 	nickname = StringField('Nom / Nickname')
 	birth_date = DateField('Date de Naissance / Date of Birth', format='%m/%d/%Y', validators=[Required()])
 	age = IntegerField('Age/Age', validators=[Required()])
-	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
+	gender = RadioField('Sex/Gender', choices=[('Male','Male/Male'), ('Female','Femelle/Female')], validators=[Required()])
 	phone = StringField('Telephone / Phone', validators=[Required()])
 	address = StringField('Adresse / Address', validators=[Required()])
 	children_count = IntegerField("Nombre d'enfants / Number of Children", validators=[InputRequired()])
@@ -64,7 +64,11 @@ class Payment(Form):
 
 class Background(Form):
 	# Blood Type
-	blood_type = SelectField('Blood Type', choices=[(0, 'Select'), (1, 'O+'), (2, 'O-'), (3, 'A+'), (4, 'A-'), (5, 'B+'), (6, 'B-'), (7, 'AB+'), (8, 'AB-')], coerce=int)
+	blood_type = SelectField('Blood Type', choices=[('Select', 'Select'), 
+												('O+', 'O+'), ('O+', 'O-'), 
+												('A+', 'A+'), ('A-', 'A-'), 
+												('B+', 'B+'), ('B-', 'B-'), 
+												('AB+', 'AB+'), ('AB-', 'AB-')])
 
 	# Conditions
 	hiv = BooleanField('HIV')
@@ -74,8 +78,8 @@ class Background(Form):
 	epilepsy = BooleanField('Epilepsie / Epilepsy')
 	asthma = BooleanField('Asthme / Asthma')
 	sickle_cell_anemia = BooleanField('Drepanocytose / Sickle Cell')
-	heart_condition = BooleanField('Drepanocytose / Sickle Cell')
-	blood_transfusion = BooleanField('Drepanocytose / Sickle Cell')
+	heart_condition = BooleanField('Drepanocytose / Heart Condition')
+	blood_transfusion = BooleanField('Drepanocytose / Blood Transfusion')
 
 	# Habits
 	tea = BooleanField('The / Tea')
@@ -85,7 +89,6 @@ class Background(Form):
 
 	# Menstrual Cycle
 	period_age_start = IntegerField('Regles de Premiere / First Period', validators=[Optional()])
-	period_last_date = DateField('Regles de Dernier/ Last Period', validators=[Optional()])
 
 	# Medical History
 	allergies = TextAreaField('Allergies / Allergies')
@@ -100,8 +103,9 @@ class Vitals(Form):
 	bp_systolic = IntegerField('Systolique / Systolic')
 	bp_diastolic = IntegerField('Diastolique / Diastolic')
 	pulse = IntegerField('Implusion / Pulse')
-	temperature = FloatField('Temperature / Temperature')
-	respirations = FloatField('Respirations / Respirations')
+	temperature = FloatField('Temperature / Temperature', validators=[optional()])
+	respirations = FloatField('Respirations / Respirations', validators=[optional()])
+	period_last_date = DateField('Regles de Dernier/ Last Period', validators=[Optional()])
 
 
 ### Doctor Visit ###

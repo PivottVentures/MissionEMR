@@ -16,6 +16,11 @@
 					<ul>
 					{% for pat in patients %}
 						<li><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</a></li>
+						{% for visit in pat.visit_patient %}
+							<ul>
+							<li>{{visit.visit_date}} {{visit.ticket_number}} {{visit.payment_type}} {{visit.payment_notes}}</li>
+							</ul>
+						{% endfor %}
 					{% endfor %}
 					</ul>
 				</form>

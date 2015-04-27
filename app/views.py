@@ -1,10 +1,10 @@
 from app import app, login_manager, db
-from models import   User, Patient #, Visit, Pharmacy, Payment, Status, Test_Patient
+from models import   User, Patient, Visit#, Pharmacy, Status, Test_Patient
 from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals#, Date_Range, Contact, Exam, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
 
-todays_patients=[]
+import datetime
 
 
 ### Login Views ###
@@ -183,6 +183,7 @@ def registration_search():
 @login_required
 def registration_output():
 	patients = Patient.query.all()
+	
 	# if request.form.get('erase'):
 	# 	for pat in patients:
 	# 		db.session.delete(pat)
@@ -223,7 +224,7 @@ def registration_new_patient():
 		if new_patient is not None:
 			db.session.add(new_patient)
 			db.session.commit()
-			users = Patient.query.all()
+			#users = Patient.query.all()
 			
 			if request.form.get('save'):
 				return redirect(url_for('registration_existing_patient', patient_id=new_patient.id))
@@ -297,8 +298,22 @@ def registration_payment(patient_id):
 	patient = Patient.query.filter_by(id=patient_id).first()
 
 	if form.validate_on_submit():
+		new_visit = Visit(
+			visit_date = datetime.date.today(),
+			ticket_number = form.ticket_number.data,
+			payment_type = form.payment_type.data,
+			payment_other_amount = form.payment_amount.data,
+			payment_notes = form.payment_notes.data,
+			patient = patient
+		)
 		
-		# Store items in database
+		if new_visit is not None:
+			db.session.add(new_visit)
+			db.session.commit()
+			
+			if request.form.get('continue'):
+				return redirect(url_for('registration_output'))
+		
 		# db.session.commit()
 		
 		return redirect(url_for('registration_output'))
@@ -346,7 +361,6 @@ def vitals_background(patient_id):
 		patient.drugs = form.drugs.data
 		patient.alcohol = form.alcohol.data
 		patient.period_age_start = form.period_age_start.data
-		patient.period_last_date = form.period_last_date.data
 		patient.allergies = form.allergies.data
 		patient.immunizations = form.immunizations.data
 		patient.surgeries = form.surgeries.data
@@ -387,7 +401,52 @@ def vitals_background(patient_id):
 
 	return render_template('vitals_background.html', patient=patient, form=form)
 
+@app.route('/vitals_vitals/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def vitals_vitals(patient_id):
+	form = Vitals()
+	
+	#Navigate to different pages
+	if request.form.get('back'):
+		return redirect(url_for('vitals_background', patient_id=patient_id))
+	
+	patient = Patient.query.filter_by(id=patient_id).first()
+	visit = Visit.query.filter_by(visit_patient_id=patient_id, visit_date=datetime.date.today()).first()
+	
+	if form.validate_on_submit() and (request.form.get('save') 
+									or request.form.get('continue')
+									or request.form.get('view_registration')
+									or request.form.get('view_background')):
+		visit.weight = form.weight.data
+		visit.height = form.height.data
+		visit.bp_systolic  = form.bp_systolic .data
+		visit.bp_diastolic = form.bp_diastolic.data
+		visit.pulse = form.pulse.data
+		visit.temperature  = form.temperature .data
+		visit.respirations = form.respirations.data
+		visit.period_last_date = form.period_last_date.data
+		
+		db.session.commit()
+		if request.form.get('view_registration'):
+			return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+		elif request.form.get('view_background'):
+			return redirect(url_for('vitals_background', patient_id=patient_id))
+		elif request.form.get('save'):
+			return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
+		else:
+			return redirect(url_for('vitals'))
 
+	elif visit is not None:
+		form.weight.data = visit.weight
+		form.height.data = visit.height
+		form.bp_systolic .data = visit.bp_systolic
+		form.bp_diastolic.data = visit.bp_diastolic
+		form.pulse.data = visit.pulse
+		form.temperature .data = visit.temperature
+		form.respirations.data = visit.respirations
+		form.period_last_date.data = visit.period_last_date
+
+	return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
 
 
 
