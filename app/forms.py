@@ -105,22 +105,19 @@ class Vitals(Form):
 	pulse = IntegerField('Implusion / Pulse')
 	temperature = FloatField('Temperature / Temperature', validators=[optional()])
 	respirations = FloatField('Respirations / Respirations', validators=[optional()])
-	period_last_date = DateField('Regles de Dernier/ Last Period', validators=[Optional()])
+	period_last_date = DateField('Regles de Dernier/ Last Period', format='%m/%d/%Y', validators=[Optional()])
+	complaint = TextAreaField('Plainte / Complaint')
 
 
 ### Doctor Visit ###
 
 class Exam(Form):
+	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')])
 	complaint = TextAreaField('Plainte / Complaint')
 	history = TextAreaField('Histoire / History')
 	exam = TextAreaField('Exam / Exam')
-	diagnois = TextAreaField('Diagnostic / Diagnosis')
-	treatment_1 = StringField('Traitement / Treatment 1')
-	treatment_2 = StringField('Traitement / Treatment 2')
-	treatment_3 = StringField('Traitement / Treatment 3')
-	treatment_4 = StringField('Traitement / Treatment 4')
-	treatment_5 = StringField('Traitement / Treatment 5')
-	treatment_6 = StringField('Traitement / Treatment 6')
+	diagnosis = TextAreaField('Diagnostic / Diagnosis')
+	treatment = TextAreaField('Traitement / Treatment')
 	follow_up = TextAreaField('Suivre / Follow Up')
 	exam_notes = TextAreaField("Notes d'Examen / Exam Notes")
 	prescrip_given = BooleanField('Compte Tenu de la Prescription / Prescription Given')

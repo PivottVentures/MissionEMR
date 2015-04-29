@@ -174,7 +174,7 @@ class Visit(db.Model):
     period_last_date = db.Column(db.Date)
 
     ### Doctor Exam Notes ###
-    chief_complaint = db.Column(db.Text)
+    complaint = db.Column(db.Text)
     hpi = db.Column(db.Text)   # history of present illness
     exam = db.Column(db.Text)
     diagnosis_doctor = db.Column(db.Text)

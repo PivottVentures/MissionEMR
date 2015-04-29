@@ -11,7 +11,24 @@
 			<div class="panel-body">
 				{% block form %}
 				
-				<i>Doctor</i>
+				<form method="POST" action="{{ url_for('doctor') }}" class="form-signin" role="form">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+					
+
+
+					<br>
+					<br>
+					<br>
+					<ul>
+					{% for pat in patients %}
+						<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
+						<li><a href="{{ url_for('doctor_exam', patient_id=pat.id) }}">{{pat.name_first}} {{pat.name_last}} {{pat.gender}}	{{pat.age}}</a></li>
+					{% endfor %}
+					</ul>
+					<br>
+					<br>
+					
+				</form>
 				
 				{% endblock %}
 			</div>

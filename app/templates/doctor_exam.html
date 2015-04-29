@@ -14,7 +14,7 @@
 				{% block form %}
 				
 				{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="{{ url_for('vitals_vitals', patient_id=patient.id) }}" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('doctor_exam', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<input type="submit" class="btn" value="View" name='view_registration'>
 					<br>
@@ -50,31 +50,47 @@
 						
 					</div>
 					<div style="float: left;">
-					{{ render_field(form.weight) }}
-					<br>
-					{{ render_field(form.height) }}
-					<br>
-					{{ render_field(form.bp_systolic) }}
-					<br>
-					{{ render_field(form.bp_diastolic) }}
-					<br>
-					{{ render_field(form.pulse) }}
-					<br>
-					{{ render_field(form.temperature) }}
-					<br>
-					{{ render_field(form.respirations) }}
-					<br>
-					{% if patient.gender == 'Female' %}
-						{{ render_field(form.period_last_date) }}
-					{% endif %}
-					<br>
-					{{ render_field(form.complaint) }}
-					<br>
-					<br>					
-					<input type="submit" class="btn btn-primary" value="Back" name='back'>
-					<input type="submit" class="btn btn-primary" value="Save" name='save'>
-					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+					
+						{{ render_field(form.visit_date) }} Today button  Last button
+						<!-- Below will need to change based on selection above -->
+						{% set visit = patient.visit_patient[0] %}
+						<br>
+						<div>
+							<b>Vitals</b> Weight: {{visit.weight}}	Height: {{visit.height}}
+							<input type="submit" class="btn" value="View" name='view_vitals'>
+							<br>
+							Systolic Blood Pressure: {{visit.bp_systolic}}	Diastolic Blood Pressure: {{visit.bp_diastolic}}
+							<br>
+							Temperature: {{visit.temperature}}	Pulse: {{visit.pulse}}
+							<br>
+							Respirations: {{visit.respirations}}
+							{% if patient.gender == 'Female' %}
+								Last Menstrual Cycle: {{visit.period_last_date}}
+							{% endif %}
+						</div>
+						<div>
+							<b>Exam</b>
+							{% set t = form.complaint.process_data(visit.complaint) %}<!-- This works, but I don't like it -->
+							{{ form.complaint.label }}
+							{{ form.complaint(value=visit.complaint) }}<!-- I cannot figure out why this isn't working!!!! -->
+							{% for error in form.errors.complaint %}
+								<span style="color: red;">[{{error}}]</span>
+							{% endfor %}
+							<br>
+							{{ render_field(form.exam) }}
+							<br>
+							{{ render_field(form.diagnosis) }}
+							<br>
+							{{ render_field(form.treatment) }}
+							<br>
+							{{ render_field(form.prescrip_given) }}
+							<br>
+							{{ render_field(form.prescrip_descrip) }}
+							<br>
+						
+						</div>
 					</div>
+					<br>
 				</form>
 				
 				{% endblock %}
@@ -82,4 +98,3 @@
 		</div>
 	</div>
 {% endblock view %}
-

@@ -1,6 +1,6 @@
 from app import app, login_manager, db
 from models import   User, Patient, Visit#, Pharmacy, Status, Test_Patient
-from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals#, Date_Range, Contact, Exam, Pharmacy
+from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals, Exam#, Date_Range, Contact, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -425,6 +425,7 @@ def vitals_vitals(patient_id):
 		visit.temperature  = form.temperature .data
 		visit.respirations = form.respirations.data
 		visit.period_last_date = form.period_last_date.data
+		visit.complaint = form.complaint.data
 		
 		db.session.commit()
 		if request.form.get('view_registration'):
@@ -445,11 +446,80 @@ def vitals_vitals(patient_id):
 		form.temperature .data = visit.temperature
 		form.respirations.data = visit.respirations
 		form.period_last_date.data = visit.period_last_date
+		form.complaint.data = visit.complaint
 
 	return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
 
 
+### Doctor Views ###
 
+@app.route('/doctor', methods=['GET', 'POST'])
+@login_required
+def doctor():
+	
+	# Change to filter patients based on status=doctor
+	patients = Patient.query.all()
+	
+	return render_template('doctor.html', patients=patients)
+
+@app.route('/doctor_exam/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def doctor_exam(patient_id):
+	form=Exam()
+	
+	#Navigate to different pages
+	if request.form.get('back'):
+		return redirect(url_for('doctor_exam'))
+	
+	patient = Patient.query.filter_by(id=patient_id).first()
+	#Need to check for doctor visit below?
+	#visit = Visit.query.filter_by(visit_patient_id=patient_id, visit_date=datetime.date.today()).first()
+	
+	date_choices = []
+	for date in patient.visit_patient:
+		choice=(date.visit_date, str(date.visit_date))
+		date_choices.append(choice)
+	form.visit_date.choices = date_choices
+	
+	if form.validate_on_submit() and (request.form.get('save') 
+									or request.form.get('continue')
+									or request.form.get('view_registration')
+									or request.form.get('view_background')
+									or request.form.get('view_vitals')):
+		#Need to check for doctor visit below?
+		visit = Visit.query.filter_by(id=form.vist_date.data).first()
+		
+		visit.complaint = form.complaint.data
+		visit.hpi = form.history.data
+		visit.exam = form.exam.data
+		visit.diagnois_doctor = form.diagnosis.data
+		visit.treatment_doctor = form.treatment.data
+# 		visit.follow_up = form.follow_up.data
+# 		visit.exam_notes = form.exam_notes.data
+		
+		# if form.prescrip_given.data then save prescription object
+		#prescription.doctor_prescription = form.prescrip_descrip.data
+		
+		db.session.commit()
+		if request.form.get('view_registration'):
+			return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+		elif request.form.get('view_background'):
+			return redirect(url_for('vitals_background', patient_id=patient_id))
+		elif request.form.get('save'):
+			return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
+		else:
+			return redirect(url_for('vitals'))
+# This will probably be taken care of in the template
+# 	elif visit is not None:
+# 		form.complaint.data = visit.complaint
+# 		form.history.data = visit.hpi
+# 		form.exam.data = visit.exam
+# 		form.diagnosis.data = visit.diagnois_doctor
+# 		form.treatment.data = visit.treatment_doctor
+# # 		form.follow_up.data = visit.follow_up
+# # 		form.exam_notes.data = visit.exam_notes
+	
+	return render_template('doctor_exam.html', patient=patient, form=form)
 
 
 
@@ -484,15 +554,6 @@ def home():
 def master():
 
 	return render_template('master.html')
-
-
-
-### Doctor Views ###
-
-@app.route('/doctor', methods=['GET', 'POST'])
-#@login_required
-def doctor():
-	return render_template('doctor.html')
 
 
 
