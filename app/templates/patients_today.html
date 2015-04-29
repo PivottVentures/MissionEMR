@@ -1,33 +1,35 @@
 {% extends "base.html" %}
 {% import "wtf.html" as wtf %}
 
-{% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Today's Patients</b>
-			</div>
-			<div class="panel-body">
-				{% block patients %}
-				
-				<form method="POST" action="/test_output" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{% if patients|length == 0 %}
-					<i>There are no patients today!</i>
-					{% else %}
-					<ul>
-					{% for pat in patients %}
-						<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
-						<li><a href="{{ url_for('test_view', patient_id=pat.id) }}">{{pat.name_last}}, {{pat.name_first}}</a></li>
-					{% endfor %}
-					</ul>
-					<br>
-					{% endif %}
-				</form>
-				
-				{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="col-sm-9">
+			<p></p>
+			<div class="panel panel-default">
+				<div class="panel-heading input-sm">
+					<span class="glyphicon glyphicon-user"></span><b> Today's Patients</b>
+				</div>
+				<div class="panel-body">
+					{% block patients %}
+					
+					<form method="POST" action="/test_output" class="form-signin" role="form">
+						<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+						{% if patients|length == 0 %}
+						<i>No patients have been submitted yet today</i>
+						{% else %}
+						<ul>
+						{% for pat in patients %}
+							<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
+							<li><a href="{{ url_for('test_view', patient_id=pat.id) }}">{{pat.name_last}}, {{pat.name_first}}</a></li>
+						{% endfor %}
+						</ul>
+						<br>
+						{% endif %}
+					</form>
+					
+					{% endblock %}
+				</div>
 			</div>
 		</div>
-	</div>
-{% endblock view %}
+{% endblock content %}

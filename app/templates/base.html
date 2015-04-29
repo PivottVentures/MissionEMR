@@ -17,8 +17,9 @@
 
     {%- block styles %}
 	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
-	<link href="/static/css/base.css" rel="stylesheet" media="screen">
-	<link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="/static/css/wfmi-style.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/static/css/custom.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!--<link href="/static/css/bootstrap-responsive.css" rel="stylesheet"> -->
 	{%- endblock styles %}
@@ -48,7 +49,7 @@
 						<li><a href="reports"><i class="fa fa-line-chart fa-2x"></i> Reports</a></li>
 		            </ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="demo"><i class="fa fa-envelope fa-2x"></i></a></li>
+						<li><a href="#contactus" data-target="#contactus" data-toggle="modal"><i class="fa fa-envelope fa-2x"></i></a></li>
 					    {% if current_user.is_authenticated() %}
 						<li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out fa-2x"></i></a></li>
 		                {% else %}
@@ -59,83 +60,142 @@
 			</div>
 		</nav>
         <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-md-offset-2">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
-                    <div class="alert alert-dismissable alert-danger">
+                    <div class="alert alert-dismissable alert-warning">
                         {% for message in messages %}
                             {{ message }}
                         {% endfor %}
                     </div>
                 {% endif %}
             {% endwith %}
-            <div class="col-md-2">
+        </div>
+<!--
+                <div class="col-md-2">
+                    <div class="row">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group-sm">
+                                <select class="control-label" id="search_select">
+                                    <option>Station</option>
+                                    <option>First Name</option>
+                                    <option>Last Name</option>
+                                    <option>Birthday</option>
+                                </select>
+                                <input type="text" class="form-control" placeholder="Search">
+                                <span class="form-group-btn">
+                                    <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+-->
+
+    <!-- Modal -->
+    <div class="modal" id="contactus" aria-labelledby="contactuslabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Contact Us</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="ContactUsName" class="col-lg-2 control-label">Name</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="ContactUsEmail" placeholder="Your Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ContactUsMessage" class="col-lg-2 control-label">Message</label>
+                            <div class="col-lg-10">
+                                <textarea class="form-control" rows="3" id="ContactUsMessage"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-4 col-lg-offset-8">
+                                <button type="close" class="btn btn-default">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
-    {%- endblock navbar %}
+    </div>
 
-	<!-- SEARCHBAR -->
-	{% block searchbar -%}
-	<!-- Placeholder for Form fields -->
-		<div class="container">
-			<div class="col-md-4">
-			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon input-sm"><b>Station:</b></span>
-						<!-- <select class="form-control input-sm">
-							<option>Station</option>
-							<option>First Name</option>
-							<option>Last Name</option>
-							<option>Birthday</option></select> -->
-						<input type="text" class="form-control input-sm" placeholder="Search">
-						<span class="input-group-btn">
-							<button class="btn btn-default btn-sm" type="button">
-								<span class="glyphicon glyphicon-search"></span>
-							</button>
-						</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-			</div>
-		</div>
-	{%- endblock searchbar %}
+    {%- endblock navbar %}
 	
-	<!-- CONTENT -->
     {% block content -%}
-		<div class="col-md-2">
-			<p><center><a href="patients_today" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-users fa-1x"></i>   Today</a></p>
-			<p><a href="{{ url_for('registration_search') }}" class="btn btn-station btn-block" role="button">
-				<span class="glyphicon glyphicon-pencil"></span>  Registration</a></p>
-			<!-- NEED TO BUILD url_for for each station -->
-			<p><a href="{{ url_for('vitals') }}" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-plus"></i>  Vitals</a></p>
-			<p><a href="{{ url_for('vitals') }}" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-stethoscope"></i>  Doctor</a></p>
-			<p><a href="{{ url_for('vitals') }}" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-stethoscope"></i>  Dentist</a></p>
-			<p><a href="{{ url_for('doctor') }}" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-heartbeat"></i>  Lab</a></p>
-			<p><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-block" role="button">
-				<i class="fa fa-medkit"></i>  Pharmacy</a></p>
-		</div>
-	{% block view -%}
+
+	<!-- CONTENT -->
+    <div class="container">
+        {% block side_nav -%} 
+            <div class="col-sm-3 sidebar">
+                <div class="row">
+                    <!-- SEARCH NAVBAR -->
+                    <form class="form-inline">
+                        <div class="col-md-12">
+                            <div class="form-group-sm">
+                                    <label for="site_search">
+                                    <select class="control-label" id="search_select">
+                                        <option>Station</option>
+                                        <option>First Name</option>
+                                        <option>Last Name</option>
+                                        <option>Birthday</option>
+                                    </select>
+                                    </label><br>
+                                <input type="text" class="form-control" placeholder="Search" id="search_text">
+                                <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i>
+                            </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END SEARCH NAVBAR -->
+                </div>
+                <br>
+                <div class="row">
+                    <center><a href="patients_today" class="btn btn-station btn-nav-block" style="width: 45%; padding-top:8px; padding-left:1px; padding-right:1px;" role="button">
+                            <i class="fa fa-users fa-2x"></i><br><p style="margin: 0 0 3px;">Today's<br>Patients</p></a>
+                    <div class="col-sm-6 col-xs-6" style="padding-top:3px; padding-left:12px; padding-right:1px;">
+                        <p style="margin: 0 0 3px;"><a href="{{ url_for('registration_search') }}" class="btn btn-station btn-nav-block" role="button">
+                            <i class="fa fa-pencil fa-3x"></i><br>Register</a></p>
+                        <!-- NEED TO BUILD url_for for each station -->
+                        <p style="margin: 0 0 3px;"><a href="{{ url_for('doctor') }}" class="btn btn-station btn-nav-block" role="button">
+                            <i class="fa fa-stethoscope fa-3x"></i><br>Doctor</a></p>
+                         <p style="margin: 0 0 3px;"><a href="{{ url_for('vitals') }}" class="btn btn-station btn-nav-block" role="button">
+                            <i class="fa fa-heartbeat fa-3x"></i><br>Lab</a></p>
+                    </div>
+                    <div class="col-sm-6 col-xs-6" style="padding-top:3px; padding-left:1px; padding-right:12px;">
+                        <p style="margin: 0 0 3px;"><a href="{{ url_for('vitals') }}" class="btn btn-station btn-nav-block" role="button">
+                            <i class="fa fa-plus fa-3x"></i><br>Vitals</a></p>
+                        <p style="margin: 0 0 3px;"><a href="{{ url_for('doctor') }}" class="btn btn-station btn-nav-block" role="button">
+                            <span class="icon-i-dental" aria-hidden="true" style="font-size: 2.75em;"></span><br>Dental</a></p>
+                        <p style="margin: 0 0 3px;"><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-nav-block" role="button">
+                            <i class="fa fa-medkit fa-3x"></i><br>Pharmacy</a></p>
+                    </div>
+                </div>
+            </div>
+
+        {%- endblock side_nav %}
 	
-	{% block form -%}
-	{%- endblock form %}
+    {% block view -%}
+        
+        {% block form -%}
+        {%- endblock form %}
 
     {%- endblock view %}
-	{%- endblock content %}
+
+    {%- endblock content %}
+	</div>
 
     {% block scripts %}
-    	<script src="/static/js/jquery-latest.js"></script>
-    	<script src="/static/js/bootstrap.min.js"></script>
-    	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
     {%- endblock scripts %}
     {%- endblock body %}
   </body>

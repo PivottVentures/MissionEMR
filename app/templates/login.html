@@ -6,6 +6,9 @@
 {% block searchbar %}
 {% endblock %}
 
+{% block side_nav %}
+{% endblock side_nav %}
+
 {% block content %}
 <div class="container">
 	<div class="row">
@@ -21,11 +24,9 @@
 		
 		<div class="col-md-4">
 		</div>
-	</div>
+	</div><br>
 	<div class="row">
-		<div class="col-md-4">
-		</div>
-		<div class="col-md-4">
+		<div class="col-sm-4 col-sm-offset-4">
 		    {% block form %}
 					
 					<form method="POST" action="/login" class="form-signin" role="form">
@@ -35,7 +36,7 @@
 		    			{{ form.password(class="form-control", placeholder="Password") }}<br>
 						<center><input type="submit" class="btn btn-warning btn-lg" value="Sign In">					
 					</form>
-					
+
 			{% endblock %}
 		   <!--  <form class="form-signin" role="form">
 
