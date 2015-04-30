@@ -1,5 +1,5 @@
 from app import app, login_manager, db
-from models import   User, Patient, Visit#, Pharmacy, Status, Test_Patient
+from models import   User, Patient, Visit, Prescription, Lab#, Pharmacy, Status, Test_Patient
 from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals, Exam#, Date_Range, Contact, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
@@ -305,7 +305,7 @@ def registration_payment(patient_id):
 			payment_other_amount = form.payment_amount.data,
 			payment_notes = form.payment_notes.data,
 			patient = patient
-		)
+			)
 		
 		if new_visit is not None:
 			db.session.add(new_visit)
@@ -313,8 +313,6 @@ def registration_payment(patient_id):
 			
 			if request.form.get('continue'):
 				return redirect(url_for('registration_output'))
-		
-		# db.session.commit()
 		
 		return redirect(url_for('registration_output'))
 
@@ -475,40 +473,50 @@ def doctor_exam(patient_id):
 	#Need to check for doctor visit below?
 	#visit = Visit.query.filter_by(visit_patient_id=patient_id, visit_date=datetime.date.today()).first()
 	
+	if request.form.get('view_registration'):
+		return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+	elif request.form.get('view_background'):
+		return redirect(url_for('vitals_background', patient_id=patient_id))
+	
 	date_choices = []
 	for date in patient.visit_patient:
-		choice=(date.visit_date, str(date.visit_date))
+		choice=(str(date.visit_date), str(date.visit_date))
 		date_choices.append(choice)
 	form.visit_date.choices = date_choices
 	
-	if form.validate_on_submit() and (request.form.get('save') 
-									or request.form.get('continue')
-									or request.form.get('view_registration')
-									or request.form.get('view_background')
-									or request.form.get('view_vitals')):
+	if form.validate_on_submit() and request.form.get('continue'):
 		#Need to check for doctor visit below?
-		visit = Visit.query.filter_by(id=form.vist_date.data).first()
+		visit = Visit.query.filter_by(visit_date=form.visit_date.data).first()
 		
 		visit.complaint = form.complaint.data
 		visit.hpi = form.history.data
 		visit.exam = form.exam.data
 		visit.diagnois_doctor = form.diagnosis.data
 		visit.treatment_doctor = form.treatment.data
-# 		visit.follow_up = form.follow_up.data
-# 		visit.exam_notes = form.exam_notes.data
 		
-		# if form.prescrip_given.data then save prescription object
-		#prescription.doctor_prescription = form.prescrip_descrip.data
+		if form.prescrip_given.data:
+			new_prescription = Prescription(
+				doctor_prescription = form.prescrip_descrip.data,
+				patient = patient,
+				visit = visit
+				)
+			
+			if new_prescription is not None:
+				db.session.add(new_prescription)
+				db.session.commit()
 		
-		db.session.commit()
-		if request.form.get('view_registration'):
-			return redirect(url_for('registration_existing_patient', patient_id=patient_id))
-		elif request.form.get('view_background'):
-			return redirect(url_for('vitals_background', patient_id=patient_id))
-		elif request.form.get('save'):
-			return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
-		else:
-			return redirect(url_for('vitals'))
+		if form.lab_given.data:
+			new_lab = Lab(
+				prescribed_test = form.lab_test.data,
+				patient = patient,
+				visit = visit
+				)
+			
+			if new_lab is not None:
+				db.session.add(new_lab)
+				db.session.commit()
+				
+		return redirect(url_for('registration_output'))
 # This will probably be taken care of in the template
 # 	elif visit is not None:
 # 		form.complaint.data = visit.complaint

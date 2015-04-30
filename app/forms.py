@@ -112,16 +112,16 @@ class Vitals(Form):
 ### Doctor Visit ###
 
 class Exam(Form):
-	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')])
-	complaint = TextAreaField('Plainte / Complaint')
-	history = TextAreaField('Histoire / History')
-	exam = TextAreaField('Exam / Exam')
-	diagnosis = TextAreaField('Diagnostic / Diagnosis')
-	treatment = TextAreaField('Traitement / Treatment')
-	follow_up = TextAreaField('Suivre / Follow Up')
-	exam_notes = TextAreaField("Notes d'Examen / Exam Notes")
-	prescrip_given = BooleanField('Compte Tenu de la Prescription / Prescription Given')
-	prescrip_descrip = TextAreaField('Description de Prescription / Prescription Description')
+	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')], coerce=unicode)
+	complaint = TextAreaField('Complaint')
+	history = TextAreaField('History')
+	exam = TextAreaField('Exam')
+	diagnosis = TextAreaField('Diagnosis')
+	treatment = TextAreaField('Treatment')
+	prescrip_given = BooleanField('Prescription Given')
+	prescrip_descrip = TextAreaField('Prescription Description')
+	lab_given = BooleanField('Lab Given')
+	lab_test = TextAreaField('Lab Tests')
 
 
 ### Pharmacy ###
