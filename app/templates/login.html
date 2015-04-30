@@ -6,44 +6,50 @@
 {% block searchbar %}
 {% endblock %}
 
+{% block side_nav %}
+{% endblock side_nav %}
+
 {% block content %}
 <div class="container">
-	<div class="col-md-3">
-	</div>
-	<div class="col-md-6">
-		<p></p>
-		<p></p>
-		<center><img src="/static/files/missionemr_logo.png">
-	</div>
-	<div class="col-md-3">
-	</div>
-	
-	<div class="col-md-4">
-	</div>
-	<div class="col-md-4">
-	    {% block form %}
-				
-				<form method="POST" action="/login" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.username(class="form-control", placeholder="Username") }}
-					<p></p>
-	    			{{ form.password(class="form-control", placeholder="Password") }}<br>
-					<center><input type="submit" class="btn btn-warning btn-lg" value="Sign In">					
-				</form>
-				
-		{% endblock %}
-	   <!--  <form class="form-signin" role="form">
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<p></p>
+			<p></p>
+			<center><img src="/static/files/missionemr_logo.png">
+		</div>
+		<div class="col-md-3">
+		</div>
+		
+		<div class="col-md-4">
+		</div>
+	</div><br>
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-4">
+		    {% block form %}
+					
+					<form method="POST" action="/login" class="form-signin" role="form">
+						<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+						{{ form.username(class="form-control", placeholder="Username") }}
+						<p></p>
+		    			{{ form.password(class="form-control", placeholder="Password") }}<br>
+						<center><input type="submit" class="btn btn-warning btn-lg" value="Sign In">					
+					</form>
 
-	    	{{ form.username(class="form-control", placeholder="Username") }}
-			<p></p>
-	    	{{ form.password(class="form-control", placeholder="Password") }}
-			<p></p>
-			<center><input type="submit" class="btn btn-warning btn-lg" value="Search">
-	    </form> -->
+			{% endblock %}
+		   <!--  <form class="form-signin" role="form">
+
+		    	{{ form.username(class="form-control", placeholder="Username") }}
+				<p></p>
+		    	{{ form.password(class="form-control", placeholder="Password") }}
+				<p></p>
+				<center><input type="submit" class="btn btn-warning btn-lg" value="Search">
+		    </form> -->
+		</div>
+		<div class="col-md-4">
+		</div>
 	</div>
-	<div class="col-md-4">
-	</div>
-	
 </div>
 	
 {% endblock %}

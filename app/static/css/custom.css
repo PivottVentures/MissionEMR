@@ -1,0 +1,111 @@
+
+
+
+/* Custom brand logo
+-------------------------------------------------- */
+.navbar-brand{
+  background: url(/static/files/missionemrlogo_web.png) no-repeat left center;
+  height: 50px;
+  width: 150px;
+  margin-top: 2.5px;
+}
+
+.btn-nav-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-station {
+  color: #ffffff;
+  background-color: #2c3e50;
+  border-color: transparent;
+  font-size: 11px;
+  padding: -2px 2px;
+  border-radius: 3px;
+}
+.btn-station:hover,
+.btn-station:focus,
+.btn-station.focus,
+.btn-station:active,
+.btn-station.active,
+.open > .dropdown-toggle.btn-station {
+  color: #ffffff;
+  background-color: #273747;
+  border-color: rgba(0, 0, 0, 0);
+}
+.btn-station:active,
+.btn-station.active,
+.open > .dropdown-toggle.btn-station {
+  background-image: none;
+}
+.btn-station.disabled,
+.btn-station[disabled],
+fieldset[disabled] .btn-station,
+.btn-station.disabled:hover,
+.btn-station[disabled]:hover,
+fieldset[disabled] .btn-station:hover,
+.btn-station.disabled:focus,
+.btn-station[disabled]:focus,
+fieldset[disabled] .btn-station:focus,
+.btn-station.disabled.focus,
+.btn-station[disabled].focus,
+fieldset[disabled] .btn-station.focus,
+.btn-station.disabled:active,
+.btn-station[disabled]:active,
+fieldset[disabled] .btn-station:active,
+.btn-station.disabled.active,
+.btn-station[disabled].active,
+fieldset[disabled] .btn-station.active {
+  background-color: #2c3e50;
+  border-color: transparent;
+}
+.btn-station .badge {
+  color: #2c3e50;
+  background-color: #ffffff;
+}
+.btn-station {
+  background-image: -webkit-radial-gradient(circle, #2c3e50 80%, #475d73 81%);
+  background-image: -o-radial-gradient(circle, #2c3e50 80%, #475d73 81%);
+  background-image: radial-gradient(circle, #2c3e50 80%, #475d73 81%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 200% 200%;
+          background-size: 200%;
+  background-position: 50%;
+  -webkit-transition: background-size 2s;
+       -o-transition: background-size 2s;
+          transition: background-size 2s;
+}
+.btn-station:hover {
+  -webkit-background-size: 100% 100%;
+          background-size: 100%;
+  border-color: #475d73;
+}
+.btn-station:active {
+  background-color: #475d73;
+  background-image: -webkit-radial-gradient(circle, #475d73 10%, #2c3e50 11%);
+  background-image: -o-radial-gradient(circle, #475d73 10%, #2c3e50 11%);
+  background-image: radial-gradient(circle, #475d73 10%, #2c3e50 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+          background-size: 1000%;
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+/*
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 16px;
+  font-size: 13px;
+  line-height: 1.846;
+  
+}
