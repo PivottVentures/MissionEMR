@@ -22,6 +22,16 @@
 						{% for visit in pat.visit_patient %}
 							<ul>
 							<li>{{visit.visit_date}} {{visit.ticket_number}} {{visit.payment_type}} {{visit.payment_notes}}</li>
+							{% for prescription in visit.prescription_visit %}
+								<ul>
+								<li>Prescription: {{prescription.id}} {{prescription.doctor_prescription}} {{prescription.dentist_prescription}}</li>
+								</ul>
+							{% endfor %}
+							{% for lab in visit.lab_visit %}
+								<ul>
+								<li>Lab: {{lab.id}} {{lab.prescribed_test}}</li>
+								</ul>
+							{% endfor %}
 							</ul>
 						{% endfor %}
 					{% endfor %}

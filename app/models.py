@@ -159,7 +159,7 @@ class Visit(db.Model):
     ### Registration Payment ###
     visit_type = db.Column(db.SmallInteger)  # 0 = doctor, 1 = dentist
     ticket_number = db.Column(db.SmallInteger)
-    payment_type = db.Column(db.String(15))  # types and values TBD
+    payment_type = db.Column(db.String(6))  # types and values TBD
     payment_other_amount = db.Column(db.Float(), default=0)
     payment_notes = db.Column(db.Text, default='')
 
@@ -183,13 +183,13 @@ class Visit(db.Model):
     ### Dentist Exam Notes ###
 
     ## Reason for Consultation ##
-    sharp_pain = db.Column(db.Boolean)
-    dental_sensitivity = db.Column(db.Boolean)
+    pain = db.Column(db.Boolean)
+    sensitivity = db.Column(db.Boolean)
     bleeding = db.Column(db.Boolean)
     abscess = db.Column(db.Boolean)
-    tooth_mobility = db.Column(db.Boolean)
-    other_reason = db.Column(db.Boolean)
-    other_reason_text = db.Column(db.Text)
+    mobility = db.Column(db.Boolean)
+    other = db.Column(db.Boolean)
+    other_reason = db.Column(db.Text)
     ## Exam ##
     tooth_numbers_treated = db.Column(db.String(400))
     diagnosis_dentist = db.Column(db.Text)

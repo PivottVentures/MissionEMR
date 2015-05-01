@@ -14,7 +14,7 @@
 				{% block form %}
 				
 				{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="{{ url_for('doctor_exam', patient_id=patient.id) }}" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('dentist_vitals', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<input type="submit" class="btn" value="View" name='view_registration'>
 					<br>
@@ -50,52 +50,36 @@
 						
 					</div>
 					<div style="float: left;">
-					
-						{{ render_field(form.visit_date) }} Today button  Last button
-						<!-- Below will need to change based on selection above -->
-						{% set visit = patient.visit_patient[0] %}
-						<br>
-						<div>
-							<b>Vitals</b> Weight: {{visit.weight}}	Height: {{visit.height}}
-							<input type="submit" class="btn" value="View" name='view_vitals'>
-							<br>
-							Systolic Blood Pressure: {{visit.bp_systolic}}	Diastolic Blood Pressure: {{visit.bp_diastolic}}
-							<br>
-							Temperature: {{visit.temperature}}	Pulse: {{visit.pulse}}
-							<br>
-							Respirations: {{visit.respirations}}
-							{% if patient.gender == 'Female' %}
-								Last Menstrual Cycle: {{visit.period_last_date}}
-							{% endif %}
-						</div>
-						<div>
-							<b>Exam</b>
-							{% set t = form.complaint.process_data(visit.complaint) %}<!-- This works, but I don't like it -->
-							{{ form.complaint.label }}
-							{{ form.complaint(value=visit.complaint) }}<!-- I cannot figure out why this isn't working!!!! -->
-							{% for error in form.errors.complaint %}
-								<span style="color: red;">[{{error}}]</span>
-							{% endfor %}
-							<br>
-							{{ render_field(form.exam) }}
-							<br>
-							{{ render_field(form.diagnosis) }}
-							<br>
-							{{ render_field(form.treatment) }}
-							<br>
-							{{ render_field(form.prescrip_given) }}
-							<br>
-							{{ render_field(form.prescrip_descrip) }}
-							<br>
-							{{ render_field(form.lab_given) }}
-							<br>
-							{{ render_field(form.lab_test) }}
-							<br>
-							<input type="submit" class="btn btn-primary" value="Back" name='back'>
-							<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
-						</div>
-					</div>
+					<b>Vitals</b>
 					<br>
+					{{ render_field(form.weight) }}
+					<br>
+					{{ render_field(form.bp_systolic) }}
+					<br>
+					{{ render_field(form.bp_diastolic) }}
+					<br>
+					<br>
+					<b>Reasons for Consultation</b>
+					<br>
+					{{ render_field(form.pain) }}
+					<br>
+					{{ render_field(form.bleeding) }}
+					<br>
+					{{ render_field(form.sensitivity) }}
+					<br>
+					{{ render_field(form.mobility) }}
+					<br>
+					{{ render_field(form.abscess) }}
+					<br>
+					{{ render_field(form.other) }}
+					<br>
+					{{ render_field(form.other_reason) }}
+					<br>
+					<br>					
+					<input type="submit" class="btn btn-primary" value="Back" name='back'>
+					<input type="submit" class="btn btn-primary" value="Save" name='save'>
+					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+					</div>
 				</form>
 				
 				{% endblock %}
@@ -103,3 +87,4 @@
 		</div>
 	</div>
 {% endblock view %}
+
