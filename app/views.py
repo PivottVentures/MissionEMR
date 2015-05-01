@@ -1,6 +1,6 @@
 from app import app, login_manager, db
 from models import   User, Patient, Visit, Prescription, Lab#, Pharmacy, Status, Test_Patient
-from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals, Exam#, Date_Range, Contact, Pharmacy
+from forms import Patients, Login, Registration_Search, Registration_Patient, Payment, Background, Vitals_Vitals, Doctor_Exam, Dentist_Vitals, Dentist_Exam#, Date_Range, Contact, Pharmacy
 from flask import render_template, flash, redirect, url_for, request, session, g
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -153,7 +153,9 @@ def patient_chart(patient_id):
 	patient = Patient.query.filter_by(id=patient_id).first()
 	return render_template('patient_chart.html', patient=patient)
 
+##########################
 ### Registration Views ###
+##########################
 
 @app.route('/registration_search', methods=['GET', 'POST'])
 @login_required
@@ -310,16 +312,19 @@ def registration_payment(patient_id):
 		if new_visit is not None:
 			db.session.add(new_visit)
 			db.session.commit()
-			
-			if request.form.get('continue'):
-				return redirect(url_for('registration_output'))
+# 			return redirect(url_for('registration_output'))
+# 		else:
+			# Do some error handling
+# 		if request.form.get('continue'):
+# 			return redirect(url_for('registration_output'))
 		
 		return redirect(url_for('registration_output'))
 
 	return render_template('registration_payment.html', patient=patient, form=form)
 
-
+####################
 ### Vitals Views ###
+####################
 
 @app.route('/vitals', methods=['GET', 'POST'])
 @login_required
@@ -402,10 +407,11 @@ def vitals_background(patient_id):
 @app.route('/vitals_vitals/<patient_id>', methods=['GET', 'POST'])
 @login_required
 def vitals_vitals(patient_id):
-	form = Vitals()
+	form = Vitals_Vitals()
 	
 	#Navigate to different pages
 	if request.form.get('back'):
+		# Either vitals or vitals_background
 		return redirect(url_for('vitals_background', patient_id=patient_id))
 	
 	patient = Patient.query.filter_by(id=patient_id).first()
@@ -433,7 +439,7 @@ def vitals_vitals(patient_id):
 		elif request.form.get('save'):
 			return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
 		else:
-			return redirect(url_for('vitals'))
+			return redirect(url_for('doctor', patient_id=patient_id))
 
 	elif visit is not None:
 		form.weight.data = visit.weight
@@ -448,8 +454,9 @@ def vitals_vitals(patient_id):
 
 	return render_template('vitals_vitals.html', patient=patient, visit=visit, form=form)
 
-
+####################
 ### Doctor Views ###
+####################
 
 @app.route('/doctor', methods=['GET', 'POST'])
 @login_required
@@ -463,7 +470,7 @@ def doctor():
 @app.route('/doctor_exam/<patient_id>', methods=['GET', 'POST'])
 @login_required
 def doctor_exam(patient_id):
-	form=Exam()
+	form = Doctor_Exam()
 	
 	#Navigate to different pages
 	if request.form.get('back'):
@@ -486,7 +493,7 @@ def doctor_exam(patient_id):
 	
 	if form.validate_on_submit() and request.form.get('continue'):
 		#Need to check for doctor visit below?
-		visit = Visit.query.filter_by(visit_date=form.visit_date.data).first()
+		visit = Visit.query.filter_by(visit_date=form.visit_date.data, visit_patient_id=patient_id).first()
 		
 		visit.complaint = form.complaint.data
 		visit.hpi = form.history.data
@@ -515,7 +522,8 @@ def doctor_exam(patient_id):
 			if new_lab is not None:
 				db.session.add(new_lab)
 				db.session.commit()
-				
+		
+		# Should go to Lab, Pharmacy, or done?		
 		return redirect(url_for('registration_output'))
 # This will probably be taken care of in the template
 # 	elif visit is not None:
@@ -529,7 +537,95 @@ def doctor_exam(patient_id):
 	
 	return render_template('doctor_exam.html', patient=patient, form=form)
 
+#####################
+### Dentist Views ###
+#####################
 
+@app.route('/dentist', methods=['GET', 'POST'])
+@login_required
+def dentist():
+	
+	# Change to filter patients based on status=doctor
+	patients = Patient.query.all()
+	
+	return render_template('dentist.html', patients=patients)
+
+@app.route('/dentist_payment/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def dentist_payment(patient_id):
+	form = Payment()
+
+	if request.form.get('back'):
+		return redirect(url_for('dentist'))
+
+	patient = Patient.query.filter_by(id=patient_id).first()
+	visit = Visit.query.filter_by(visit_patient_id=patient_id, visit_date=datetime.date.today()).first()
+
+	if form.validate_on_submit() and request.form.get('continue'):
+		visit.ticket_number = form.ticket_number.data
+		visit.payment_type = form.payment_type.data
+		visit.payment_other_amount = form.payment_amount.data
+		visit.payment_notes = form.payment_notes.data
+		
+		db.session.commit()
+		# If first time patient
+		return redirect(url_for('vitals_background', patient_id=patient_id))
+		
+# 		else: go to dentist_vitals
+
+	return render_template('dentist_payment.html', patient=patient, form=form)
+
+@app.route('/dentist_vitals/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def dentist_vitals(patient_id):
+	form = Dentist_Vitals()
+	
+	#Navigate to different pages
+	if request.form.get('back'):
+		# Either dentist_payment or vitals_background
+		return redirect(url_for('vitals_background', patient_id=patient_id))
+	
+	patient = Patient.query.filter_by(id=patient_id).first()
+	visit = Visit.query.filter_by(visit_patient_id=patient_id, visit_date=datetime.date.today()).first()
+	
+	if form.validate_on_submit() and (request.form.get('save') 
+									or request.form.get('continue')
+									or request.form.get('view_registration')
+									or request.form.get('view_background')):
+		visit.weight = form.weight.data
+		visit.bp_systolic = form.bp_systolic.data
+		visit.bp_diastolic = form.bp_diastolic.data
+		visit.pain = form.pain.data
+		visit.bleeding = form.bleeding.data
+		visit.sensitivity = form.sensitivity.data
+		visit.mobility = form.mobility.data
+		visit.abscess = form.abscess.data
+		visit.other = form.other.data
+		visit.other_reason = form.other_reason.data
+		
+		db.session.commit()
+		if request.form.get('view_registration'):
+			return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+		elif request.form.get('view_background'):
+			return redirect(url_for('vitals_background', patient_id=patient_id))
+		elif request.form.get('save'):
+			return render_template('dentist_vitals.html', patient=patient, visit=visit, form=form)
+		else:
+			return redirect(url_for('dentist_exam'))
+
+	elif visit is not None:
+		form.weight.data = visit.weight
+		form.bp_systolic.data = visit.bp_systolic
+		form.bp_diastolic.data = visit.bp_diastolic
+		form.pain.data = visit.pain
+		form.bleeding.data = visit.bleeding
+		form.sensitivity.data = visit.sensitivity
+		form.mobility.data = visit.mobility
+		form.abscess.data = visit.abscess
+		form.other.data = visit.other
+		form.other_reason.data = visit.other_reason
+
+	return render_template('dentist_vitals.html', patient=patient, visit=visit, form=form)
 
 	### Base Views ###
 
