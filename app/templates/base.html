@@ -141,17 +141,16 @@
                     <form class="form-inline">
                         <div class="col-md-12">
                             <div class="form-group-sm">
-                                    <label for="site_search">
-                                    <select class="control-label" id="search_select">
-                                        <option>Station</option>
-                                        <option>First Name</option>
-                                        <option>Last Name</option>
-                                        <option>Birthday</option>
-                                    </select>
-                                    </label><br>
+                                <label class="sr-only" for="site_search">Site Search</label>
+                                <select id="search_term">
+                                    <option>Station</option>
+                                    <option>First Name</option>
+                                    <option>Last Name</option>
+                                    <option>Birthday</option>
+                                </select>
+                                <br>
                                 <input type="text" class="form-control" placeholder="Search" id="search_text">
-                                <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i>
-                            </button>
+                                <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                     </form>
