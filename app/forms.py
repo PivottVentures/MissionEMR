@@ -8,7 +8,7 @@ from wtforms.validators import Required, Length, InputRequired, Optional,\
 ### Login Forms ###
 
 class Login(Form):
-	username = StringField("Username", validators=[Required(), Length(1, 64)])
+	username = StringField('Username', validators=[Required(), Length(1, 64)])
 	password = PasswordField('Password', validators=[Required()])
 
 ### Test Forms ###
@@ -17,7 +17,7 @@ class Patients(Form):
 	name_first = StringField('First Name', validators=[Required()])
 	name_last = StringField('Last Name', validators=[Required()])
 	age = IntegerField('Age', validators=[Required()])
-	gender = RadioField('Gender', choices=[(0,'Male'), (1,'Female')], coerce=int)
+	gender = RadioField('Sex', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
 
 
 class Registration_Search(Form):
@@ -34,30 +34,30 @@ class Registration_Search(Form):
 ### Registration ###
 
 class Registration_Patient(Form): # DONE!
-	name_first = StringField('First Name', validators=[Required()])
-	name_last = StringField('Last Name', validators=[Required()])
-	nickname = StringField('Nickname')
-	birth_date = DateField('Date of Birth', format='%m/%d/%Y', validators=[Required()])
-	age = IntegerField('Age', validators=[Required()])
-	gender = RadioField('Gender', choices=[('Male','Male'), ('Female','Female')], validators=[Required()])
-	phone = StringField('Phone', validators=[Required()])
-	address = StringField('Address', validators=[Required()])
-	children_count = IntegerField("Number of Children", validators=[InputRequired()])
-	references = StringField('References')
-	occupation = StringField('Occupation')
-	mother_name = StringField("Mother's Name")
-	caretaker = StringField('Caretaker')
-	caretaker_relation = StringField('Relationship')
-	emergency_person = StringField('Emergency Contact Person')
-	emergency_number = StringField('Emergency Contact Number')
+	name_first = StringField('Prenom / First Name', validators=[Required()])
+	name_last = StringField('Nom / Last Name', validators=[Required()])
+	nickname = StringField('Nom / Nickname')
+	birth_date = DateField('Date de Naissance / Date of Birth', format='%m/%d/%Y', validators=[Required()])
+	age = IntegerField('Age/Age', validators=[Required()])
+	gender = RadioField('Sex/Gender', choices=[('Male','Male/Male'), ('Female','Femelle/Female')], validators=[Required()])
+	phone = StringField('Telephone / Phone', validators=[Required()])
+	address = StringField('Adresse / Address', validators=[Required()])
+	children_count = IntegerField("Nombre d'enfants / Number of Children", validators=[InputRequired()])
+	references = StringField('XXXXX / References')
+	occupation = StringField('Occupation / Occupation')
+	mother_name = StringField("Nom de la Mere / Mother's Name")
+	caretaker = StringField('Tuteur / Caretaker')
+	caretaker_relation = StringField('Parente / Relationship')
+	emergency_person = StringField('XXXXX / Emergency Contact Person')
+	emergency_number = StringField('XXXXX / Emergency Contact Number')
 
 class Payment(Form):  
-	ticket_number = IntegerField('Ticket Number', validators=[Required()])
-	payment_type = RadioField('Payment Type', choices=[('Money', 'Money'), ('Pink', "Pink Pass"), 
-																			('Blue', "Blue Pass"), ('Yellow', "Yellow Pass"),
-																			('Other', "Other")], validators=[Required()])
-	payment_amount = DecimalField('Other Amount', places=2, rounding=None, validators=[optional()])
-	payment_notes = StringField('Notes')
+	ticket_number = IntegerField('XXXXX / Ticket Number', validators=[Required()])
+	payment_type = RadioField('Type de Paiement / Payment Type', choices=[('Money', 'Argent/Money'), ('Pink Pass', "Carte D'abonnement/Pass"), 
+																			('Blue Pass', "Carte D'abonnement/Pass"), ('Yellow Pass', "Carte D'abonnement/Pass"),
+																			('Other', "Autre/Other")], validators=[Required()])
+	payment_amount = DecimalField('Autres Montant/Other Amount', places=2, rounding=None, validators=[optional()])
+	payment_notes = StringField('XXXXX / Notes')
 
 
 ### Vitals ###
@@ -73,97 +73,72 @@ class Background(Form):
 	# Conditions
 	hiv = BooleanField('HIV')
 	ht = BooleanField('Hypertension')
-	diabetes = BooleanField('Diabetes')
+	diabetes = BooleanField('Diabete / Diabetes')
 	tb = BooleanField('Tuberculosis')
-	epilepsy = BooleanField('Epilepsy')
-	asthma = BooleanField('Asthma')
-	sickle_cell_anemia = BooleanField('Sickle Cell')
-	heart_condition = BooleanField('Heart Condition')
-	blood_transfusion = BooleanField('Blood Transfusion')
+	epilepsy = BooleanField('Epilepsie / Epilepsy')
+	asthma = BooleanField('Asthme / Asthma')
+	sickle_cell_anemia = BooleanField('Drepanocytose / Sickle Cell')
+	heart_condition = BooleanField('Drepanocytose / Heart Condition')
+	blood_transfusion = BooleanField('Drepanocytose / Blood Transfusion')
 
 	# Habits
-	tea = BooleanField('Tea')
-	coffee = BooleanField('Coffee')
-	drugs = BooleanField('Drugs')
-	alcohol = BooleanField('Alcohol')
+	tea = BooleanField('The / Tea')
+	coffee = BooleanField('Cafe / Coffee')
+	drugs = BooleanField('La Drogues / Drugs')
+	alcohol = BooleanField('Alcool / Alcohol')
 
 	# Menstrual Cycle
-	period_age_start = IntegerField('First Period', validators=[Optional()])
+	period_age_start = IntegerField('Regles de Premiere / First Period', validators=[Optional()])
 
 	# Medical History
-	allergies = TextAreaField('Allergies')
-	immunizations = TextAreaField('Immunizations')
-	surgeries = TextAreaField('Surgeries')
-	family_history = TextAreaField('Family History')
-	background_notes = TextAreaField('Background Notes')
+	allergies = TextAreaField('Allergies / Allergies')
+	immunizations = TextAreaField('Vaccinations / Immunizations')
+	surgeries = TextAreaField('Chirurgies / Surgeries')
+	family_history = TextAreaField('Histoire de Famille / Family History')
+	background_notes = TextAreaField('Remarques Background / Background Notes')
 
-class Vitals_Vitals(Form):
-	weight = FloatField('Weight')
-	height = FloatField('Height')
-	bp_systolic = IntegerField('Systolic')
-	bp_diastolic = IntegerField('Diastolic')
-	pulse = IntegerField('Pulse')
-	temperature = FloatField('Temperature', validators=[optional()])
-	respirations = FloatField('Respirations', validators=[optional()])
-	period_last_date = DateField('Last Period', format='%m/%d/%Y', validators=[Optional()])
-	complaint = TextAreaField('Complaint')
+class Vitals(Form):
+	weight = FloatField('Poids / Weight')
+	height = FloatField('Hauteur / Height')
+	bp_systolic = IntegerField('Systolique / Systolic')
+	bp_diastolic = IntegerField('Diastolique / Diastolic')
+	pulse = IntegerField('Implusion / Pulse')
+	temperature = FloatField('Temperature / Temperature', validators=[optional()])
+	respirations = FloatField('Respirations / Respirations', validators=[optional()])
+	period_last_date = DateField('Regles de Dernier/ Last Period', format='%m/%d/%Y', validators=[Optional()])
+	complaint = TextAreaField('Plainte / Complaint')
 
 
 ### Doctor Visit ###
 
-class Doctor_Exam(Form):
-	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')], coerce=unicode)
-	complaint = TextAreaField('Complaint')
-	history = TextAreaField('History')
-	exam = TextAreaField('Exam')
-	diagnosis = TextAreaField('Diagnosis')
-	treatment = TextAreaField('Treatment')
-	prescrip_given = BooleanField('Prescription Given')
-	prescrip_descrip = TextAreaField('Prescription Description')
-	lab_given = BooleanField('Lab Given')
-	lab_test = TextAreaField('Lab Tests')
+class Exam(Form):
+	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')])
+	complaint = TextAreaField('Plainte / Complaint')
+	history = TextAreaField('Histoire / History')
+	exam = TextAreaField('Exam / Exam')
+	diagnosis = TextAreaField('Diagnostic / Diagnosis')
+	treatment = TextAreaField('Traitement / Treatment')
+	follow_up = TextAreaField('Suivre / Follow Up')
+	exam_notes = TextAreaField("Notes d'Examen / Exam Notes")
+	prescrip_given = BooleanField('Compte Tenu de la Prescription / Prescription Given')
+	prescrip_descrip = TextAreaField('Description de Prescription / Prescription Description')
 
-
-### Dentist ###
-
-class Dentist_Vitals(Form):
-	weight = FloatField('Weight')
-	bp_systolic = IntegerField('Systolic')
-	bp_diastolic = IntegerField('Diastolic')
-	pain = BooleanField('Sharp Pain')
-	bleeding = BooleanField('Bleeding')
-	sensitivity = BooleanField('Dental Sensitivity')
-	mobility = BooleanField('Tooth Mobility')
-	abscess = BooleanField('Abscess')
-	other = BooleanField('Other:')
-	other_reason = StringField('Other:')
-
-class Dentist_Exam(Form):
-	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')], coerce=unicode)
-	tooth_treated = StringField("Tooth #'s Treated:" )
-	diagnosis = TextAreaField('Diagnosis')
-	treatment = TextAreaField('Treatment')
-	prescrip_given = BooleanField('Prescription Given')
-	prescrip_descrip = TextAreaField('Prescription Description')
-	lab_given = BooleanField('Lab Given')
-	lab_test = TextAreaField('Lab Tests')
-	
 
 ### Pharmacy ###
 
 class Pharmacy(Form):
-	medication_given = StringField('Medication Given')
-	amount_given = StringField('Amount Given')
-	pharmacy_notes = TextAreaField('Notes')
+	medication_given = StringField('Medicament Donne / Medication Given')
+	amount_given = StringField('Quantite Donnee / Amount Given')
+	pharmacy_notes = TextAreaField('Notes / Notes')
 
 
 ### Base Forms ###
 
 class Date_Range(Form):
-	start_date = DateField('Start Date')
-	end_date = DateField('End Date')
+	start_date = DateField('Date de Debut / Start Date')
+	end_date = DateField('Date de Fin / End Date')
 
 class Contact(Form):
-	contact_name = StringField('Name')
+	contact_name = StringField('Prenom / Name')
 	reason = TextAreaField('Reason')
 
