@@ -3,29 +3,18 @@
 
 {% block view %}
 	<div class="col-sm-9">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<span class="glyphicon glyphicon-user"></span><b> Registration - Search or Add</b>
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-
+		{% block form %}
+      <div class="page-header">
+				<h4> Registration Search Results</h4>
+      </div>
 				<!-- SEARCH NAVBAR -->
                     <form method="POST" action="" class="form-inline" role="form">
                     	<center>
                         <div class="col-md-12">
                         	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <div class="form-group">
-                                    <label for="search_select" class="control-label">
-                                    	<select class="form-control" id="search_select">
-	                                        <option>First Name</option>
-	                                        <option>Last Name</option>
-	                                        <option>Birthday</option>
-	                                    </select>
-                                    </label>
-                                <input type="text" class="form-control" placeholder="Search" id="search_text">
+                                    <label for="search_select" class="control-label">{{ form.criteria }}</label>
+                                    {{ form.search_term(class="form-control", placeholder="Search") }}
                                 <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-search"></i>
                             </button>
                             </div>
@@ -33,89 +22,34 @@
                     </center>
                     </form>
                 <!-- END SEARCH NAVBAR -->
-				<br><br><br><br><br>
-
-
-					<form method="POST" action="" class="form-signin" role="form">
-						<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-						<div class="input-group">
-							{{ form.criteria.label }}
-							{{ form.criteria }}
-							{{ form.search_term(class="form-control", placeholder="Search") }}
-						</div>
-						<input type="submit" class="btn btn-success" value="Search" name='search'>
-						<br>
-						<br>
-						<br>
-						<ul>
-						{% for pat in patients %}
-							<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
-							<li><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{pat.name_last}}, {{pat.name_first}}, {{pat.gender}}, {{pat.age}}</a></li>
-						{% endfor %}
-						</ul>
-						<br>
-						<br>
-						<input type="submit" class="btn btn-warning" value="Add_testing" name="add">
-					</form>
-				
-					<table class="table table-striped table-hover ">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Column heading</th>
-      <th>Column heading</th>
-      <th>Column heading</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="info">
-      <td>3</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="success">
-      <td>4</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="danger">
-      <td>5</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="warning">
-      <td>6</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr class="active">
-      <td>7</td>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-  </tbody>
-</table> 
-
-				
-				{% endblock form %}
-			</div>
-		</div>
+					<table class="table table-striped table-hover table-condensed">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Sex</th>
+                <th>Age</th>
+                <th>Last Visit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pat in patients %}
+              <tr>
+                <td>{{pat.status}}</td>
+                <td><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{pat.name_first}}</a></td>
+                <td>{{pat.name_last}}</td>
+                <td>{{pat.gender}}</td>
+                <td>{{pat.age}}</td>
+                <td>FILLER</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table> 
+        {% endblock form %}
+        <form method="POST" action="" class="form-signin" role="form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <center><input type="submit" class="btn btn-warning" value="Add New Patient" name="add">
+        </form>
 	</div>
 {% endblock view %}

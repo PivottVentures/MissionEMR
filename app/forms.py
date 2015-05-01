@@ -8,22 +8,22 @@ from wtforms.validators import Required, Length, InputRequired, Optional,\
 ### Login Forms ###
 
 class Login(Form):
-	username = StringField("Nom d'utilisateur / Username", validators=[Required(), Length(1, 64)])
-	password = PasswordField('Mot de passe / Password', validators=[Required()])
+	username = StringField('Username', validators=[Required(), Length(1, 64)])
+	password = PasswordField('Password', validators=[Required()])
 
 ### Test Forms ###
 
 class Patients(Form):
-	name_first = StringField('Prenom/First Name', validators=[Required()])
-	name_last = StringField('Nom/Last Name', validators=[Required()])
-	age = IntegerField('Age/Age', validators=[Required()])
-	gender = RadioField('Sex/Gender', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
+	name_first = StringField('First Name', validators=[Required()])
+	name_last = StringField('Last Name', validators=[Required()])
+	age = IntegerField('Age', validators=[Required()])
+	gender = RadioField('Sex', choices=[(0,'Male/Male'), (1,'Femelle/Female')], coerce=int)
 
 
 class Registration_Search(Form):
-	criteria = SelectField('Recherche Par/ Search By', choices=[('name_last', 'Nom/Last Name'), \
-						('name_first', 'Prenom/First Name'), ('phone', 'Telephone/Phone'), \
-						('address', 'Adresse/Address'), ('id', 'Nombre des Patiens/Patient Number')])
+	criteria = SelectField('Search By', choices=[('name_last', 'Last Name'), \
+						('name_first', 'First Name'), ('phone', 'Phone'), \
+						('address', 'Address'), ('id', 'Patient Number')])
 	search_term = StringField('Search Term', validators=[Required()])
 
 

@@ -1,6 +1,4 @@
 
-
-
 /* Custom brand logo
 -------------------------------------------------- */
 .navbar-brand{
@@ -108,4 +106,10 @@ fieldset[disabled] .btn-station.active {
   font-size: 13px;
   line-height: 1.846;
   
+}
+*/
+.page-header {
+  padding-bottom: 5.5px;
+  margin: 20px 0 20px;
+  border-bottom: 1px solid #eeeeee;
 }
