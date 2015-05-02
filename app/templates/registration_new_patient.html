@@ -2,7 +2,7 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
+	<div class="col-md-9">
 		<p></p>
 		<div class="panel panel-default">
 			<div class="panel-heading input-sm">
@@ -91,7 +91,41 @@
 					<br>
 					<input type="submit" class="btn btn-primary" value="Back" name='back'>
 					<input type="submit" class="btn btn-primary" value="Save" name='save'>
-					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+					<button type="button" class="btn btn-warning" data-target="#testing" data-toggle="modal">Modal</button>
+						<!-- Modal -->
+					    <div class="modal" id="testing" aria-labelledby="contactuslabel" aria-hidden="true">
+					        <div class="modal-dialog">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					                    <h4 class="modal-title">Appointment Type</h4>
+					                </div>
+					                <div class="modal-body">
+					                	<div class="row">
+					                		<div class="col-sm-3 col-sm-offset-3">
+					                			<div class="radio">
+					                				<label class="radio-inline">
+														<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"> <a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-stethoscope fa-3x"></i><br>Doctor</a>
+													</label>
+											    </div>
+											</div>
+											<div class="col-sm-3">
+											    <div class="radio">
+											        <label class="radio-inline">
+														<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"><a href="#" class="btn btn-station btn-nav-block"><span class="icon-i-dental" aria-hidden="true" style="font-size: 2.75em;"></span><br>Dentist</a>
+													</label>
+											    </div>
+											</div>
+										</div>
+					                </div>
+					                <div class="modal-footer">
+					                	<button type="close" class="btn btn-primary" data-dimsiss="modal" aria-hidden="true"><i class="fa fa-times fa-2x"></i></button>
+					                	<button type="submit" class="btn btn-success" aria-hidden="true"><i class="fa fa-arrow-right fa-2x"></i></button>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
 				</form>
 				
 				{% endblock %}
@@ -99,4 +133,3 @@
 		</div>
 	</div>
 {% endblock view %}
-
