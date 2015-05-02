@@ -191,7 +191,7 @@ class Visit(db.Model):
     other = db.Column(db.Boolean)
     other_reason = db.Column(db.Text)
     ## Exam ##
-    tooth_numbers_treated = db.Column(db.String(400))
+    teeth_treated = db.Column(db.String(400))
     diagnosis_dentist = db.Column(db.Text)
     treatment_dentist = db.Column(db.Text)
 
