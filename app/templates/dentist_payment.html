@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "wtf.html" as wtf %}
+
+{% block view %}
+	<div class="col-md-10">
+		<p></p>
+		<div class="panel panel-default">
+			<div class="panel-heading input-sm">
+				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
+			</div>
+			<div class="panel-body">
+				{% block form %}
+				
+				{% from "form_helpers.html" import render_field %}
+				<form method="POST" action="{{ url_for('dentist_payment', patient_id=patient.id) }}" class="form-signin" role="form">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+					<br>
+					
+					{{ render_field(form.ticket_number) }}
+					{{ render_field(form.payment_type) }}
+					{{ render_field(form.payment_amount) }}
+					{{ render_field(form.payment_notes) }}
+					
+					<br>
+					<br>
+					<br>
+					<input type="submit" class="btn btn-primary" value="Back" name='back'>
+					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+				
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock view %}
+
