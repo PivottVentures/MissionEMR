@@ -231,7 +231,7 @@ def registration_new_patient():
 			if request.form.get('save'):
 				return redirect(url_for('registration_existing_patient', patient_id=new_patient.id))
 			elif request.form.get('continue'):
-				return redirect(url_for('registration_output'))
+				return redirect(url_for('registration_payment', patient_id=new_patient.id))
 
 	return render_template('registration_new_patient.html', form=form)
 
