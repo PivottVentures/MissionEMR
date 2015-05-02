@@ -474,7 +474,7 @@ def doctor_exam(patient_id):
 	
 	#Navigate to different pages
 	if request.form.get('back'):
-		return redirect(url_for('doctor_exam'))
+		return redirect(url_for('doctor'))
 	
 	patient = Patient.query.filter_by(id=patient_id).first()
 	#Need to check for doctor visit below?
@@ -484,6 +484,7 @@ def doctor_exam(patient_id):
 		return redirect(url_for('registration_existing_patient', patient_id=patient_id))
 	elif request.form.get('view_background'):
 		return redirect(url_for('vitals_background', patient_id=patient_id))
+	#elif view_vitals --> how to pass back the visit to view?
 	
 	date_choices = []
 	for date in patient.visit_patient:
@@ -491,7 +492,8 @@ def doctor_exam(patient_id):
 		date_choices.append(choice)
 	form.visit_date.choices = date_choices
 	
-	if form.validate_on_submit() and request.form.get('continue'):
+	if form.validate_on_submit() and (request.form.get('continue')
+									or request.form.get('save')):
 		#Need to check for doctor visit below?
 		visit = Visit.query.filter_by(visit_date=form.visit_date.data, visit_patient_id=patient_id).first()
 		
@@ -525,6 +527,7 @@ def doctor_exam(patient_id):
 		
 		# Should go to Lab, Pharmacy, or done?		
 		return redirect(url_for('registration_output'))
+	
 # This will probably be taken care of in the template
 # 	elif visit is not None:
 # 		form.complaint.data = visit.complaint
@@ -626,6 +629,77 @@ def dentist_vitals(patient_id):
 		form.other_reason.data = visit.other_reason
 
 	return render_template('dentist_vitals.html', patient=patient, visit=visit, form=form)
+
+@app.route('/dentist_exam/<patient_id>', methods=['GET', 'POST'])
+@login_required
+def dentist_exam(patient_id):
+	form = Dentist_Exam()
+	
+	#Navigate to different pages
+	if request.form.get('back'):
+		return redirect(url_for('dentist_vitals', patient_id=patient_id))
+	
+	patient = Patient.query.filter_by(id=patient_id).first()
+	#Need to check for doctor visit below?
+	#visit = Visit.query.filter_by(visit_patient_id=patient_id, visit_date=datetime.date.today()).first()
+	
+	if request.form.get('view_registration'):
+		return redirect(url_for('registration_existing_patient', patient_id=patient_id))
+	elif request.form.get('view_background'):
+		return redirect(url_for('vitals_background', patient_id=patient_id))
+	#elif view_vitals --> how to pass back the visit to view?
+	
+	date_choices = []
+	for date in patient.visit_patient:
+		choice=(str(date.visit_date), str(date.visit_date))
+		date_choices.append(choice)
+	form.visit_date.choices = date_choices
+	
+	if form.validate_on_submit() and (request.form.get('continue')
+									or request.form.get('save')):
+		#Need to check for doctor visit below?
+		visit = Visit.query.filter_by(visit_date=form.visit_date.data, visit_patient_id=patient_id).first()
+		
+		visit.teeth_treated = form.teeth_treated.data
+		visit.diagnois_dentist = form.diagnosis.data
+		visit.treatment_detist = form.treatment.data
+		
+		if form.prescrip_given.data:
+			new_prescription = Prescription(
+				doctor_prescription = form.prescrip_descrip.data,
+				patient = patient,
+				visit = visit
+				)
+			
+			if new_prescription is not None:
+				db.session.add(new_prescription)
+				db.session.commit()
+		
+		if form.lab_given.data:
+			new_lab = Lab(
+				prescribed_test = form.lab_test.data,
+				patient = patient,
+				visit = visit
+				)
+			
+			if new_lab is not None:
+				db.session.add(new_lab)
+				db.session.commit()
+		
+		# Should go to Lab, Pharmacy, or done?		
+		return redirect(url_for('registration_output'))
+	
+# This will probably be taken care of in the template
+# 	elif visit is not None:
+# 		form.complaint.data = visit.complaint
+# 		form.history.data = visit.hpi
+# 		form.exam.data = visit.exam
+# 		form.diagnosis.data = visit.diagnois_doctor
+# 		form.treatment.data = visit.treatment_doctor
+# # 		form.follow_up.data = visit.follow_up
+# # 		form.exam_notes.data = visit.exam_notes
+	
+	return render_template('dentist_exam.html', patient=patient, form=form)
 
 	### Base Views ###
 

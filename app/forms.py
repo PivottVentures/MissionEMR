@@ -140,7 +140,7 @@ class Dentist_Vitals(Form):
 
 class Dentist_Exam(Form):
 	visit_date = SelectField('Visit Date:', choices=[('Today', 'Today')], coerce=unicode)
-	tooth_treated = StringField("Tooth #'s Treated:" )
+	teeth_treated = StringField("Tooth #'s Treated:" )
 	diagnosis = TextAreaField('Diagnosis')
 	treatment = TextAreaField('Treatment')
 	prescrip_given = BooleanField('Prescription Given')

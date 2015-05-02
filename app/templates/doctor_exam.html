@@ -26,7 +26,7 @@
 							Blood Type: {{patient.blood_type}}
 						{% endif %}
 						<br>
-						{% set conditions = {'Hypertension':patient.ht,'Tuberculosis': patient.tb, 
+						{% set conditions = {'Hypertension': patient.ht, 'Tuberculosis': patient.tb, 
 									'Asthma': patient.asthma, 'Heart Condition': patient.heart_condition, 
 									'HIV': patient.hiv, 'Diabetes': patient.diabetes, 'Epilepsy': patient.epilepsy, 
 									'Sickle Cell Anemia': patient.sickle_cell_anemia, 
@@ -76,6 +76,8 @@
 							{% for error in form.errors.complaint %}
 								<span style="color: red;">[{{error}}]</span>
 							{% endfor %}
+							<br>
+							{{ render_field(form.hpi) }}
 							<br>
 							{{ render_field(form.exam) }}
 							<br>
