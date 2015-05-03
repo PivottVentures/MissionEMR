@@ -1,0 +1,45 @@
+{% block background %}
+
+<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(246, 246, 246); padding: 10px;">
+
+    <div class="row" style="padding-bottom: 5px;">
+
+        <div class="col-sm-6">
+            <span style="font-size: 12pt; margin-bottom: 30px;">VITALS</span>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a class="btn btn-primary btn-xs" role="button" href="{{ url_for('vitals_vitals', patient_id=patient.id) }}">View</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 col-sm-offset-1">
+            <b>Weight:</b> {{visit.weight}}
+            <br>
+            <b>Height:</b> {{visit.height}}
+        </div>
+        <div class="col-sm-4">
+            <b>Respirations:</b> {{visit.respirations}}
+            <br>
+            <b>Temperature:</b> {{visit.temperature}}
+        </div>
+        <div class="col-sm-4">
+            <b>Pulse:</b> {{visit.pulse}}
+            <br>
+            <b>Blood Pressure:</b> {{visit.bp_systolic}}
+        </div>
+        <!-- <div class="col-sm-3">
+            <b>Systolic Blood Pressure:</b> {{visit.bp_systolic}}  
+            <b>Diastolic Blood Pressure:</b> {{visit.bp_diastolic}}
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">
+            {% if patient.gender == 'Female' %}
+                <b>Last Menstrual Cycle:</b> {{visit.period_last_date}}
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock background %}

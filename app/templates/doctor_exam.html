@@ -2,96 +2,97 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-<div class="col-sm-9">
-	<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
-		<div class="row">
-			<div class="col-sm-5">
-				<h4>{{patient.name_first}} {{patient.name_last}}</h4>
-			</div>
-			<div class="col-sm-3 col-sm-offset-4">
-				<span class="fa-stack fa-2x" style="color: #e1e1e1">
-					<i class="fa fa-circle-thin fa-stack-2x"></i>
-					<i class="fa fa-exclamation-triangle fa-stack-1x"></i>
-				</span>
-				<span class="fa-stack fa-2x" style="btn-primary">
-					<i class="fa fa-circle fa-stack-2x"></i>
-					<i class="fa fa-pencil fa-inverse fa-stack-1x"></i>
-				</span>
-			</div>
-		</div>
-		<div class="row" style="border-bottom: 0px solid #eeeeee;">
-			<div class="col-sm-12">
-				<a class="btn btn-primary" role="button" href="{{ url_for('registration_existing_patient', patient_id=patient.id) }}" >View</a>
- 				Sex: {{patient.gender}} Age: {{patient.age}} # of Kids: {{patient.children_count}} Occupation: {{patient.occupation}}
-			</div>
-		</div>
-	</div>
+
+<!-- SECTION: Patient Info -->
+<div class="col-sm-12">
+    {% include "template_patient_info.html" %}
 </div>
 
+<!-- SECTION: Background -->
+<div class="col-sm-3">
+    {% include "template_background.html" %}
+</div>
 
-<div class="row">
-		{% block form %}
-			{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="{{ url_for('doctor_exam', patient_id=patient.id) }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					<br>
-					<div class="col-sm-2" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
-						{% include "background_template.html" %}
-					</div>
-					<div class="col-sm-6" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
-						<div class="row">
-							{{ render_field(form.visit_date) }} Today button  Last button
-							<!-- Below will need to change based on selection above -->
-							{% set visit = patient.visit_patient[0] %}
-						</div>
-					
-						<div>
-							<b>Vitals</b> Weight: {{visit.weight}}	Height: {{visit.height}}
-							<input type="submit" class="btn" value="View" name='view_vitals'>
-							<br>
-							Systolic Blood Pressure: {{visit.bp_systolic}}	Diastolic Blood Pressure: {{visit.bp_diastolic}}
-							<br>
-							Temperature: {{visit.temperature}}	Pulse: {{visit.pulse}}
-							<br>
-							Respirations: {{visit.respirations}}
-							{% if patient.gender == 'Female' %}
-								Last Menstrual Cycle: {{visit.period_last_date}}
-							{% endif %}
-						</div>
-						<div>
-							<b>Exam</b>
-							{% set t = form.complaint.process_data(visit.complaint) %}<!-- This works, but I don't like it -->
-							{{ form.complaint.label }}
-							{{ form.complaint(value=visit.complaint) }}<!-- I cannot figure out why this isn't working!!!! -->
-							{% for error in form.errors.complaint %}
-								<span style="color: red;">[{{error}}]</span>
-							{% endfor %}
-							<br>
-							{{ render_field(form.history) }}
-							<br>
-							{{ render_field(form.exam) }}
-							<br>
-							{{ render_field(form.diagnosis) }}
-							<br>
-							{{ render_field(form.treatment) }}
-							<br>
-							{{ render_field(form.prescrip_given) }}
-							<br>
-							{{ render_field(form.prescrip_descrip) }}
-							<br>
-							{{ render_field(form.lab_given) }}
-							<br>
-							{{ render_field(form.lab_test) }}
-							<br>
-							<input type="submit" class="btn btn-primary" value="Back" name='back'>
-							<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
-						</div>
-					</div>
-					<br>
-				</form>
-				
-				{% endblock %}
-			</div>
-		</div>
-	</div>
-	{% endblock view %}
+    {% block form %}
+    {% from "form_helpers.html" import render_field %}
+        <form method="POST" action="{{ url_for('doctor_exam', patient_id=patient.id) }}" class="form-signin" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <!-- SECTION: Visit Date -->
+            <div class="col-sm-9">
+                {% include "template_visit_date.html" %}
+                
+                <!-- VISIT DATE Section -->
+                <!-- <div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(243, 243, 243); padding: 10px;">
+                    <span style="font-size: 12pt; margin-bottom: 30px;">{{ render_field(form.visit_date) }}</span> &nbsp; &nbsp; Today button &nbsp; &nbsp; Last button -->
+                    
+                    <!-- Below will need to change based on selection above -->
+                    <!-- {% set visit = patient.visit_patient[0] %}
+                </div> -->
+
+                <!-- SECTION: Vitals -->
+                {% include "template_vitals.html" %}
+                
+                <!-- VITALS Section -->
+                <!-- <div>
+                    <b>Vitals</b> Weight: {{visit.weight}}  Height: {{visit.height}}
+                    <input type="submit" class="btn" value="View" name='view_vitals'>
+                    <br>
+                    Systolic Blood Pressure: {{visit.bp_systolic}}  Diastolic Blood Pressure: {{visit.bp_diastolic}}
+                    <br>
+                    Temperature: {{visit.temperature}}  Pulse: {{visit.pulse}}
+                    <br>
+                    Respirations: {{visit.respirations}}
+                    {% if patient.gender == 'Female' %}
+                        Last Menstrual Cycle: {{visit.period_last_date}}
+                    {% endif %}
+                </div> -->
+
+                <!-- SECTION: Exam -->
+                <div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(246, 246, 246); padding: 10px;">
+                    <div class="row" style="padding-bottom: 5px;">
+                        <div class="col-sm-6">
+                            <span style="font-size: 12pt; margin-bottom: 30px;">EXAM</span>
+                        </div>
+                        <!-- <div class="col-sm-6 text-right">
+                            <a class="btn btn-primary btn-xs" role="button" href="{{ url_for('doctor_exam', patient_id=patient.id) }}">View</a> 
+                        </div> -->
+                    </div>
+
+
+                <!-- EXAM Section -->
+                <div>
+                    
+                    {% set t = form.complaint.process_data(visit.complaint) %}<!-- This works, but I don't like it -->
+                    {{ form.complaint.label }}
+                    {{ form.complaint(value=visit.complaint) }}<!-- I cannot figure out why this isn't working!!!! -->
+                    {% for error in form.errors.complaint %}
+                        <span style="color: red;">[{{error}}]</span>
+                    {% endfor %}
+                    <br>
+                    {{ render_field(form.history) }}
+                    <br>
+                    {{ render_field(form.exam) }}
+                    <br>
+                    {{ render_field(form.diagnosis) }}
+                    <br>
+                    {{ render_field(form.treatment) }}
+                    <br>
+                    {{ render_field(form.prescrip_given) }}
+                    <br>
+                    {{ render_field(form.prescrip_descrip) }}
+                    <br>
+                    {{ render_field(form.lab_given) }}
+                    <br>
+                    {{ render_field(form.lab_test) }}
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Back" name='back'>
+                    <input type="submit" class="btn btn-primary" value="Continue" name='continue'>
+                </div>
+            </div>
+            <br>
+        </form>
+            
+    {% endblock form %}
+
+{% endblock view %}

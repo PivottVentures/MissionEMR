@@ -2,36 +2,34 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Dentist - Patients</b>
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				<form method="POST" action="{{ url_for('dentist') }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					
-
-
-					<br>
-					<br>
-					<br>
-					<ul>
-					{% for pat in patients %}
-						<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
-						<li><a href="{{ url_for('dentist_payment', patient_id=pat.id) }}">{{pat.name_first}} {{pat.name_last}} {{pat.gender}}	{{pat.age}}</a></li>
-					{% endfor %}
-					</ul>
-					<br>
-					<br>
-					
-				</form>
-				
-				{% endblock %}
-			</div>
-		</div>
+<p></p>
+<div class="panel panel-default">
+	<div class="panel-heading input-sm">
+		<span class="glyphicon glyphicon-user"></span><b> Dentist - Patients</b>
 	</div>
+	<div class="panel-body">
+		{% block form %}
+		
+		<form method="POST" action="{{ url_for('dentist') }}" class="form-signin" role="form">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			
+
+
+			<br>
+			<br>
+			<br>
+			<ul>
+			{% for pat in patients %}
+				<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
+				<li><a href="{{ url_for('dentist_payment', patient_id=pat.id) }}">{{pat.name_first}} {{pat.name_last}} {{pat.gender}}	{{pat.age}}</a></li>
+			{% endfor %}
+			</ul>
+			<br>
+			<br>
+			
+		</form>
+		
+		{% endblock %}
+	</div>
+</div>
 {% endblock view %}

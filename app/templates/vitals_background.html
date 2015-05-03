@@ -2,23 +2,20 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
+
+<!-- SECTION: Patient Info -->
+<div class="col-sm-12">
+    {% include "template_patient_info.html" %}
+</div>
+
+	{% block form %}
+	{% from "form_helpers.html" import render_field %}
+		<form method="POST" action="{{ url_for('vitals_background', patient_id=patient.id) }}" class="form-signin" role="form">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 				<br>
-				Sex: {{patient.gender}} Age: {{patient.age}} # of Kids: {{patient.children_count}} Occupation: {{patient.occupation}}
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="{{ url_for('vitals_background', patient_id=patient.id) }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					<input type="submit" class="btn" value="View" name='view'>
-					<br>
-					<br>
+				<br>
+			<div class="col-sm-12">
+				<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(246, 246, 246); padding: 10px;">
 					{{ render_field(form.blood_type) }}
 					<br>
 					{{ render_field(form.hiv) }}
@@ -37,7 +34,7 @@
 					{{ render_field(form.alcohol) }}
 					{{ render_field(form.drugs) }}
 					<br>
-<!-- 					Placeholder: Need a check here for Female to display -->
+			<!-- 					Placeholder: Need a check here for Female to display -->
 					{{ render_field(form.period_age_start, class="form-control") }}
 					<br>
 					{{ render_field(form.allergies) }}
@@ -50,14 +47,18 @@
 					<br>
 					{{ render_field(form.background_notes) }}
 					<br>
-					<input type="submit" class="btn btn-primary" value="Back" name='back'>
-					<input type="submit" class="btn btn-primary" value="Save" name='save'>
-					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
-				</form>
-				
-				{% endblock %}
+				</div>
 			</div>
-		</div>
+		</form>
+	{% endblock form %}
+
+	<!-- ACTION BUTTONS -->
+	<div class="col-sm-12 text-right">
+		<button type="submit" class="btn btn-primary" aria-hidden="true" value="Back" name='back'><i class="fa fa-arrow-left fa-2x"></i></button>
+		<button type="submit" class="btn btn-primary" aria-hidden="true" value="Save" name='cancel'><i class="fa fa-check fa-2x"></i></button>
+		<button type="button" class="btn btn-success" data-target="#testing" data-toggle="modal"><i class="fa fa-arrow-right fa-2x"></i></button>
 	</div>
+	
+
 {% endblock view %}
 

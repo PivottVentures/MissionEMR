@@ -3,28 +3,26 @@
 
 
 {% block view %}
-<div class="col-sm-9">
-	
-  {% block form %}
-  <div class="page-header">
-		<h4> REGISTRATION</h4>
-  </div>
 
-	<!-- SEARCH NAVBAR -->
-  <form method="POST" action="" class="form-inline" role="form">
-  	<center>
-      <div class="col-md-12">
-      	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <div class="form-group">
-            <label for="search_select" class="control-label">{{ form.criteria }}</label>
-            {{ form.search_term(class="form-control", placeholder="Search") }}
-            <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-search"></i></button>
-        </div>
-      </div>
-    </center>
-  </form>
-  <!-- END SEARCH NAVBAR -->
-  {% endblock form %}
-
+{% block form %}
+<div class="page-header">
+	<h4> REGISTRATION</h4>
 </div>
+
+<!-- SEARCH NAVBAR -->
+<form method="POST" action="" class="form-inline" role="form">
+	<center>
+    <div class="col-md-12">
+    	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div class="form-group">
+          <label for="search_select" class="control-label">{{ form.criteria }}</label>
+          {{ form.search_term(class="form-control", placeholder="Search") }}
+          <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </center>
+</form>
+<!-- END SEARCH NAVBAR -->
+{% endblock form %}
+
 {% endblock view %}

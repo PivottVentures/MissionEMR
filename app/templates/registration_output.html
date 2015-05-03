@@ -2,47 +2,45 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-sm-9">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> All Patients</b>
-			</div>
-			<div class="panel-body">
-				{% block patients %}
-				
-				<form method="POST" action="{{ url_for('registration_output') }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+<p></p>
+<div class="panel panel-default">
+    <div class="panel-heading input-sm">
+        <span class="glyphicon glyphicon-user"></span><b> All Patients</b>
+    </div>
+    <div class="panel-body">
+        {% block patients %}
+        
+        <form method="POST" action="{{ url_for('registration_output') }}" class="form-signin" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
-					<table class="table table-stripped table-condensed">
+            <table class="table table-stripped table-condensed">
 
-					<ul>
-					{% for pat in patients %}
-						<li><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</a></li>
-						{% for visit in pat.visit_patient %}
-							<ul>
-							<li>{{visit.visit_date}} {{visit.ticket_number}} {{visit.payment_type}} {{visit.payment_notes}}</li>
-							{% for prescription in visit.prescription_visit %}
-								<ul>
-								<li>Prescription: {{prescription.id}} {{prescription.doctor_prescription}} {{prescription.dentist_prescription}}</li>
-								</ul>
-							{% endfor %}
-							{% for lab in visit.lab_visit %}
-								<ul>
-								<li>Lab: {{lab.id}} {{lab.prescribed_test}}</li>
-								</ul>
-							{% endfor %}
-							</ul>
-						{% endfor %}
-					{% endfor %}
-					</ul>
+            <ul>
+            {% for pat in patients %}
+                <li><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</a></li>
+                {% for visit in pat.visit_patient %}
+                    <ul>
+                    <li>{{visit.visit_date}} {{visit.ticket_number}} {{visit.payment_type}} {{visit.payment_notes}}</li>
+                    {% for prescription in visit.prescription_visit %}
+                        <ul>
+                        <li>Prescription: {{prescription.id}} {{prescription.doctor_prescription}} {{prescription.dentist_prescription}}</li>
+                        </ul>
+                    {% endfor %}
+                    {% for lab in visit.lab_visit %}
+                        <ul>
+                        <li>Lab: {{lab.id}} {{lab.prescribed_test}}</li>
+                        </ul>
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+            {% endfor %}
+            </ul>
 
-					</table>
+            </table>
 
-				</form>
-				
-				{% endblock patients %}
-			</div>
-		</div>
-	</div>
+        </form>
+        
+        {% endblock patients %}
+    </div>
+</div>
 {% endblock view %}

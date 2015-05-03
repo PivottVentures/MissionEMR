@@ -1,0 +1,31 @@
+{% block patient_info %}
+
+<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(238, 238, 238); padding: 10px; margin-top: 10px;">
+    <div class="row">
+
+        <!-- Patient Name -->
+        <div class="col-sm-8">
+            <h4>{{patient.name_first}} {{patient.name_last}}</h4>
+        </div>
+
+        <!-- Badges -->
+        <div class="col-sm-4 text-right">
+            <span class="fa-stack fa-2x" style="color: #e1e1e1">
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
+                <i class="fa fa-exclamation-triangle fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack fa-2x" style="btn-primary">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-pencil fa-inverse fa-stack-1x"></i>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+
+        <!-- Patient Info -->
+        <div class="col-sm-12">
+            <a class="btn btn-primary btn-xs" role="button" href="{{ url_for('registration_existing_patient', patient_id=patient.id) }}" >View</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Sex:</b> &nbsp; {{patient.gender}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Age:</b> &nbsp; {{patient.age}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Kids:</b> &nbsp; {{patient.children_count}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Occupation:</b> &nbsp; {{patient.occupation}}
+        </div>
+    </div>
+</div>
+{% endblock patient_info %}

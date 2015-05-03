@@ -1,11 +1,12 @@
 {% block doc -%}
 <!DOCTYPE html>
 <html{% block html_attribs %}{% endblock html_attribs %}>
+
 {%- block html %}
-  <head>
-    {%- block head %}
-    
-    <title>{% block title %}MissionEMR{% endblock title %}</title>
+<head>
+
+{%- block head %}
+<title>{% block title %}MissionEMR{% endblock title %}</title>
 
     {%- block metas %}
     <meta charset="utf-8">
@@ -16,83 +17,69 @@
     {%- endblock metas %}
 
     {%- block styles %}
-	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
-	<link href="/static/css/wfmi-style.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/wfmi-style.css" rel="stylesheet">
     <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="/static/css/custom.css" rel="stylesheet" media="screen">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!--<link href="/static/css/bootstrap-responsive.css" rel="stylesheet"> -->
-	{%- endblock styles %}
-    {%- endblock head %}
-  </head>
-  <body{% block body_attribs %}{% endblock body_attribs %}>
-    {% block body -%}
-		
-	<!-- NAVBAR -->
-    {% block navbar %}
-        <nav class="navbar navbar-default navbar-inverse">
-            <div class="container">
-	    		<div class="navbar-header">
-					<button type="button" class="navbar-toggle"
-					data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle Navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-		            </button>
-		            <a class="navbar-brand" href="home"></a>
-				</div>
-	            <div class="collapse navbar-collapse">
-	            	<ul class="nav navbar-nav">
-	                	<li><a href="#"></a></li>
-						<li><a href="master"><i class="fa fa-hospital-o fa-2x"></i> Clinic</a></li>
-						<li><a href="reports"><i class="fa fa-line-chart fa-2x"></i> Reports</a></li>
-		            </ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#contactus" data-target="#contactus" data-toggle="modal"><i class="fa fa-envelope fa-2x"></i></a></li>
-					    {% if current_user.is_authenticated() %}
-						<li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out fa-2x"></i></a></li>
-		                {% else %}
-		                <li><a href="{{ url_for('login') }}"><i class="fa fa-sign-in fa-2x"></i></a></li>
-		                {% endif %}
-		            </ul>
-				</div>
-			</div>
-		</nav>
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="alert alert-dismissable alert-warning">
-                        {% for message in messages %}
-                            {{ message }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-        </div>
-<!--
-                <div class="col-md-2">
-                    <div class="row">
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group-sm">
-                                <select class="control-label" id="search_select">
-                                    <option>Station</option>
-                                    <option>First Name</option>
-                                    <option>Last Name</option>
-                                    <option>Birthday</option>
-                                </select>
-                                <input type="text" class="form-control" placeholder="Search">
-                                <span class="form-group-btn">
-                                    <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
--->
+    {%- endblock styles %}
 
-    <!-- Modal -->
+{%- endblock head %}
+
+</head>
+<body{% block body_attribs %}{% endblock body_attribs %}>
+
+{% block body -%}
+	
+    {% block navbar %}
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container">
+    		<div class="navbar-header">
+				<button type="button" class="navbar-toggle"
+				data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="home"></a>
+			</div>
+            <div class="collapse navbar-collapse">
+            	<ul class="nav navbar-nav">
+                	<li><a href="#"></a></li>
+					<li><a href="master"><i class="fa fa-hospital-o fa-2x"></i> Clinic</a></li>
+					<li><a href="reports"><i class="fa fa-line-chart fa-2x"></i> Reports</a></li>
+	            </ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#contactus" data-target="#contactus" data-toggle="modal"><i class="fa fa-envelope fa-2x"></i></a></li>
+				    {% if current_user.is_authenticated() %}
+					<li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out fa-2x"></i></a></li>
+	                {% else %}
+	                <li><a href="{{ url_for('login') }}"><i class="fa fa-sign-in fa-2x"></i></a></li>
+	                {% endif %}
+	            </ul>
+			</div>
+		</div>
+	</nav>
+
+    <!-- ALERT MESSAGES -->
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-dismissable alert-warning">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- MODAL: Contact Us -->
     <div class="modal" id="contactus" aria-labelledby="contactuslabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,102 +89,120 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
-                    <fieldset>
-                        <div class="form-group">
-                            <label for="ContactUsName" class="col-lg-2 control-label">Name</label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="ContactUsEmail" placeholder="Your Name">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="ContactUsName" class="col-lg-2 control-label">Name</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ContactUsEmail" placeholder="Your Name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="ContactUsMessage" class="col-lg-2 control-label">Message</label>
-                            <div class="col-lg-10">
-                                <textarea class="form-control" rows="3" id="ContactUsMessage"></textarea>
+                            <div class="form-group">
+                                <label for="ContactUsMessage" class="col-lg-2 control-label">Message</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="3" id="ContactUsMessage"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-4 col-lg-offset-8">
-                                <button type="close" class="btn btn-default">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="form-group">
+                                <div class="col-lg-4 col-lg-offset-8">
+                                    <button type="close" class="btn btn-default">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     {%- endblock navbar %}
-	
+
     {% block content -%}
 
-	<!-- CONTENT -->
-    <div class="container">
-        {% block side_nav -%} 
-            <div class="col-sm-3 sidebar">
-                <div class="row">
-                    <!-- SEARCH NAVBAR -->
-                    <form class="form-inline">
-                        <div class="col-md-12">
-                            <div class="form-group-sm">
-                                <label class="sr-only" for="site_search">Site Search</label>
-                                <select id="search_term">
-                                    <option>Station</option>
-                                    <option>First Name</option>
-                                    <option>Last Name</option>
-                                    <option>Birthday</option>
-                                </select>
-                                <br>
-                                <input type="text" class="form-control" placeholder="Search" id="search_text">
-                                <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i></button>
-                            </div>
+    <!-- CONTENT -->
+    <div class="container"> 
+
+        <!-- SIDE NAVBAR -->
+        <div class="col-sm-3 sidebar">
+
+            {% block side_nav -%}
+
+            <!-- SITE SEARCH -->
+            <div class="row">
+                <form class="form-inline">
+                    <div class="col-md-12">
+                        <div class="form-group-sm">
+                            <label class="sr-only" for="site_search">Site Search</label>
+                            <select id="search_term">
+                                <option>Station</option>
+                                <option>First Name</option>
+                                <option>Last Name</option>
+                                <option>Birthday</option>
+                            </select>
+                            <br>
+                            <input type="text" class="form-control" placeholder="Search" id="search_text">
+                            <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-search"></i></button>
                         </div>
-                    </form>
-                    <!-- END SEARCH NAVBAR -->
+                    </div>
+                </form>
+            </div>
+            <br>
+
+            <!-- STATIONS -->
+            <!-- NEED TO BUILD url_for for each station -->
+            <div class="row">
+                <center>
+                    <!-- TODAY'S PATIENTS -->
+                    <a href="patients_today" class="btn btn-station btn-nav-block" style="width: 45%; padding-top:8px; padding-left:1px; padding-right:1px;" role="button"><i class="fa fa-users fa-2x"></i><br><p style="margin: 0 0 3px;">Today's<br>Patients</p></a>
+                </center>
+                <div class="col-sm-6 col-xs-6" style="padding-top:3px; padding-left:12px; padding-right:1px;">
+                    <!-- REGISTER -->
+                    <p style="margin: 0 0 3px;"><a href="{{ url_for('registration_search') }}" class="btn btn-station btn-nav-block" role="button">
+                        <i class="fa fa-pencil fa-3x"></i><br>Register</a></p>
+                    <!-- DOCTOR -->
+                    <p style="margin: 0 0 3px;"><a href="{{ url_for('doctor') }}" class="btn btn-station btn-nav-block" role="button">
+                        <i class="fa fa-stethoscope fa-3x"></i><br>Doctor</a></p>
+                    <!-- LAB -->
+                    <p style="margin: 0 0 3px;"><a href="{{ url_for('vitals') }}" class="btn btn-station btn-nav-block" role="button">
+                        <i class="fa fa-heartbeat fa-3x"></i><br>Lab</a></p>
                 </div>
-                <br>
-                <div class="row">
-                    <center><a href="patients_today" class="btn btn-station btn-nav-block" style="width: 45%; padding-top:8px; padding-left:1px; padding-right:1px;" role="button">
-                            <i class="fa fa-users fa-2x"></i><br><p style="margin: 0 0 3px;">Today's<br>Patients</p></a>
-                    <div class="col-sm-6 col-xs-6" style="padding-top:3px; padding-left:12px; padding-right:1px;">
-                        <p style="margin: 0 0 3px;"><a href="{{ url_for('registration_search') }}" class="btn btn-station btn-nav-block" role="button">
-                            <i class="fa fa-pencil fa-3x"></i><br>Register</a></p>
-                        <!-- NEED TO BUILD url_for for each station -->
-                        <p style="margin: 0 0 3px;"><a href="{{ url_for('doctor') }}" class="btn btn-station btn-nav-block" role="button">
-                            <i class="fa fa-stethoscope fa-3x"></i><br>Doctor</a></p>
-                         <p style="margin: 0 0 3px;"><a href="{{ url_for('vitals') }}" class="btn btn-station btn-nav-block" role="button">
-                            <i class="fa fa-heartbeat fa-3x"></i><br>Lab</a></p>
-                    </div>
-                    <div class="col-sm-6 col-xs-6" style="padding-top:3px; padding-left:1px; padding-right:12px;">
-                        <p style="margin: 0 0 3px;"><a href="{{ url_for('vitals') }}" class="btn btn-station btn-nav-block" role="button">
-                            <i class="fa fa-plus fa-3x"></i><br>Vitals</a></p>
-                        <p style="margin: 0 0 3px;"><a href="{{ url_for('doctor') }}" class="btn btn-station btn-nav-block" role="button">
-                            <span class="icon-i-dental" aria-hidden="true" style="font-size: 2.75em;"></span><br>Dental</a></p>
-                        <p style="margin: 0 0 3px;"><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-nav-block" role="button">
-                            <i class="fa fa-medkit fa-3x"></i><br>Pharmacy</a></p>
-                    </div>
+                <div class="col-sm-6 col-xs-6" style="padding-top:3px; padding-left:1px; padding-right:12px;">
+                    <!-- VITALS -->
+                    <p style="margin: 0 0 3px;"><a href="{{ url_for('vitals') }}" class="btn btn-station btn-nav-block" role="button">
+                        <i class="fa fa-plus fa-3x"></i><br>Vitals</a></p>
+                    <!-- DENTIST -->
+                    <p style="margin: 0 0 3px;"><a href="{{ url_for('doctor') }}" class="btn btn-station btn-nav-block" role="button">
+                        <span class="icon-i-dental" aria-hidden="true" style="font-size: 2.75em;"></span><br>Dental</a></p>
+                    <!-- PHARMACY -->
+                    <p style="margin: 0 0 3px;"><a href="{{ url_for('pharmacy') }}" class="btn btn-station btn-nav-block" role="button">
+                        <i class="fa fa-medkit fa-3x"></i><br>Pharmacy</a></p>
                 </div>
             </div>
+            {%- endblock side_nav %}
+        </div>
 
-        {%- endblock side_nav %}
-	
-    {% block view -%}
-        
-        {% block form -%}
-        {%- endblock form %}
+        <!-- MAIN VIEW -->
+        <div class="col-sm-9">
 
-    {%- endblock view %}
+            {% block view -%}
+                
+                {% block form -%}
+                {%- endblock form %}
 
+            {%- endblock view %}
+        </div>
+
+    </div>
     {%- endblock content %}
-	</div>
 
     {% block scripts %}
     	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
     {%- endblock scripts %}
-    {%- endblock body %}
-  </body>
+
+{%- endblock body %}
+
+</body>
 {%- endblock html %}
+
 </html>
 {% endblock doc -%}

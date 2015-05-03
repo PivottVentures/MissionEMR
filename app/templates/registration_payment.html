@@ -2,86 +2,99 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-		<div class="col-sm-9">
-			<div class="row" style="border-bottom: 0px solid #eeeeee;">
-				<div class="col-sm-5">
-				<h4>{{patient.name_first}} {{patient.name_last}}</h4>
-				</div>
-				<div class="col-sm-3 col-sm-offset-4">
-					<span class="fa-stack fa-2x" style="color: #e1e1e1">
-						<i class="fa fa-circle-thin fa-stack-2x"></i>
-						<i class="fa fa-exclamation-triangle fa-stack-1x"></i>
-					</span>
-					<span class="fa-stack fa-2x" style="btn-primary">
-						<i class="fa fa-circle fa-stack-2x"></i>
-						<i class="fa fa-pencil fa-inverse fa-stack-1x"></i>
-					</span>
-				</div>
-			</div>
-				{% block form %}
-				
-				{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="{{ url_for('registration_payment', patient_id=patient.id) }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					<br>
-					
-					{{ render_field(form.ticket_number) }}
-					{{ render_field(form.payment_type) }}
-					{{ render_field(form.payment_amount) }}
-					{{ render_field(form.payment_notes) }}
-					
-					<br>
-					<br>
-					<br>
-					<div class="col-sm-4 col-sm-offset-8">
-						
-						<button type="submit" class="btn btn-primary" aria-hidden="true" value="Back" name='back'><i class="fa fa-arrow-left fa-2x"></i></button>
-						<button type="submit" class="btn btn-primary" aria-hidden="true" value="Cancel" name='cancel'><i class="fa fa-close fa-2x"></i></button>
-						<button type="button" class="btn btn-success" data-target="#testing" data-toggle="modal"><i class="fa fa-arrow-right fa-2x"></i></button>
-							<!-- Modal -->
-						    <div class="modal" id="testing" aria-labelledby="contactuslabel" aria-hidden="true">
-						        <div class="modal-dialog">
-						            <div class="modal-content">
-						                <div class="modal-header">
-						                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						                    <h4 class="modal-title">Change Stations</h4>
+<!-- <div class="row" style="border-bottom: 0px solid #eeeeee;">
+	<div class="col-sm-5">
+	<h4>{{patient.name_first}} {{patient.name_last}}</h4>
+	</div>
+	<div class="col-sm-3 col-sm-offset-4">
+		<span class="fa-stack fa-2x" style="color: #e1e1e1">
+			<i class="fa fa-circle-thin fa-stack-2x"></i>
+			<i class="fa fa-exclamation-triangle fa-stack-1x"></i>
+		</span>
+		<span class="fa-stack fa-2x" style="btn-primary">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-pencil fa-inverse fa-stack-1x"></i>
+		</span>
+	</div>
+</div> -->
 
-						                </div>
-						                <div class="modal-body">
-						                	<div class="row">
-						                		<div class="col-sm-3 col-sm-offset-1">
-						                			<div class="radio">
-						                				<label class="radio-inline">
-															<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"> <a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-plus fa-3x"></i><br>Vitals</a>
-														</label>
-												    </div>
-												</div>
-						                		<div class="col-sm-3">
-						                			<div class="radio">
-						                				<label class="radio-inline">
-															<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"> <a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-heartbeat fa-3x"></i><br>Lab</a>
-														</label>
-												    </div>
-												</div>
-												<div class="col-sm-3">
-												    <div class="radio">
-												        <label class="radio-inline">
-															<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"><a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-medkit fa-3x"></i><br>Pharmacy</a>
-														</label>
-												    </div>
-												</div>
-											</div>
-						                </div>
-						                <div class="modal-footer">
-						                	<button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-2x"></i></button>
-						                	<button type="submit" class="btn btn-success" aria-hidden="true" value="Continue" name='continue'><i class="fa fa-arrow-right fa-2x"></i></button>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						</div>
-				</form>
-				{% endblock %}
+<!-- SECTION: Patient Info -->
+<div class="col-sm-12">
+    {% include "template_patient_info.html" %}
+</div>
+
+	{% block form %}
+	
+	{% from "form_helpers.html" import render_field %}
+	<form method="POST" action="{{ url_for('registration_payment', patient_id=patient.id) }}" class="form-signin" role="form">
+
+		<div class="col-sm-12">
+			<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(246, 246, 246); padding: 10px;">
+
+				<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+				<br>
+				
+				{{ render_field(form.ticket_number) }}
+				{{ render_field(form.payment_type) }}
+				{{ render_field(form.payment_amount) }}
+				{{ render_field(form.payment_notes) }}
+				
+				<br>
+				<br>
+				<br>
 			</div>
+
+			<!-- ACTION BUTTONS -->
+			<div class="col-sm-12 text-right">
+				<button type="submit" class="btn btn-primary" aria-hidden="true" value="Back" name='back'><i class="fa fa-arrow-left fa-2x"></i></button>
+				<button type="submit" class="btn btn-primary" aria-hidden="true" value="Cancel" name='cancel'><i class="fa fa-close fa-2x"></i></button>
+				<button type="button" class="btn btn-success" data-target="#testing" data-toggle="modal"><i class="fa fa-arrow-right fa-2x"></i></button>
+			</div>
+				
+				<!-- Modal -->
+			    <div class="modal" id="testing" aria-labelledby="contactuslabel" aria-hidden="true">
+			        <div class="modal-dialog">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			                    <h4 class="modal-title">Change Stations</h4>
+
+			                </div>
+			                <div class="modal-body">
+			                	<div class="row">
+			                		<div class="col-sm-3 col-sm-offset-1">
+			                			<div class="radio">
+			                				<label class="radio-inline">
+												<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"> <a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-plus fa-3x"></i><br>Vitals</a>
+											</label>
+									    </div>
+									</div>
+			                		<div class="col-sm-3">
+			                			<div class="radio">
+			                				<label class="radio-inline">
+												<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"> <a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-heartbeat fa-3x"></i><br>Lab</a>
+											</label>
+									    </div>
+									</div>
+									<div class="col-sm-3">
+									    <div class="radio">
+									        <label class="radio-inline">
+												<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"><a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-medkit fa-3x"></i><br>Pharmacy</a>
+											</label>
+									    </div>
+									</div>
+								</div>
+			                </div>
+			                <div class="modal-footer">
+			                	<button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-2x"></i></button>
+			                	<button type="submit" class="btn btn-success" aria-hidden="true" value="Continue" name='continue'><i class="fa fa-arrow-right fa-2x"></i></button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</form>
+	{% endblock %}
 {% endblock view %}
 

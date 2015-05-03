@@ -2,53 +2,51 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Registration - Add New Patient</b>
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="/test_input" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ render_field(form.name_first, class="form-control", placeholder="Last Name") }}
-					
+<p></p>
+<div class="panel panel-default">
+	<div class="panel-heading input-sm">
+		<span class="glyphicon glyphicon-user"></span><b> Registration - Add New Patient</b>
+	</div>
+	<div class="panel-body">
+		{% block form %}
+		
+		{% from "form_helpers.html" import render_field %}
+		<form method="POST" action="/test_input" class="form-signin" role="form">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			{{ render_field(form.name_first, class="form-control", placeholder="Last Name") }}
+			
 <!-- 					{{ form.name_first.label }} -->
 <!-- 					{{ form.name_first(class="form-control", placeholder="First Name") }} -->
 <!-- 					{% for error in form.errors.name_first %} -->
 <!-- 						<span style="color: red;">[{{error}}]</span> -->
 <!-- 					{% endfor %} -->
-					<br>
-					{{ form.name_last.label }}
-					{{form.name_last(class="form-control", placeholder="Last Name") }}
-					{% for error in form.errors.name_last %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.age.label }}
-					{{ form.age(class="form-control", placeholder="Age") }}
-					{% for error in form.errors.age %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.gender.label }}
-					{{ form.gender }}
-					{% for error in form.errors.gender %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					<br>
-					<input type="submit" class="btn btn-warning" value="Create" name='create'>
-					<input type="submit" class="btn btn-warning" value="Cancel" name='cancel'>
-				</form>
-				
-				{% endblock %}
-			</div>
-		</div>
+			<br>
+			{{ form.name_last.label }}
+			{{form.name_last(class="form-control", placeholder="Last Name") }}
+			{% for error in form.errors.name_last %}
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}
+			<br>
+			{{ form.age.label }}
+			{{ form.age(class="form-control", placeholder="Age") }}
+			{% for error in form.errors.age %}
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}
+			<br>
+			{{ form.gender.label }}
+			{{ form.gender }}
+			{% for error in form.errors.gender %}
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}
+			<br>
+			<br>
+			<br>
+			<input type="submit" class="btn btn-warning" value="Create" name='create'>
+			<input type="submit" class="btn btn-warning" value="Cancel" name='cancel'>
+		</form>
+		
+		{% endblock %}
 	</div>
+</div>
 {% endblock view %}
 

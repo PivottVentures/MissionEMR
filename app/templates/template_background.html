@@ -1,0 +1,54 @@
+{% block background %}
+
+<div class="row" style="border-bottom: 3px solid #fff; border-right: 3px solid #fff; background-color: rgb(238, 238, 238); padding: 10px;">
+    <div class="row" style="padding-bottom: 5px;">
+
+        <div class="col-sm-6">
+            <span style="font-size: 12pt; margin-bottom: 30px;">BACKGROUND</span>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a class="btn btn-primary btn-xs" role="button" href="{{ url_for('vitals_background', patient_id=patient.id) }}">View</a>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Blood Type -->
+            {% if patient.blood_type != 'Select' %}
+                <b>Blood Type:</b> {{patient.blood_type}}
+            {% endif %}
+            <br>
+
+            <!-- Conditions -->
+            {% set conditions = {'Hypertension': patient.ht, 'Tuberculosis': patient.tb, 
+                        'Asthma': patient.asthma, 'Heart Condition': patient.heart_condition, 
+                        'HIV': patient.hiv, 'Diabetes': patient.diabetes, 'Epilepsy': patient.epilepsy, 
+                        'Sickle Cell Anemia': patient.sickle_cell_anemia, 
+                        'Blood Transfusion': patient.blood_transfusion} %}
+            <b>Conditions</b>
+            {% for field in conditions %}
+                {% if conditions[field] == True %}
+                    <li>{{field}}</li>
+                {% endif %} 
+            {% endfor %}
+
+            <!-- Habits -->
+            {% set habits = {'Tea':patient.tea,'Coffee': patient.coffee, 
+                        'Drugs': patient.drugs, 'Alcohol': patient.alcohol} %}
+            <b>Habits</b>
+            {% for field in habits %}
+                {% if habits[field] == True %}
+                    <li>{{field}}</li>
+                {% endif %} 
+            {% endfor %}
+            <br>
+
+            <!-- Menstrual Cycle Start -->
+            <!-- Allergies -->
+            <!-- Immunizations -->
+            <!-- Surgeries -->
+            <!-- Family History -->
+            <!-- Notes -->
+        </div>
+    </div>
+</div>
+{% endblock background %}

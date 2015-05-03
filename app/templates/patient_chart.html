@@ -2,37 +2,34 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Patient info</b>
-			</div>
-			<div class="panel-body">
-				{% block patient %}
-				
-				<form method="POST" action="{{ url_for('patient_chart', patient_id=patient.id) }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					<ul>
-					<li>{{ patient.id }}</li>
-					<li>{{ patient.name_first }}</li>
-					<li>{{ patient.name_last }}</li>
-					<li>{{ patient.age }}</li>
-					<li>{{ patient.nickname }}</li>
-					<li>{{ patient.blood_type }}</li>
-					{% if patient.hiv == True %}
-						<li> HIV Positive</li>
-					{% endif %}
-					</ul>
-					<br>
-					<br>
-					<input type="submit" class="btn btn-warning" value="Add" name="add">
-					<br>
-				</form>
-				
-				{% endblock %}
-			</div>
-		</div>
+<p></p>
+<div class="panel panel-default">
+	<div class="panel-heading input-sm">
+		<span class="glyphicon glyphicon-user"></span><b> Patient info</b>
 	</div>
+	<div class="panel-body">
+		{% block patient %}
+		
+		<form method="POST" action="{{ url_for('patient_chart', patient_id=patient.id) }}" class="form-signin" role="form">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			<ul>
+			<li>{{ patient.id }}</li>
+			<li>{{ patient.name_first }}</li>
+			<li>{{ patient.name_last }}</li>
+			<li>{{ patient.age }}</li>
+			<li>{{ patient.nickname }}</li>
+			<li>{{ patient.blood_type }}</li>
+			{% if patient.hiv == True %}
+				<li> HIV Positive</li>
+			{% endif %}
+			</ul>
+			<br>
+			<br>
+			<input type="submit" class="btn btn-warning" value="Add" name="add">
+			<br>
+		</form>
+		
+		{% endblock %}
+	</div>
+</div>
 {% endblock view %}
-

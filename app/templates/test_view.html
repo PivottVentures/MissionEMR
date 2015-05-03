@@ -2,49 +2,47 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Patient info</b>
-			</div>
-			<div class="panel-body">
-				{% block patient %}
-				
-				<form method="POST" action="{{ url_for('test_view', patient_id=patient.id) }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.name_first.label }}
-					{{ form.name_first(class="form-control", value=patient.first_name) }}
-
-					{{ form.name_last.label }}
-					{{ form.name_last(class="form-control", value=patient.last_name) }}
-
-					{{ form.age.label }}
-					{{ form.age(class="form-control", value=patient.age) }}
-
-					{{ form.gender.label }}
-					<br>
-					{{ form.gender.choices[patient.gender][1]}}
-
-					<br>
-					<br>
-
-					<ul>
-					<li>{{ patient.id }}</li>
-					<li>{{ patient.first_name }}</li>
-					<li>{{ patient.last_name }}</li>
-					<li>{{ patient.age }}</li>
-					<li>{{ form.gender.choices[patient.gender][1]}}</li>
-					</ul>
-					<br>
-					<br>
-					<input type="submit" class="btn btn-warning" value="Add" name="add">
-					<br>
-				</form>
-				
-				{% endblock %}
-			</div>
-		</div>
+<p></p>
+<div class="panel panel-default">
+	<div class="panel-heading input-sm">
+		<span class="glyphicon glyphicon-user"></span><b> Patient info</b>
 	</div>
+	<div class="panel-body">
+		{% block patient %}
+		
+		<form method="POST" action="{{ url_for('test_view', patient_id=patient.id) }}" class="form-signin" role="form">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			{{ form.name_first.label }}
+			{{ form.name_first(class="form-control", value=patient.first_name) }}
+
+			{{ form.name_last.label }}
+			{{ form.name_last(class="form-control", value=patient.last_name) }}
+
+			{{ form.age.label }}
+			{{ form.age(class="form-control", value=patient.age) }}
+
+			{{ form.gender.label }}
+			<br>
+			{{ form.gender.choices[patient.gender][1]}}
+
+			<br>
+			<br>
+
+			<ul>
+			<li>{{ patient.id }}</li>
+			<li>{{ patient.first_name }}</li>
+			<li>{{ patient.last_name }}</li>
+			<li>{{ patient.age }}</li>
+			<li>{{ form.gender.choices[patient.gender][1]}}</li>
+			</ul>
+			<br>
+			<br>
+			<input type="submit" class="btn btn-warning" value="Add" name="add">
+			<br>
+		</form>
+		
+		{% endblock %}
+	</div>
+</div>
 {% endblock view %}
 

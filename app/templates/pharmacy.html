@@ -2,19 +2,17 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Pharmacy - Patients</b>
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				<i>Pharmacy</i>
-				
-				{% endblock %}
-			</div>
-		</div>
+<p></p>
+<div class="panel panel-default">
+	<div class="panel-heading input-sm">
+		<span class="glyphicon glyphicon-user"></span><b> Pharmacy - Patients</b>
 	</div>
+	<div class="panel-body">
+		{% block form %}
+		
+		<i>Pharmacy</i>
+		
+		{% endblock %}
+	</div>
+</div>
 {% endblock view %}

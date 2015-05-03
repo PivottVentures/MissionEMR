@@ -2,58 +2,60 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-sm-9">
-		{% block form %}
-      <div class="page-header" style="border-bottom: 0px solid #eeeeee;">
-				<h4> Registration Search Results</h4>
-      </div>
-				<!-- SEARCH NAVBAR -->
-        <div class="row">
-          <form method="POST" action="" class="form-inline" role="form">
-          	<center>
-              <div class="col-md-12">
-              	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                  <div class="form-group">
-                          <label for="search_select" class="control-label">{{ form.criteria }}</label>
-                          {{ form.search_term(class="form-control", placeholder="Search") }}
-                      <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-search"></i>
-                  </button>
-                  </div>
-              </div>
-          </center>
-          </form>
+
+    {% block form %}
+    <div class="page-header" style="border-bottom: 0px solid #eeeeee;">
+        <h4> REGISTRATION: Search Results</h4>
+    </div>
+    
+    <!-- SEARCH NAVBAR -->
+    <div class="row">
+        <form method="POST" action="" class="form-inline" role="form">
+            <center>
+                <div class="col-md-12">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="form-group">
+                        <label for="search_select" class="control-label">{{ form.criteria }}</label>
+                        {{ form.search_term(class="form-control", placeholder="Search") }}
+                        <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </center>
+        </form>
         <!-- END SEARCH NAVBAR -->
+        
         <br><br><br>
-					<table class="table table-striped table-hover table-condensed" style="margin: 0 10px 0px 10px;">
+        
+        <table class="table table-striped table-hover table-condensed" style="margin: 0 10px 0px 10px;">
             <thead>
-              <tr>
-                <th>Status</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Sex</th>
-                <th>Age</th>
-                <th>Last Visit</th>
-              </tr>
+                <tr>
+                    <th>Status</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Sex</th>
+                    <th>Age</th>
+                    <th>Last Visit</th>
+                </tr>
             </thead>
             <tbody>
-              {% for pat in patients %}
-              <tr  onclick="location.href='{{ url_for('registration_existing_patient', patient_id=pat.id) }}'" style="cursor:pointer;">
-                <td>{{pat.status}}</td>
-                <td><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{pat.name_first}}</a></td>
-                <td>{{pat.name_last}}</td>
-                <td>{{pat.gender}}</td>
-                <td>{{pat.age}}</td>
-                <td>FILLER</td>
-              </tr>
-              {% endfor %}
+                {% for pat in patients %}
+                    <tr  onclick="location.href='{{ url_for('registration_existing_patient', patient_id=pat.id) }}'" style="cursor:pointer;">
+                        <td>{{pat.status}}</td>
+                        <td><a href="{{ url_for('registration_existing_patient', patient_id=pat.id) }}">{{pat.name_first}}</a></td>
+                        <td>{{pat.name_last}}</td>
+                        <td>{{pat.gender}}</td>
+                        <td>{{pat.age}}</td>
+                        <td>FILLER</td>
+                    </tr>
+                {% endfor %}
             </tbody>
-          </table>
-          </div> 
-          <br><br>
-        {% endblock form %}
-        <form method="POST" action="" class="form-signin" role="form">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-          <center><input type="submit" class="btn btn-warning" value="Add New Patient" name="add">
-        </form>
-	</div>
+        </table>
+    </div> 
+    <br><br>
+    {% endblock form %}
+        
+<form method="POST" action="" class="form-signin" role="form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <center><input type="submit" class="btn btn-warning" value="Add New Patient" name="add">
+</form>
 {% endblock view %}

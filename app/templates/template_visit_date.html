@@ -1,0 +1,12 @@
+{% block visit_date %}
+
+<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(246, 246, 246); padding: 10px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <span style="font-size: 12pt; margin-bottom: 30px;">{{ render_field(form.visit_date) }}</span> &nbsp; &nbsp; &nbsp; Today button &nbsp; &nbsp; &nbsp; Last button
+            <!-- Below will need to change based on selection above -->
+            {% set visit = patient.visit_patient[0] %}
+        </div>
+    </div>  
+</div>
+{% endblock visit_date %}
