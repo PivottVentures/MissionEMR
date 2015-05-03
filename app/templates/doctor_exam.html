@@ -2,59 +2,49 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b>  {{patient.name_first}} {{patient.name_last}}</b>
-				<br>
-				Sex: {{patient.gender}} Age: {{patient.age}} # of Kids: {{patient.children_count}} Occupation: {{patient.occupation}}
+<div class="col-sm-9">
+	<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
+		<div class="row">
+			<div class="col-sm-5">
+				<h4>{{patient.name_first}} {{patient.name_last}}</h4>
 			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				{% from "form_helpers.html" import render_field %}
+			<div class="col-sm-3 col-sm-offset-4">
+				<span class="fa-stack fa-2x" style="color: #e1e1e1">
+					<i class="fa fa-circle-thin fa-stack-2x"></i>
+					<i class="fa fa-exclamation-triangle fa-stack-1x"></i>
+				</span>
+				<span class="fa-stack fa-2x" style="btn-primary">
+					<i class="fa fa-circle fa-stack-2x"></i>
+					<i class="fa fa-pencil fa-inverse fa-stack-1x"></i>
+				</span>
+			</div>
+		</div>
+		<div class="row" style="border-bottom: 0px solid #eeeeee;">
+			<div class="col-sm-12">
+				<a class="btn btn-primary" role="button" href="{{ url_for('registration_existing_patient', patient_id=patient.id) }}" >View</a>
+ 				Sex: {{patient.gender}} Age: {{patient.age}} # of Kids: {{patient.children_count}} Occupation: {{patient.occupation}}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+		{% block form %}
+			{% from "form_helpers.html" import render_field %}
 				<form method="POST" action="{{ url_for('doctor_exam', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					<input type="submit" class="btn" value="View" name='view_registration'>
 					<br>
-					<div style="float: left;">
-						Background
-						<input type="submit" class="btn" value="View" name='view_background'>
-						<br>
-						{% if patient.blood_type != 'Select' %}
-							Blood Type: {{patient.blood_type}}
-						{% endif %}
-						<br>
-						{% set conditions = {'Hypertension': patient.ht, 'Tuberculosis': patient.tb, 
-									'Asthma': patient.asthma, 'Heart Condition': patient.heart_condition, 
-									'HIV': patient.hiv, 'Diabetes': patient.diabetes, 'Epilepsy': patient.epilepsy, 
-									'Sickle Cell Anemia': patient.sickle_cell_anemia, 
-									'Blood Transfusion': patient.blood_transfusion} %}
-						Conditions
-						{% for field in conditions %}
-							{% if conditions[field] == True %}
-								<li>{{field}}</li>
-							{% endif %} 
-						{% endfor %}
-						<br>
-						{% set habits = {'Tea':patient.tea,'Coffee': patient.coffee, 
-									'Drugs': patient.drugs, 'Alcohol': patient.alcohol} %}
-						Habits
-						{% for field in habits %}
-							{% if habits[field] == True %}
-								<li>{{field}}</li>
-							{% endif %} 
-						{% endfor %}	
-						
-						
+					<div class="col-sm-2" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
+						{% include "background_template.html" %}
 					</div>
-					<div style="float: left;">
+					<div class="col-sm-6" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
+						<div class="row">
+							{{ render_field(form.visit_date) }} Today button  Last button
+							<!-- Below will need to change based on selection above -->
+							{% set visit = patient.visit_patient[0] %}
+						</div>
 					
-						{{ render_field(form.visit_date) }} Today button  Last button
-						<!-- Below will need to change based on selection above -->
-						{% set visit = patient.visit_patient[0] %}
-						<br>
 						<div>
 							<b>Vitals</b> Weight: {{visit.weight}}	Height: {{visit.height}}
 							<input type="submit" class="btn" value="View" name='view_vitals'>
@@ -77,7 +67,7 @@
 								<span style="color: red;">[{{error}}]</span>
 							{% endfor %}
 							<br>
-							{{ render_field(form.hpi) }}
+							{{ render_field(form.history) }}
 							<br>
 							{{ render_field(form.exam) }}
 							<br>
@@ -104,4 +94,4 @@
 			</div>
 		</div>
 	</div>
-{% endblock view %}
+	{% endblock view %}

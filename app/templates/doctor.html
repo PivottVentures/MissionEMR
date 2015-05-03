@@ -2,33 +2,42 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b> Doctor - Patients</b>
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				<form method="POST" action="{{ url_for('doctor') }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					<br>
-					<br>
-					<br>
-					<ul>
-					{% for pat in patients %}
-						<!-- <li>{{ pat.id }} {{ pat.name_first }} {{ pat.name_last }} {{ pat.age }} {{ pat.gender }}</li> -->
-						<li><a href="{{ url_for('doctor_exam', patient_id=pat.id) }}">{{pat.name_first}} {{pat.name_last}} {{pat.gender}}	{{pat.age}}</a></li>
-					{% endfor %}
-					</ul>
-					<br>
-					<br>
-					
-				</form>
-				
-				{% endblock %}
-			</div>
-		</div>
+<div class="col-sm-9">
+  	<div class="page-header" style="border-bottom: 0px solid #eeeeee;">
+		<h4>DOCTOR: Patient List</h4>
+  	</div>
+  	<div class="row">
+
+		{% block form %}
+		<form method="POST" action="{{ url_for('doctor') }}" class="form-signin" role="form">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			<table class="table table-striped table-hover table-condensed" style="margin: 0 10px 0px 10px;">
+	            <thead>
+	              	<tr>
+	                	<th>Status</th>
+		                <th>First Name</th>
+		                <th>Last Name</th>
+		                <th>Sex</th>
+		                <th>Age</th>
+		                <th>Last Visit</th>
+	              	</tr>
+	            </thead>
+	            <tbody>
+	              	{% for pat in patients %}
+		              	<tr  onclick="location.href='{{ url_for('doctor_exam', patient_id=pat.id) }}'" style="cursor:pointer;">
+			                <td>{{pat.status}}</td>
+			                <td><a href="{{ url_for('doctor_exam', patient_id=pat.id) }}">{{pat.name_first}}</a></td>
+			                <td>{{pat.name_last}}</td>
+			                <td>{{pat.gender}}</td>
+			                <td>{{pat.age}}</td>
+			                <td>FILLER</td>
+		              	</tr>
+	              	{% endfor %}
+	            </tbody>
+	        </table> 
+		</form>
+		{% endblock %}
+
 	</div>
+</div>
 {% endblock view %}
