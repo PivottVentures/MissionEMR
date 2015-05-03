@@ -2,101 +2,139 @@
 {% import "wtf.html" as wtf %}
 
 {% block view %}
-	<div class="col-md-10">
-		<p></p>
-		<div class="panel panel-default">
-			<div class="panel-heading input-sm">
-				<span class="glyphicon glyphicon-user"></span><b>  New Patient</b>
-			</div>
-			<div class="panel-body">
-				{% block form %}
-				
-				<form method="POST" action="{{ url_for('registration_new_patient') }}" class="form-signin" role="form">
-					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-					{{ form.name_last.label }}
-					{{form.name_last(class="form-control", placeholder="Last Name") }}
-					{% for error in form.errors.name_last %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.name_first.label }}
-					{{ form.name_first(class="form-control", placeholder="First Name") }}
-					{% for error in form.errors.name_first %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.nickname.label }}
-					{{ form.nickname(class="form-control", placeholder="Nickname") }}
-					{% for error in form.errors.nickname %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.birth_date.label }}
-					{{ form.birth_date(class="form-control", placeholder="Date of Birth") }}
-					{% for error in form.errors.birth_date %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.age.label }}
-					{{ form.age(class="form-control", placeholder="Age") }}
-					{% for error in form.errors.age %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.gender.label }}
-					{{ form.gender }}
-					{% for error in form.errors.gender %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.phone.label }}<br>{{ form.phone(size=20) }}
-					{% for error in form.errors.phone %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.address.label }}<br>{{ form.address(size=20) }}
-					{% for error in form.errors.address %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					{{ form.children_count.label }}
-					{{ form.children_count }}
-					{% for error in form.errors.children_count %}
-						<span style="color: red;">[{{error}}]</span>
-					{% endfor %}
-					<br>
-					<br>
-					{{ form.references.label }}<br>{{ form.references(size=20) }}
-					<br>
-					<br>
-					{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
-					<br>
-					<br>
-					{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
-					<br>
-					<br>
-					{{ form.caretaker.label }}<br>{{ form.caretaker(size=20) }}
-					<br>
-					<br>
-					{{ form.caretaker_relation.label }}<br>{{ form.caretaker_relation(size=20) }}
-					<br>
-					<br>
-					{{ form.emergency_person.label }}<br>{{ form.emergency_person(size=20) }}
-					<br>
-					<br>
-					{{ form.emergency_number.label }}<br>{{ form.emergency_number(size=20) }}
-					<br>
-					<br>
-					<input type="submit" class="btn btn-primary" value="Back" name='back'>
-					<input type="submit" class="btn btn-primary" value="Save" name='save'>
-					<input type="submit" class="btn btn-primary" value="Continue" name='continue'>
-				</form>
-				
-				{% endblock %}
-			</div>
+<div class="col-sm-9">
+	<div class="row" style="border-bottom: 3px solid #fff; background-color: rgb(248, 248, 248);">
+		<div class="col-sm-5">
+			<h4>New Patient</h4>
 		</div>
 	</div>
-{% endblock view %}
 
+	{% block form %}
+	<form method="POST" action="{{ url_for('registration_new_patient') }}" class="form-signin" role="form">
+		<div class="row" style="background-color: rgb(248, 248, 248);">
+			<div class="col-sm-6">
+				<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+				{{ form.name_last.label }}
+				{{form.name_last(class="form-control", placeholder="Last Name") }}
+				{% for error in form.errors.name_last %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				{{ form.name_first.label }}
+				{{ form.name_first(class="form-control", placeholder="First Name") }}
+				{% for error in form.errors.name_first %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				{{ form.nickname.label }}
+				{{ form.nickname(class="form-control", placeholder="Nickname") }}
+				{% for error in form.errors.nickname %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				{{ form.birth_date.label }}
+				{{ form.birth_date(class="form-control", placeholder="Date of Birth") }}
+				{% for error in form.errors.birth_date %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				{{ form.age.label }}
+				{{ form.age(class="form-control", placeholder="Age") }}
+				{% for error in form.errors.age %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				{{ form.gender.label }}
+				{{ form.gender }}
+				{% for error in form.errors.gender %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				<br>
+				{{ form.phone.label }}<br>{{ form.phone(size=20) }}
+				{% for error in form.errors.phone %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				<br>
+			</div>
+			<div class="col-sm-6">
+				{{ form.address.label }}<br>{{ form.address(size=20) }}
+				{% for error in form.errors.address %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				{{ form.children_count.label }}
+				{{ form.children_count }}
+				{% for error in form.errors.children_count %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
+				<br>
+				<br>
+				{{ form.references.label }}<br>{{ form.references(size=20) }}
+				<br>
+				<br>
+				{{ form.occupation.label }}<br>{{ form.occupation(size=20) }}
+				<br>
+				<br>
+				{{ form.mother_name.label }}<br>{{ form.mother_name(size=20) }}
+				<br>
+				<br>
+				{{ form.caretaker.label }}<br>{{ form.caretaker(size=20) }}
+				<br>
+				<br>
+				{{ form.caretaker_relation.label }}<br>{{ form.caretaker_relation(size=20) }}
+				<br>
+				<br>
+				{{ form.emergency_person.label }}<br>{{ form.emergency_person(size=20) }}
+				<br>
+				<br>
+				{{ form.emergency_number.label }}<br>{{ form.emergency_number(size=20) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-8">
+				<button type="submit" class="btn btn-primary" aria-hidden="true" value="Back" name='back'><i class="fa fa-close fa-2x"></i></button>
+				<button type="submit" class="btn btn-primary" aria-hidden="true" value="Save" name='save'><i class="fa fa-check fa-2x"></i></button>
+				<button type="button" class="btn btn-success" data-target="#testing" data-toggle="modal"><i class="fa fa-arrow-right fa-2x"></i></button>
+			<!-- Modal -->
+			    <div class="modal" id="testing" aria-labelledby="contactuslabel" aria-hidden="true">
+			        <div class="modal-dialog">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			                    <h4 class="modal-title">Appointment Type</h4>
+			                </div>
+			                <div class="modal-body">
+			                	<div class="row">
+			                		<div class="col-sm-3 col-sm-offset-3">
+			                			<div class="radio">
+			                				<label class="radio-inline">
+												<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"> <a href="#" class="btn btn-station btn-nav-block"><i class="fa fa-stethoscope fa-3x"></i><br>Doctor</a>
+											</label>
+									    </div>
+									</div>
+									<div class="col-sm-3">
+									    <div class="radio">
+									        <label class="radio-inline">
+												<input type="radio" name="visitTypeSelections" id="inlineRadio1" value="doctor"><a href="#" class="btn btn-station btn-nav-block"><span class="icon-i-dental" aria-hidden="true" style="font-size: 2.75em;"></span><br>Dentist</a>
+											</label>
+									    </div>
+									</div>
+								</div>
+			                </div>
+			                <div class="modal-footer">
+			                	<button type="button" class="btn btn-primary" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-2x"></i></button>
+			                	<button type="submit" class="btn btn-success" aria-hidden="true" value="Continue" name='continue'><i class="fa fa-arrow-right fa-2x"></i></button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		</form>
+	</div>
+	<br><br><br>
+	{% endblock %}
+</div>
+{% endblock view %}

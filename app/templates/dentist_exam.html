@@ -14,7 +14,7 @@
 				{% block form %}
 				
 				{% from "form_helpers.html" import render_field %}
-				<form method="POST" action="{{ url_for('doctor_exam', patient_id=patient.id) }}" class="form-signin" role="form">
+				<form method="POST" action="{{ url_for('dentist_exam', patient_id=patient.id) }}" class="form-signin" role="form">
 					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 					<input type="submit" class="btn" value="View" name='view_registration'>
 					<br>
@@ -26,7 +26,7 @@
 							Blood Type: {{patient.blood_type}}
 						{% endif %}
 						<br>
-						{% set conditions = {'Hypertension':patient.ht,'Tuberculosis': patient.tb, 
+						{% set conditions = {'Hypertension': patient.ht, 'Tuberculosis': patient.tb, 
 									'Asthma': patient.asthma, 'Heart Condition': patient.heart_condition, 
 									'HIV': patient.hiv, 'Diabetes': patient.diabetes, 'Epilepsy': patient.epilepsy, 
 									'Sickle Cell Anemia': patient.sickle_cell_anemia, 
@@ -56,28 +56,28 @@
 						{% set visit = patient.visit_patient[0] %}
 						<br>
 						<div>
-							<b>Vitals</b> Weight: {{visit.weight}}	Height: {{visit.height}}
+							{% set complaints = {'Sharp Pain': visit.pain,  'Bleeding': visit.bleeding,
+										'Dental Sensitivity': visit.sensitivity, 'Tooth Mobility': visit.mobility,
+										'Abscess': visit.abscess, 'Other: ': visit.other} %}
+							
+							<b>Vitals</b> Weight: {{visit.weight}}	Systolic Blood Pressure: {{visit.bp_systolic}}	Diastolic Blood Pressure: {{visit.bp_diastolic}}
 							<input type="submit" class="btn" value="View" name='view_vitals'>
 							<br>
-							Systolic Blood Pressure: {{visit.bp_systolic}}	Diastolic Blood Pressure: {{visit.bp_diastolic}}
+							<b>Complaints</b>
+							{% for field in complaints %}
+								{% if complaints[field] == True %}
+									{{field}}
+									{% if field == 'Other: ' %}
+										{{visit.other_reason}}
+									{% endif %}
+								{% endif %} 
+							{% endfor %}
 							<br>
-							Temperature: {{visit.temperature}}	Pulse: {{visit.pulse}}
-							<br>
-							Respirations: {{visit.respirations}}
-							{% if patient.gender == 'Female' %}
-								Last Menstrual Cycle: {{visit.period_last_date}}
-							{% endif %}
 						</div>
 						<div>
 							<b>Exam</b>
-							{% set t = form.complaint.process_data(visit.complaint) %}<!-- This works, but I don't like it -->
-							{{ form.complaint.label }}
-							{{ form.complaint(value=visit.complaint) }}<!-- I cannot figure out why this isn't working!!!! -->
-							{% for error in form.errors.complaint %}
-								<span style="color: red;">[{{error}}]</span>
-							{% endfor %}
 							<br>
-							{{ render_field(form.exam) }}
+							{{ render_field(form.teeth_treated) }}
 							<br>
 							{{ render_field(form.diagnosis) }}
 							<br>

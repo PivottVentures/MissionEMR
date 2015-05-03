@@ -1,0 +1,37 @@
+{% block background %}
+<div class="row">
+    <h5>Background
+    <a class="btn btn-primary btn-sm" role="button" href="{{ url_for('vitals_background', patient_id=patient.id) }}">View</a>
+    </h5>
+</div>
+<div class="row">
+
+<br>
+{% if patient.blood_type != 'Select' %}
+    Blood Type: <strong>{{patient.blood_type}}</strong>
+{% endif %}
+<br>
+{% set conditions = {'Hypertension': patient.ht, 'Tuberculosis': patient.tb, 
+            'Asthma': patient.asthma, 'Heart Condition': patient.heart_condition, 
+            'HIV': patient.hiv, 'Diabetes': patient.diabetes, 'Epilepsy': patient.epilepsy, 
+            'Sickle Cell Anemia': patient.sickle_cell_anemia, 
+            'Blood Transfusion': patient.blood_transfusion} %}
+Conditions
+{% for field in conditions %}
+    {% if conditions[field] == True %}
+        <li>{{field}}</li>
+    {% endif %} 
+{% endfor %}
+<br>
+{% set habits = {'Tea':patient.tea,'Coffee': patient.coffee, 
+            'Drugs': patient.drugs, 'Alcohol': patient.alcohol} %}
+Habits
+{% for field in habits %}
+    {% if habits[field] == True %}
+        <li>{{field}}</li>
+    {% endif %} 
+{% endfor %}    
+
+
+</div>
+{% endblock background %}
